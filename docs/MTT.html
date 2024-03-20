@@ -374,7 +374,7 @@ EDA-treated astrocytes from multiple experiments</h1>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -385,8 +385,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -399,9 +399,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
@@ -424,21 +424,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -529,15 +526,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treefbebf814c4451560c1f362a248bb124bd2ee4fbatargetblankfbebf81a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treed69bcf7aed8ee80915dcfc71e123ee76de314394targetblankd69bcf7a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/fbebf814c4451560c1f362a248bb124bd2ee4fba" target="_blank">fbebf81</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/d69bcf7aed8ee80915dcfc71e123ee76de314394" target="_blank">d69bcf7</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treefbebf814c4451560c1f362a248bb124bd2ee4fbatargetblankfbebf81a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treed69bcf7aed8ee80915dcfc71e123ee76de314394targetblankd69bcf7a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +544,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/fbebf814c4451560c1f362a248bb124bd2ee4fba" target="_blank">fbebf81</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/d69bcf7aed8ee80915dcfc71e123ee76de314394" target="_blank">d69bcf7</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -562,14 +559,8 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  analysis/MTT.Rmd
-    Untracked:  data/ASTRO_MTT_EPA.tsv
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
@@ -584,10 +575,73 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/MTT.Rmd</code>) and HTML
+(<code>docs/MTT.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/d69bcf7aed8ee80915dcfc71e123ee76de314394/docs/MTT.html" target="_blank">d69bcf7</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+<td>
+fix .gitignore
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/d09b2f1bf99b04298fc3df3849d31001e7003df5/analysis/MTT.Rmd" target="_blank">d09b2f1</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+<td>
+calculate cell viability MTT assay
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -638,99 +692,99 @@ kable(df)</code></pre>
 <td align="right">0.561</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.638</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.643</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.667</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.680</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.630</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.658</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.627</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_1</td>
+<td align="left">EPA_5μM_1</td>
 <td align="right">0.649</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.630</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.651</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.669</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.670</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.677</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.670</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.737</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_1</td>
+<td align="left">EPA_10μM_1</td>
 <td align="right">0.683</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.731</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.733</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.797</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.758</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.737</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.735</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.510</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_1</td>
+<td align="left">EPA_30μM_1</td>
 <td align="right">0.673</td>
 </tr>
 <tr class="odd">
@@ -766,99 +820,99 @@ kable(df)</code></pre>
 <td align="right">0.767</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.859</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.914</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.928</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.941</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.888</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.907</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.988</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_2</td>
+<td align="left">EPA_5μM_2</td>
 <td align="right">0.857</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.850</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.893</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.880</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.934</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.943</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.909</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.898</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_2</td>
+<td align="left">EPA_10μM_2</td>
 <td align="right">0.931</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.896</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.975</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.919</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.966</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.952</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.977</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.974</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_2</td>
+<td align="left">EPA_30μM_2</td>
 <td align="right">0.872</td>
 </tr>
 <tr class="odd">
@@ -894,99 +948,99 @@ kable(df)</code></pre>
 <td align="right">0.661</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.726</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.770</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.754</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.725</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.688</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.768</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.753</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_3</td>
+<td align="left">EPA_5μM_3</td>
 <td align="right">0.708</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.753</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.787</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.782</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.744</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.747</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.788</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.748</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_3</td>
+<td align="left">EPA_10μM_3</td>
 <td align="right">0.729</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.759</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.809</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.790</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.855</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.797</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.845</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.842</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_3</td>
+<td align="left">EPA_30μM_3</td>
 <td align="right">0.824</td>
 </tr>
 <tr class="odd">
@@ -1022,99 +1076,99 @@ kable(df)</code></pre>
 <td align="right">0.825</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.778</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.803</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.791</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.761</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.760</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.750</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.765</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_4</td>
+<td align="left">EPA_5μM_4</td>
 <td align="right">0.765</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.790</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.763</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.833</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.806</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.787</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.785</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.790</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_4</td>
+<td align="left">EPA_10μM_4</td>
 <td align="right">0.839</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.859</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.859</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.881</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.887</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.911</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.839</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.916</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_4</td>
+<td align="left">EPA_30μM_4</td>
 <td align="right">0.920</td>
 </tr>
 <tr class="odd">
@@ -1150,99 +1204,99 @@ kable(df)</code></pre>
 <td align="right">0.516</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.531</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.529</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.510</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.531</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.531</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.528</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.506</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_5</td>
+<td align="left">EPA_5μM_5</td>
 <td align="right">0.519</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.529</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.551</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.552</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.535</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.545</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.545</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.515</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_5</td>
+<td align="left">EPA_10μM_5</td>
 <td align="right">0.540</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.611</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.621</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.706</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.577</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.579</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.590</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.560</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_5</td>
+<td align="left">EPA_30μM_5</td>
 <td align="right">0.588</td>
 </tr>
 <tr class="odd">
@@ -1278,114 +1332,114 @@ kable(df)</code></pre>
 <td align="right">0.510</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.580</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.620</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.710</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.630</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.620</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.620</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.640</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_5um_6</td>
+<td align="left">EPA_5μM_6</td>
 <td align="right">0.600</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.570</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.590</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.610</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.560</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.610</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.560</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.580</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_10uM_6</td>
+<td align="left">EPA_10μM_6</td>
 <td align="right">0.570</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.680</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.670</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.650</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.650</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.650</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.680</td>
 </tr>
 <tr class="odd">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.680</td>
 </tr>
 <tr class="even">
-<td align="left">EPA_30ul_6</td>
+<td align="left">EPA_30μM_6</td>
 <td align="right">0.660</td>
 </tr>
 </tbody>
 </table>
-<div id="μl-of-epa" class="section level2">
-<h2>5 μl of EPA</h2>
+<div id="μm-of-epa" class="section level2">
+<h2>5 μM of EPA</h2>
 <pre class="r"><code>unpaired5 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
-    c(&quot;Ctr_1&quot;, &quot;EPA_5um_1&quot;),
-    c(&quot;Ctr_2&quot;, &quot;EPA_5um_2&quot;),
-    c(&quot;Ctr_3&quot;, &quot;EPA_5um_3&quot;),
-    c(&quot;Ctr_4&quot;, &quot;EPA_5um_4&quot;),
-    c(&quot;Ctr_5&quot;, &quot;EPA_5um_5&quot;),
-    c(&quot;Ctr_6&quot;, &quot;EPA_5um_6&quot;)
+    c(&quot;Ctr_1&quot;, &quot;EPA_5μM_1&quot;),
+    c(&quot;Ctr_2&quot;, &quot;EPA_5μM_2&quot;),
+    c(&quot;Ctr_3&quot;, &quot;EPA_5μM_3&quot;),
+    c(&quot;Ctr_4&quot;, &quot;EPA_5μM_4&quot;),
+    c(&quot;Ctr_5&quot;, &quot;EPA_5μM_5&quot;),
+    c(&quot;Ctr_6&quot;, &quot;EPA_5μM_6&quot;)
   ),
   minimeta = TRUE
 )</code></pre>
@@ -1394,15 +1448,15 @@ kable(df)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
-1. EPA_5um_1 minus Ctr_1
-2. EPA_5um_2 minus Ctr_2
-3. EPA_5um_3 minus Ctr_3
-4. EPA_5um_4 minus Ctr_4
-5. EPA_5um_5 minus Ctr_5
-6. EPA_5um_6 minus Ctr_6
+1. EPA_5μM_1 minus Ctr_1
+2. EPA_5μM_2 minus Ctr_2
+3. EPA_5μM_3 minus Ctr_3
+4. EPA_5μM_4 minus Ctr_4
+5. EPA_5μM_5 minus Ctr_5
+6. EPA_5μM_6 minus Ctr_6
 7. weighted delta (only for mean difference)
 
 5000 resamples will be used to generate the effect size bootstraps.</code></pre>
@@ -1413,57 +1467,196 @@ print(unpaired5.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
-The unpaired mean difference between EPA_5um_1 and Ctr_1 is 0.036 [95%CI 0.011, 0.063].
+The unpaired mean difference between EPA_5μM_1 and Ctr_1 is 0.036 [95%CI 0.011, 0.063].
 The p-value of the two-sided permutation t-test is 0.0499, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_5um_2 and Ctr_2 is 0.068 [95%CI 0.032, 0.109].
+The unpaired mean difference between EPA_5μM_2 and Ctr_2 is 0.068 [95%CI 0.032, 0.109].
 The p-value of the two-sided permutation t-test is 0.0063, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_5um_3 and Ctr_3 is 0.012 [95%CI -0.018, 0.043].
+The unpaired mean difference between EPA_5μM_3 and Ctr_3 is 0.012 [95%CI -0.018, 0.043].
 The p-value of the two-sided permutation t-test is 0.5737, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_5um_4 and Ctr_4 is -0.026 [95%CI -0.048, 0.002].
+The unpaired mean difference between EPA_5μM_4 and Ctr_4 is -0.026 [95%CI -0.048, 0.002].
 The p-value of the two-sided permutation t-test is 0.1559, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_5um_5 and Ctr_5 is -0.011 [95%CI -0.031, 0.005].
+The unpaired mean difference between EPA_5μM_5 and Ctr_5 is -0.011 [95%CI -0.031, 0.005].
 The p-value of the two-sided permutation t-test is 0.4606, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_5um_6 and Ctr_6 is 0.091 [95%CI 0.065, 0.125].
+The unpaired mean difference between EPA_5μM_6 and Ctr_6 is 0.091 [95%CI 0.065, 0.125].
 The p-value of the two-sided permutation t-test is 0.0011, calculated for legacy purposes only.
 
 5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
 Any p-value reported is the probability of observing the effect size (or greater),
 assuming the null hypothesis of zero difference is true.
 For each p-value, 5000 reshuffles of the control and test labels were performed.</code></pre>
-<pre class="r"><code>unpaired5.mean_diff$boot_result</code></pre>
-<pre><code># A tibble: 7 × 11
-  control_group   test_group bootstraps nboots bca_ci_low bca_ci_high pct_ci_low
-  &lt;chr&gt;           &lt;chr&gt;      &lt;list&gt;      &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
-1 Ctr_1           EPA_5um_1  &lt;dbl&gt;        5000    0.0105      0.0626      0.0105
-2 Ctr_2           EPA_5um_2  &lt;dbl&gt;        5000    0.0320      0.109       0.0315
-3 Ctr_3           EPA_5um_3  &lt;dbl&gt;        5000   -0.0180      0.0430     -0.0182
-4 Ctr_4           EPA_5um_4  &lt;dbl&gt;        5000   -0.0483      0.00238    -0.0495
-5 Ctr_5           EPA_5um_5  &lt;dbl&gt;        5000   -0.0310      0.00512    -0.0300
-6 Ctr_6           EPA_5um_6  &lt;dbl&gt;        5000    0.0650      0.125       0.0625
-7 Minimeta Overa… Minimeta … &lt;dbl&gt;        5000    0.00243     0.0274      0.0149
-# ℹ 4 more variables: pct_ci_high &lt;dbl&gt;, ci &lt;dbl&gt;, difference &lt;dbl&gt;,
-#   weight &lt;dbl&gt;</code></pre>
+<pre class="r"><code>kable(unpaired5.mean_diff$boot_result |&gt; select(-bootstraps))</code></pre>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="2%" />
+<col width="9%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">control_group</th>
+<th align="left">test_group</th>
+<th align="right">nboots</th>
+<th align="right">bca_ci_low</th>
+<th align="right">bca_ci_high</th>
+<th align="right">pct_ci_low</th>
+<th align="right">pct_ci_high</th>
+<th align="right">ci</th>
+<th align="right">difference</th>
+<th align="right">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="left">EPA_5μM_1</td>
+<td align="right">5000</td>
+<td align="right">0.0105000</td>
+<td align="right">0.0626250</td>
+<td align="right">0.0105000</td>
+<td align="right">0.0625000</td>
+<td align="right">95</td>
+<td align="right">0.036000</td>
+<td align="right">1278.3053</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="left">EPA_5μM_2</td>
+<td align="right">5000</td>
+<td align="right">0.0320000</td>
+<td align="right">0.1085000</td>
+<td align="right">0.0315031</td>
+<td align="right">0.1076250</td>
+<td align="right">95</td>
+<td align="right">0.068500</td>
+<td align="right">575.6816</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="left">EPA_5μM_3</td>
+<td align="right">5000</td>
+<td align="right">-0.0180310</td>
+<td align="right">0.0429689</td>
+<td align="right">-0.0182469</td>
+<td align="right">0.0428750</td>
+<td align="right">95</td>
+<td align="right">0.011875</td>
+<td align="right">925.5663</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="left">EPA_5μM_4</td>
+<td align="right">5000</td>
+<td align="right">-0.0483460</td>
+<td align="right">0.0023750</td>
+<td align="right">-0.0494969</td>
+<td align="right">0.0003719</td>
+<td align="right">95</td>
+<td align="right">-0.025750</td>
+<td align="right">1362.6962</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="left">EPA_5μM_5</td>
+<td align="right">5000</td>
+<td align="right">-0.0310000</td>
+<td align="right">0.0051207</td>
+<td align="right">-0.0300000</td>
+<td align="right">0.0057500</td>
+<td align="right">95</td>
+<td align="right">-0.011500</td>
+<td align="right">2693.9914</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="left">EPA_5μM_6</td>
+<td align="right">5000</td>
+<td align="right">0.0650000</td>
+<td align="right">0.1250000</td>
+<td align="right">0.0625000</td>
+<td align="right">0.1225000</td>
+<td align="right">95</td>
+<td align="right">0.091250</td>
+<td align="right">949.9576</td>
+</tr>
+<tr class="odd">
+<td align="left">Minimeta Overall Test</td>
+<td align="left">Minimeta Overall Test</td>
+<td align="right">5000</td>
+<td align="right">0.0024303</td>
+<td align="right">0.0274285</td>
+<td align="right">0.0148743</td>
+<td align="right">0.0152279</td>
+<td align="right">95</td>
+<td align="right">0.015034</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>dabest_plot(unpaired5.mean_diff)</code></pre>
 <p><img src="figure/MTT.Rmd/unnamed-chunk-5-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/d69bcf7aed8ee80915dcfc71e123ee76de314394/docs/figure/MTT.Rmd/unnamed-chunk-5-1.png" target="_blank">d69bcf7</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="μl-of-epa-1" class="section level2">
-<h2>10 μl of EPA</h2>
+</div>
+</div>
+<div id="μm-of-epa-1" class="section level2">
+<h2>10 μM of EPA</h2>
 <pre class="r"><code>unpaired10 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
-    c(&quot;Ctr_1&quot;, &quot;EPA_10uM_1&quot;),
-    c(&quot;Ctr_2&quot;, &quot;EPA_10uM_2&quot;),
-    c(&quot;Ctr_3&quot;, &quot;EPA_10uM_3&quot;),
-    c(&quot;Ctr_4&quot;, &quot;EPA_10uM_4&quot;),
-    c(&quot;Ctr_5&quot;, &quot;EPA_10uM_5&quot;),
-    c(&quot;Ctr_6&quot;, &quot;EPA_10uM_6&quot;)
+    c(&quot;Ctr_1&quot;, &quot;EPA_10μM_1&quot;),
+    c(&quot;Ctr_2&quot;, &quot;EPA_10μM_2&quot;),
+    c(&quot;Ctr_3&quot;, &quot;EPA_10μM_3&quot;),
+    c(&quot;Ctr_4&quot;, &quot;EPA_10μM_4&quot;),
+    c(&quot;Ctr_5&quot;, &quot;EPA_10μM_5&quot;),
+    c(&quot;Ctr_6&quot;, &quot;EPA_10μM_6&quot;)
   ),
   minimeta = TRUE
 )</code></pre>
@@ -1472,15 +1665,15 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
-1. EPA_10uM_1 minus Ctr_1
-2. EPA_10uM_2 minus Ctr_2
-3. EPA_10uM_3 minus Ctr_3
-4. EPA_10uM_4 minus Ctr_4
-5. EPA_10uM_5 minus Ctr_5
-6. EPA_10uM_6 minus Ctr_6
+1. EPA_10μM_1 minus Ctr_1
+2. EPA_10μM_2 minus Ctr_2
+3. EPA_10μM_3 minus Ctr_3
+4. EPA_10μM_4 minus Ctr_4
+5. EPA_10μM_5 minus Ctr_5
+6. EPA_10μM_6 minus Ctr_6
 7. weighted delta (only for mean difference)
 
 5000 resamples will be used to generate the effect size bootstraps.</code></pre>
@@ -1491,57 +1684,196 @@ print(unpaired10.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
-The unpaired mean difference between EPA_10uM_1 and Ctr_1 is 0.06 [95%CI 0.033, 0.093].
+The unpaired mean difference between EPA_10μM_1 and Ctr_1 is 0.06 [95%CI 0.033, 0.093].
 The p-value of the two-sided permutation t-test is 0.0038, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_10uM_2 and Ctr_2 is 0.063 [95%CI 0.03, 0.096].
+The unpaired mean difference between EPA_10μM_2 and Ctr_2 is 0.063 [95%CI 0.03, 0.096].
 The p-value of the two-sided permutation t-test is 0.0047, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_10uM_3 and Ctr_3 is 0.035 [95%CI 0.009, 0.064].
+The unpaired mean difference between EPA_10μM_3 and Ctr_3 is 0.035 [95%CI 0.009, 0.064].
 The p-value of the two-sided permutation t-test is 0.0517, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_10uM_4 and Ctr_4 is 0.002 [95%CI -0.024, 0.032].
+The unpaired mean difference between EPA_10μM_4 and Ctr_4 is 0.002 [95%CI -0.024, 0.032].
 The p-value of the two-sided permutation t-test is 0.8747, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_10uM_5 and Ctr_5 is 0.004 [95%CI -0.015, 0.021].
+The unpaired mean difference between EPA_10μM_5 and Ctr_5 is 0.004 [95%CI -0.015, 0.021].
 The p-value of the two-sided permutation t-test is 0.5280, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_10uM_6 and Ctr_6 is 0.045 [95%CI 0.024, 0.065].
+The unpaired mean difference between EPA_10μM_6 and Ctr_6 is 0.045 [95%CI 0.024, 0.065].
 The p-value of the two-sided permutation t-test is 0.0060, calculated for legacy purposes only.
 
 5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
 Any p-value reported is the probability of observing the effect size (or greater),
 assuming the null hypothesis of zero difference is true.
 For each p-value, 5000 reshuffles of the control and test labels were performed.</code></pre>
-<pre class="r"><code>unpaired10.mean_diff$boot_result</code></pre>
-<pre><code># A tibble: 7 × 11
-  control_group   test_group bootstraps nboots bca_ci_low bca_ci_high pct_ci_low
-  &lt;chr&gt;           &lt;chr&gt;      &lt;list&gt;      &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
-1 Ctr_1           EPA_10uM_1 &lt;dbl&gt;        5000    0.0325       0.0926    0.0316 
-2 Ctr_2           EPA_10uM_2 &lt;dbl&gt;        5000    0.0305       0.0964    0.0300 
-3 Ctr_3           EPA_10uM_3 &lt;dbl&gt;        5000    0.00925      0.0644    0.00838
-4 Ctr_4           EPA_10uM_4 &lt;dbl&gt;        5000   -0.0242       0.0318   -0.0258 
-5 Ctr_5           EPA_10uM_5 &lt;dbl&gt;        5000   -0.0154       0.0211   -0.0144 
-6 Ctr_6           EPA_10uM_6 &lt;dbl&gt;        5000    0.0237       0.0650    0.0237 
-7 Minimeta Overa… Minimeta … &lt;dbl&gt;        5000    0.0173       0.0413    0.0289 
-# ℹ 4 more variables: pct_ci_high &lt;dbl&gt;, ci &lt;dbl&gt;, difference &lt;dbl&gt;,
-#   weight &lt;dbl&gt;</code></pre>
+<pre class="r"><code>kable(unpaired10.mean_diff$boot_result |&gt; select(-bootstraps))</code></pre>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="2%" />
+<col width="9%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">control_group</th>
+<th align="left">test_group</th>
+<th align="right">nboots</th>
+<th align="right">bca_ci_low</th>
+<th align="right">bca_ci_high</th>
+<th align="right">pct_ci_low</th>
+<th align="right">pct_ci_high</th>
+<th align="right">ci</th>
+<th align="right">difference</th>
+<th align="right">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="left">EPA_10μM_1</td>
+<td align="right">5000</td>
+<td align="right">0.0325000</td>
+<td align="right">0.0925793</td>
+<td align="right">0.0316250</td>
+<td align="right">0.0911250</td>
+<td align="right">95</td>
+<td align="right">0.0603750</td>
+<td align="right">923.3686</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="left">EPA_10μM_2</td>
+<td align="right">5000</td>
+<td align="right">0.0305000</td>
+<td align="right">0.0963750</td>
+<td align="right">0.0300031</td>
+<td align="right">0.0960000</td>
+<td align="right">95</td>
+<td align="right">0.0630000</td>
+<td align="right">784.2698</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="left">EPA_10μM_3</td>
+<td align="right">5000</td>
+<td align="right">0.0092500</td>
+<td align="right">0.0643750</td>
+<td align="right">0.0083750</td>
+<td align="right">0.0631250</td>
+<td align="right">95</td>
+<td align="right">0.0351250</td>
+<td align="right">1110.9899</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="left">EPA_10μM_4</td>
+<td align="right">5000</td>
+<td align="right">-0.0242500</td>
+<td align="right">0.0317707</td>
+<td align="right">-0.0257500</td>
+<td align="right">0.0306250</td>
+<td align="right">95</td>
+<td align="right">0.0017500</td>
+<td align="right">1104.7326</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="left">EPA_10μM_5</td>
+<td align="right">5000</td>
+<td align="right">-0.0153750</td>
+<td align="right">0.0211250</td>
+<td align="right">-0.0143750</td>
+<td align="right">0.0220000</td>
+<td align="right">95</td>
+<td align="right">0.0043750</td>
+<td align="right">2523.4887</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="left">EPA_10μM_6</td>
+<td align="right">5000</td>
+<td align="right">0.0237500</td>
+<td align="right">0.0650000</td>
+<td align="right">0.0237500</td>
+<td align="right">0.0650000</td>
+<td align="right">95</td>
+<td align="right">0.0450000</td>
+<td align="right">1872.9097</td>
+</tr>
+<tr class="odd">
+<td align="left">Minimeta Overall Test</td>
+<td align="left">Minimeta Overall Test</td>
+<td align="right">5000</td>
+<td align="right">0.0172908</td>
+<td align="right">0.0412704</td>
+<td align="right">0.0289180</td>
+<td align="right">0.0292622</td>
+<td align="right">95</td>
+<td align="right">0.0290195</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>dabest_plot(unpaired10.mean_diff)</code></pre>
 <p><img src="figure/MTT.Rmd/unnamed-chunk-10-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/d69bcf7aed8ee80915dcfc71e123ee76de314394/docs/figure/MTT.Rmd/unnamed-chunk-10-1.png" target="_blank">d69bcf7</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="μl-of-epa-2" class="section level2">
-<h2>30 μl of EPA</h2>
+</div>
+</div>
+<div id="μm-of-epa-2" class="section level2">
+<h2>30 μM of EPA</h2>
 <pre class="r"><code>unpaired30 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
-    c(&quot;Ctr_1&quot;, &quot;EPA_30ul_1&quot;),
-    c(&quot;Ctr_2&quot;, &quot;EPA_30ul_2&quot;),
-    c(&quot;Ctr_3&quot;, &quot;EPA_30ul_3&quot;),
-    c(&quot;Ctr_4&quot;, &quot;EPA_30ul_4&quot;),
-    c(&quot;Ctr_5&quot;, &quot;EPA_30ul_5&quot;),
-    c(&quot;Ctr_6&quot;, &quot;EPA_30ul_6&quot;)
+    c(&quot;Ctr_1&quot;, &quot;EPA_30μM_1&quot;),
+    c(&quot;Ctr_2&quot;, &quot;EPA_30μM_2&quot;),
+    c(&quot;Ctr_3&quot;, &quot;EPA_30μM_3&quot;),
+    c(&quot;Ctr_4&quot;, &quot;EPA_30μM_4&quot;),
+    c(&quot;Ctr_5&quot;, &quot;EPA_30μM_5&quot;),
+    c(&quot;Ctr_6&quot;, &quot;EPA_30μM_6&quot;)
   ),
   minimeta = TRUE
 )</code></pre>
@@ -1550,15 +1882,15 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
-1. EPA_30ul_1 minus Ctr_1
-2. EPA_30ul_2 minus Ctr_2
-3. EPA_30ul_3 minus Ctr_3
-4. EPA_30ul_4 minus Ctr_4
-5. EPA_30ul_5 minus Ctr_5
-6. EPA_30ul_6 minus Ctr_6
+1. EPA_30μM_1 minus Ctr_1
+2. EPA_30μM_2 minus Ctr_2
+3. EPA_30μM_3 minus Ctr_3
+4. EPA_30μM_4 minus Ctr_4
+5. EPA_30μM_5 minus Ctr_5
+6. EPA_30μM_6 minus Ctr_6
 7. weighted delta (only for mean difference)
 
 5000 resamples will be used to generate the effect size bootstraps.</code></pre>
@@ -1569,45 +1901,184 @@ print(unpaired30.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 16:30 PM on Wednesday March 20, 2024.
+The current time is 17:17 PM on Wednesday March 20, 2024.
 
-The unpaired mean difference between EPA_30ul_1 and Ctr_1 is 0.096 [95%CI 0.007, 0.14].
+The unpaired mean difference between EPA_30μM_1 and Ctr_1 is 0.096 [95%CI 0.007, 0.14].
 The p-value of the two-sided permutation t-test is 0.0104, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_30ul_2 and Ctr_2 is 0.1 [95%CI 0.061, 0.136].
+The unpaired mean difference between EPA_30μM_2 and Ctr_2 is 0.1 [95%CI 0.061, 0.136].
 The p-value of the two-sided permutation t-test is 0.0011, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_30ul_3 and Ctr_3 is 0.091 [95%CI 0.059, 0.123].
+The unpaired mean difference between EPA_30μM_3 and Ctr_3 is 0.091 [95%CI 0.059, 0.123].
 The p-value of the two-sided permutation t-test is 0.0003, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_30ul_4 and Ctr_4 is 0.087 [95%CI 0.057, 0.117].
+The unpaired mean difference between EPA_30μM_4 and Ctr_4 is 0.087 [95%CI 0.057, 0.117].
 The p-value of the two-sided permutation t-test is 0.0013, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_30ul_5 and Ctr_5 is 0.069 [95%CI 0.043, 0.116].
+The unpaired mean difference between EPA_30μM_5 and Ctr_5 is 0.069 [95%CI 0.043, 0.116].
 The p-value of the two-sided permutation t-test is 0.0006, calculated for legacy purposes only.
 
-The unpaired mean difference between EPA_30ul_6 and Ctr_6 is 0.129 [95%CI 0.108, 0.145].
+The unpaired mean difference between EPA_30μM_6 and Ctr_6 is 0.129 [95%CI 0.108, 0.145].
 The p-value of the two-sided permutation t-test is 0.0009, calculated for legacy purposes only.
 
 5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
 Any p-value reported is the probability of observing the effect size (or greater),
 assuming the null hypothesis of zero difference is true.
 For each p-value, 5000 reshuffles of the control and test labels were performed.</code></pre>
-<pre class="r"><code>unpaired30.mean_diff$boot_result</code></pre>
-<pre><code># A tibble: 7 × 11
-  control_group   test_group bootstraps nboots bca_ci_low bca_ci_high pct_ci_low
-  &lt;chr&gt;           &lt;chr&gt;      &lt;list&gt;      &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
-1 Ctr_1           EPA_30ul_1 &lt;dbl&gt;        5000    0.00707       0.140     0.0289
-2 Ctr_2           EPA_30ul_2 &lt;dbl&gt;        5000    0.0610        0.136     0.0619
-3 Ctr_3           EPA_30ul_3 &lt;dbl&gt;        5000    0.0587        0.123     0.0585
-4 Ctr_4           EPA_30ul_4 &lt;dbl&gt;        5000    0.0574        0.117     0.0570
-5 Ctr_5           EPA_30ul_5 &lt;dbl&gt;        5000    0.0426        0.116     0.0385
-6 Ctr_6           EPA_30ul_6 &lt;dbl&gt;        5000    0.108         0.145     0.109 
-7 Minimeta Overa… Minimeta … &lt;dbl&gt;        5000    0.0922        0.115     0.104 
-# ℹ 4 more variables: pct_ci_high &lt;dbl&gt;, ci &lt;dbl&gt;, difference &lt;dbl&gt;,
-#   weight &lt;dbl&gt;</code></pre>
+<pre class="r"><code>kable(unpaired30.mean_diff$boot_result |&gt; select(-bootstraps))</code></pre>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="2%" />
+<col width="9%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">control_group</th>
+<th align="left">test_group</th>
+<th align="right">nboots</th>
+<th align="right">bca_ci_low</th>
+<th align="right">bca_ci_high</th>
+<th align="right">pct_ci_low</th>
+<th align="right">pct_ci_high</th>
+<th align="right">ci</th>
+<th align="right">difference</th>
+<th align="right">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="left">EPA_30μM_1</td>
+<td align="right">5000</td>
+<td align="right">0.0070740</td>
+<td align="right">0.1397500</td>
+<td align="right">0.0288781</td>
+<td align="right">0.1503750</td>
+<td align="right">95</td>
+<td align="right">0.0962500</td>
+<td align="right">225.2778</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="left">EPA_30μM_2</td>
+<td align="right">5000</td>
+<td align="right">0.0610000</td>
+<td align="right">0.1357500</td>
+<td align="right">0.0618813</td>
+<td align="right">0.1367500</td>
+<td align="right">95</td>
+<td align="right">0.0996250</td>
+<td align="right">619.8153</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="left">EPA_30μM_3</td>
+<td align="right">5000</td>
+<td align="right">0.0587500</td>
+<td align="right">0.1227395</td>
+<td align="right">0.0585031</td>
+<td align="right">0.1224969</td>
+<td align="right">95</td>
+<td align="right">0.0905000</td>
+<td align="right">850.7148</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="left">EPA_30μM_4</td>
+<td align="right">5000</td>
+<td align="right">0.0573750</td>
+<td align="right">0.1167127</td>
+<td align="right">0.0570000</td>
+<td align="right">0.1165000</td>
+<td align="right">95</td>
+<td align="right">0.0866250</td>
+<td align="right">971.4211</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="left">EPA_30μM_5</td>
+<td align="right">5000</td>
+<td align="right">0.0426250</td>
+<td align="right">0.1157298</td>
+<td align="right">0.0385000</td>
+<td align="right">0.1073750</td>
+<td align="right">95</td>
+<td align="right">0.0693750</td>
+<td align="right">738.6352</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="left">EPA_30μM_6</td>
+<td align="right">5000</td>
+<td align="right">0.1075000</td>
+<td align="right">0.1450000</td>
+<td align="right">0.1087500</td>
+<td align="right">0.1462500</td>
+<td align="right">95</td>
+<td align="right">0.1287500</td>
+<td align="right">2338.2046</td>
+</tr>
+<tr class="odd">
+<td align="left">Minimeta Overall Test</td>
+<td align="left">Minimeta Overall Test</td>
+<td align="right">5000</td>
+<td align="right">0.0921689</td>
+<td align="right">0.1152220</td>
+<td align="right">0.1037444</td>
+<td align="right">0.1040722</td>
+<td align="right">95</td>
+<td align="right">0.1039085</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
 <pre class="r"><code>dabest_plot(unpaired30.mean_diff)</code></pre>
 <p><img src="figure/MTT.Rmd/unnamed-chunk-15-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/d69bcf7aed8ee80915dcfc71e123ee76de314394/docs/figure/MTT.Rmd/unnamed-chunk-15-1.png" target="_blank">d69bcf7</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
