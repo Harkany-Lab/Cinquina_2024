@@ -5,6 +5,10 @@ navbar:
   left:
   - text: Home
     href: index.html
+  - text: Analysis
+    menu:
+      - text: MTT assay analysis of EDA-treated astrocytes
+        href: MTT.html
   - text: About
     href: about.html
   - text: License

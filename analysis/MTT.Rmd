@@ -1,0 +1,180 @@
+---
+title: "Analysis of MTT assay results of EDA-treated astrocytes from multiple experiments"
+author: "Evgenii O. Tretiakov"
+date: "`r Sys.Date()`"
+output:
+  workflowr::wflow_html:
+    toc: true
+---
+
+```{r setup, echo=FALSE, include=FALSE}
+docname <- "mini-meta-dabest-of-mtt-eda-astrocytes"
+now <- Sys.time()
+# Time chunks during knitting
+knitr::knit_hooks$set(timeit = function(before) {
+  if (before) {
+    print(paste("Start:", Sys.time()))
+    now <<- Sys.time()
+  } else {
+    print(paste("Stop:", Sys.time()))
+    print(Sys.time() - now)
+  }
+})
+
+knitr::opts_chunk$set(
+  autodep        = TRUE,
+  cache          = FALSE,
+  cache.path     = paste0("cache/", docname, "/"),
+  cache.comments = FALSE,
+  cache.lazy     = FALSE,
+  dev            = c("png", "pdf"),
+  echo           = TRUE,
+  error          = FALSE,
+  fig.align      = "center",
+  fig.width      = 14,
+  fig.height     = 12,
+  message        = FALSE,
+  warning        = FALSE,
+  timeit         = TRUE
+)
+# Load packages
+suppressPackageStartupMessages({
+  library(here)
+  library(knitr)
+  library(RColorBrewer)
+  library(dabestr)
+  library(tidyverse)
+  library(magrittr)
+  library(stringr)
+  library(skimr)
+})
+
+# Set paths
+src_dir <- here("code")
+data_dir <- here("data")
+output_dir <- here("output")
+plots_dir <- here(output_dir, "figures")
+tables_dir <- here(output_dir, "tables")
+
+# parallelisation
+n_cores <- 4
+
+# set seed
+reseed <- 42
+set.seed(seed = reseed)
+
+# ggplot2 theme
+theme_set(ggmin::theme_powerpoint())
+```
+
+```{r load}
+df <- read_tsv(here(data_dir, "ASTRO_MTT_EPA.tsv"))
+df <- df %>%
+  tidyr::gather(key = Group, value = Measurement)
+
+kable(df)
+```
+## 5 μM of EPA
+
+```{r}
+unpaired5 <- load(df,
+  x = Group, y = Measurement,
+  idx = list(
+    c("Ctr_1", "EPA_5μM_1"),
+    c("Ctr_2", "EPA_5μM_2"),
+    c("Ctr_3", "EPA_5μM_3"),
+    c("Ctr_4", "EPA_5μM_4"),
+    c("Ctr_5", "EPA_5μM_5"),
+    c("Ctr_6", "EPA_5μM_6")
+  ),
+  minimeta = TRUE
+)
+```
+
+```{r}
+print(unpaired5)
+```
+
+```{r}
+unpaired5.mean_diff <- mean_diff(unpaired5)
+
+print(unpaired5.mean_diff)
+```
+
+```{r}
+kable(unpaired5.mean_diff$boot_result |> select(-bootstraps))
+```
+
+```{r}
+dabest_plot(unpaired5.mean_diff)
+```
+
+## 10 μM of EPA
+
+```{r}
+unpaired10 <- load(df,
+  x = Group, y = Measurement,
+  idx = list(
+    c("Ctr_1", "EPA_10μM_1"),
+    c("Ctr_2", "EPA_10μM_2"),
+    c("Ctr_3", "EPA_10μM_3"),
+    c("Ctr_4", "EPA_10μM_4"),
+    c("Ctr_5", "EPA_10μM_5"),
+    c("Ctr_6", "EPA_10μM_6")
+  ),
+  minimeta = TRUE
+)
+```
+
+```{r}
+print(unpaired10)
+```
+
+```{r}
+unpaired10.mean_diff <- mean_diff(unpaired10)
+
+print(unpaired10.mean_diff)
+```
+
+```{r}
+kable(unpaired10.mean_diff$boot_result |> select(-bootstraps))
+```
+
+```{r}
+dabest_plot(unpaired10.mean_diff)
+```
+
+## 30 μM of EPA
+
+```{r}
+unpaired30 <- load(df,
+  x = Group, y = Measurement,
+  idx = list(
+    c("Ctr_1", "EPA_30μM_1"),
+    c("Ctr_2", "EPA_30μM_2"),
+    c("Ctr_3", "EPA_30μM_3"),
+    c("Ctr_4", "EPA_30μM_4"),
+    c("Ctr_5", "EPA_30μM_5"),
+    c("Ctr_6", "EPA_30μM_6")
+  ),
+  minimeta = TRUE
+)
+```
+
+```{r}
+print(unpaired30)
+```
+
+```{r}
+unpaired30.mean_diff <- mean_diff(unpaired30)
+
+print(unpaired30.mean_diff)
+```
+
+```{r}
+kable(unpaired30.mean_diff$boot_result |> select(-bootstraps))
+```
+
+```{r}
+dabest_plot(unpaired30.mean_diff)
+```
