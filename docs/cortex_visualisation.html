@@ -9,14 +9,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Evgenii O. Tretiakov" />
 
+<meta name="date" content="2024-06-09" />
 
-<title>cortex_visualisation.knit.md</title>
+<title>Exploratory analysis of CaCyBP and S100a6 expression in embryonic mice cortex dataset with focus on astrocytic lineage</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,8 +35,11 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -229,6 +234,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -359,8 +367,21 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
+
+<h1 class="title toc-ignore">Exploratory analysis of CaCyBP and S100a6
+expression in embryonic mice cortex dataset with focus on astrocytic
+lineage</h1>
+<h4 class="author">Evgenii O. Tretiakov</h4>
+<h4 class="date">2024-06-09</h4>
 
 </div>
 
@@ -368,7 +389,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -379,8 +400,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -393,9 +414,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
@@ -418,21 +439,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -523,15 +541,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treecd64ad04048de9354cfe9b302929ac8efb975e95targetblankcd64ad0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree62900cfb0462113c3abd64181b50aa5d7578b58btargetblank62900cfa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/cd64ad04048de9354cfe9b302929ac8efb975e95" target="_blank">cd64ad0</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/62900cfb0462113c3abd64181b50aa5d7578b58b" target="_blank">62900cf</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treecd64ad04048de9354cfe9b302929ac8efb975e95targetblankcd64ad0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree62900cfb0462113c3abd64181b50aa5d7578b58btargetblank62900cfa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +559,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/cd64ad04048de9354cfe9b302929ac8efb975e95" target="_blank">cd64ad0</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/62900cfb0462113c3abd64181b50aa5d7578b58b" target="_blank">62900cf</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -557,14 +575,8 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  analysis/cortex.Rmd
-    Untracked:  analysis/cortex_visualisation.Rmd
-    Untracked:  analysis/figure/
-    Untracked:  data/SCP1290/
-    Untracked:  data/azimuth_integrated.rds
-    Untracked:  data/cfg.txt
+    Ignored:    data/SCP1290/
+    Ignored:    data/azimuth_integrated.rds
 
 </code></pre>
 <p>
@@ -579,67 +591,95 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/cortex_visualisation.Rmd</code>)
+and HTML (<code>docs/cortex_visualisation.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/62900cfb0462113c3abd64181b50aa5d7578b58b/analysis/cortex_visualisation.Rmd" target="_blank">62900cf</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+<td>
+add header to fix vector output in pdf
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/analysis/cortex_visualisation.Rmd" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+<td>
+add visualisation of cortical data analysis of CaCyBP and S100a6
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/cortex_visualisation.html" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+<td>
+add visualisation of cortical data analysis of CaCyBP and S100a6
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<pre class="r"><code>library(here)</code></pre>
-<pre><code>here() starts at /data/Cinquina_2024</code></pre>
-<pre class="r"><code>library(RColorBrewer)
-library(Seurat)</code></pre>
-<pre><code>Loading required package: SeuratObject</code></pre>
-<pre><code>Loading required package: sp</code></pre>
-<pre><code>
-Attaching package: &#39;SeuratObject&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
-
-    intersect</code></pre>
-<pre class="r"><code>library(scCustomize)</code></pre>
-<pre><code>scCustomize v2.0.1
-If you find the scCustomize useful please cite.
-See &#39;samuel-marsh.github.io/scCustomize/articles/FAQ.html&#39; for citation info.</code></pre>
-<pre class="r"><code>library(SeuratData)</code></pre>
-<pre><code>Using cached data manifest, last updated at 2024-05-07 11:22:16.949269</code></pre>
-<pre><code>── Installed datasets ──────────────────────────────── SeuratData v0.2.2.9001 ──</code></pre>
-<pre><code>✔ mousecortexref 1.0.0                  </code></pre>
-<pre><code>────────────────────────────────────── Key ─────────────────────────────────────</code></pre>
-<pre><code>✔ Dataset loaded successfully
-❯ Dataset built with a newer version of Seurat than installed
-❓ Unknown version of Seurat installed</code></pre>
-<pre class="r"><code>library(SeuratWrappers)
-library(Azimuth)</code></pre>
-<pre><code>Registered S3 method overwritten by &#39;SeuratDisk&#39;:
-  method            from  
-  as.sparse.H5Group Seurat</code></pre>
-<pre><code></code></pre>
-<pre><code>Attaching shinyBS</code></pre>
-<pre class="r"><code>library(BPCells)
-library(dplyr)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(magrittr)
-library(stringr)
-library(readr)
-library(ggplot2)
-library(cowplot)
-library(patchwork)</code></pre>
-<pre><code>
-Attaching package: &#39;patchwork&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:cowplot&#39;:
-
-    align_plots</code></pre>
-<pre class="r"><code>options(future.globals.maxSize = 1e9)
-options(Seurat.object.assay.version = &quot;v5&quot;)</code></pre>
 <pre class="r"><code># Create a vector with the stage of development for each object
 stage_info &lt;- c(&quot;E11.5&quot;, &quot;E12.5&quot;, &quot;E13.5&quot;, &quot;E14.5&quot;, &quot;E15.5&quot;, &quot;E16&quot;, &quot;E18.5&quot;, &quot;E18&quot;, &quot;P1&quot;, &quot;P1&quot;, &quot;E10&quot;, &quot;E17.5&quot;, &quot;P4&quot;)</code></pre>
 <pre class="r"><code>merged_cortex_2 &lt;- SeuratObject::LoadSeuratRds(here::here(&quot;data/azimuth_integrated.rds&quot;))
@@ -681,15 +721,8 @@ $ tSNE_2    &lt;dbl&gt; -19.603245, -17.062466, -20.102599, -20.003542, -18.6362
 <pre class="r"><code>orig_tsne %&lt;&gt;% tibble::column_to_rownames(&quot;cell_name&quot;)
 orig_tsne %&lt;&gt;% as.matrix()
 orig_metadata &lt;- readr::read_tsv(here(
-  &quot;data/SCP1290/metadata/metaData_scDevSC.txt&quot;))</code></pre>
-<pre><code>Rows: 98048 Columns: 28
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;\t&quot;
-chr (28): NAME, orig_ident, nCount_RNA, nFeature_RNA, percent_mito, n_hkgene...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>orig_metadata %&lt;&gt;% rename(&quot;cell_name&quot; = &quot;NAME&quot;)
+  &quot;data/SCP1290/metadata/metaData_scDevSC.txt&quot;))
+orig_metadata %&lt;&gt;% rename(&quot;cell_name&quot; = &quot;NAME&quot;)
 orig_metadata_types &lt;- orig_metadata[1,] |&gt; purrr::simplify()
 orig_metadata %&lt;&gt;% filter(!cell_name == &quot;TYPE&quot;)
 glimpse(orig_metadata)</code></pre>
@@ -828,10 +861,9 @@ merged_cortex &lt;-
     seurat_object = merged_cortex,
     palette = rev(brewer.pal(n = 11, name = &quot;Spectral&quot;)),
     palette_name = &quot;expr_Colour_Pal&quot;
-  )</code></pre>
-<pre><code>Seurat Object now contains the following items in @misc slot:
-ℹ &#39;expr_Colour_Pal&#39;</code></pre>
-<pre class="r"><code># Get the list of S100 family genes
+  )
+
+# Get the list of S100 family genes
 s100_genes &lt;- grep(&quot;^S100&quot;, rownames(merged_cortex), value = TRUE)
 
 genes.embed &lt;- c(
@@ -1009,6 +1041,43 @@ p2 &lt;- DimPlot(
 )</code></pre>
 <pre class="r"><code>wrap_plots(c(p1, p2), ncol = 2, byrow = F)</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-stages-and-types-all-cells-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-stages-and-types-all-cells-1">
+Past versions of plot-stages-and-types-all-cells-1.png
+</button>
+</p>
+<div id="fig-plot-stages-and-types-all-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-stages-and-types-all-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Create a custom FeaturePlot for each S100 gene
 plot_list &lt;-
     lapply(
@@ -1029,22 +1098,52 @@ plot_list &lt;-
                 label_feature_yaxis = TRUE,
                 combine = FALSE
             )
-        })</code></pre>
-<pre><code>
-NOTE: FeaturePlot_scCustom uses a specified `na_cutoff` when plotting to
-color cells with no expression as background color separate from color scale.
-Please ensure `na_cutoff` value is appropriate for feature being plotted.
-Default setting is appropriate for use when plotting from &#39;RNA&#39; assay.
-When `na_cutoff` not appropriate (e.g., module scores) set to NULL to
-plot all cells in gradient color palette.
+        })
 
------This message will be shown once per session.-----</code></pre>
-<pre class="r"><code># Combine the plots into a single grid
+
+# Combine the plots into a single grid
 combined_plot &lt;- patchwork::wrap_plots(plot_list, ncol = 1)
 
 # Display the combined plot
 print(combined_plot)</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-s100-features-all-cells-1.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-s100-features-all-cells-1">
+Past versions of plot-s100-features-all-cells-1.png
+</button>
+</p>
+<div id="fig-plot-s100-features-all-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-s100-features-all-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Create a compact DotPlot
 compact_plot &lt;- DotPlot(
   object = merged_cortex,
@@ -1060,7 +1159,44 @@ compact_plot &lt;- DotPlot(
 
 # Display the compact plot
 print(compact_plot)</code></pre>
-<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-all-cells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-all-cells-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-s100-dot-all-cells-1">
+Past versions of plot-s100-dot-all-cells-1.png
+</button>
+</p>
+<div id="fig-plot-s100-dot-all-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-s100-dot-all-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot_gene_by_dev &lt;- function(x) {
   f_plot &lt;- FeaturePlot_scCustom(
     merged_cortex,
@@ -1083,7 +1219,5098 @@ print(compact_plot)</code></pre>
 }
 
 genes.embed |&gt; purrr::walk(plot_gene_by_dev)</code></pre>
-<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-1.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-2.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-3.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-4.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-5.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-6.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-7.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-8.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-9.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-10.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-11.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-12.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-13.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-14.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-15.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-16.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-17.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-18.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-19.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-20.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-21.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-22.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-23.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-24.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-25.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-26.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-27.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-28.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-29.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-30.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-31.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-32.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-33.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-34.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-35.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-36.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-37.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-38.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-39.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-40.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-41.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-42.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-43.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-44.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-45.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-46.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-47.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-48.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-49.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-50.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-51.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-52.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-53.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-54.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-55.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-56.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-57.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-58.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-59.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-60.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-61.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-62.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-63.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-64.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-65.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-66.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-67.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-68.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-69.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-70.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-71.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-72.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-73.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-74.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-75.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-76.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-77.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-78.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-79.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-80.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-81.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-82.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-83.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-84.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-85.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-86.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-87.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-88.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-89.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-90.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-91.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-92.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-93.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-94.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-95.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-96.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-97.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-98.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-99.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-100.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-101.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-102.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-103.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-104.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-105.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-106.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-107.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-108.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-109.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-110.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-111.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-112.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-113.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-114.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-115.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-116.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-117.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-118.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-119.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-120.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-121.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-122.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-123.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-124.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-125.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-126.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-127.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-128.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-129.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-130.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-131.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-132.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-133.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-134.png" width="4608" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-1.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-1">
+Past versions of plot-various-features-all-cells-1.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-2.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-2">
+Past versions of plot-various-features-all-cells-2.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-2.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-3.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-3">
+Past versions of plot-various-features-all-cells-3.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-3.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-4.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-4">
+Past versions of plot-various-features-all-cells-4.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-4.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-5.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-5">
+Past versions of plot-various-features-all-cells-5.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-5.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-6.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-6">
+Past versions of plot-various-features-all-cells-6.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-6.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-7.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-7">
+Past versions of plot-various-features-all-cells-7.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-7.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-8.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-8">
+Past versions of plot-various-features-all-cells-8.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-8.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-9.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-9">
+Past versions of plot-various-features-all-cells-9.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-9.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-10.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-10">
+Past versions of plot-various-features-all-cells-10.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-10.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-11.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-11">
+Past versions of plot-various-features-all-cells-11.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-11.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-12.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-12">
+Past versions of plot-various-features-all-cells-12.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-12.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-13.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-13">
+Past versions of plot-various-features-all-cells-13.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-13.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-14.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-14">
+Past versions of plot-various-features-all-cells-14.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-14.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-15.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-15">
+Past versions of plot-various-features-all-cells-15.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-15.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-16.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-16">
+Past versions of plot-various-features-all-cells-16.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-16.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-17.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-17">
+Past versions of plot-various-features-all-cells-17.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-17.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-18.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-18">
+Past versions of plot-various-features-all-cells-18.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-18.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-19.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-19">
+Past versions of plot-various-features-all-cells-19.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-19.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-20.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-20">
+Past versions of plot-various-features-all-cells-20.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-20.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-21.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-21">
+Past versions of plot-various-features-all-cells-21.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-21.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-22.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-22">
+Past versions of plot-various-features-all-cells-22.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-22.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-23.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-23">
+Past versions of plot-various-features-all-cells-23.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-23.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-24.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-24">
+Past versions of plot-various-features-all-cells-24.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-24" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-24.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-25.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-25">
+Past versions of plot-various-features-all-cells-25.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-25" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-25.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-26.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-26">
+Past versions of plot-various-features-all-cells-26.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-26" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-26.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-27.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-27">
+Past versions of plot-various-features-all-cells-27.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-27" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-27.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-28.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-28">
+Past versions of plot-various-features-all-cells-28.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-28" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-28.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-29.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-29">
+Past versions of plot-various-features-all-cells-29.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-29" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-29.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-30.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-30">
+Past versions of plot-various-features-all-cells-30.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-30" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-30.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-31.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-31">
+Past versions of plot-various-features-all-cells-31.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-31" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-31.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-32.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-32">
+Past versions of plot-various-features-all-cells-32.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-32" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-32.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-33.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-33">
+Past versions of plot-various-features-all-cells-33.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-33" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-33.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-34.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-34">
+Past versions of plot-various-features-all-cells-34.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-34" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-34.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-35.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-35">
+Past versions of plot-various-features-all-cells-35.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-35" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-35.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-36.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-36">
+Past versions of plot-various-features-all-cells-36.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-36" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-36.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-37.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-37">
+Past versions of plot-various-features-all-cells-37.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-37" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-37.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-38.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-38">
+Past versions of plot-various-features-all-cells-38.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-38" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-38.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-39.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-39">
+Past versions of plot-various-features-all-cells-39.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-39" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-39.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-40.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-40">
+Past versions of plot-various-features-all-cells-40.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-40" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-40.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-41.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-41">
+Past versions of plot-various-features-all-cells-41.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-41" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-41.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-42.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-42">
+Past versions of plot-various-features-all-cells-42.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-42" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-42.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-43.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-43">
+Past versions of plot-various-features-all-cells-43.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-43" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-43.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-44.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-44">
+Past versions of plot-various-features-all-cells-44.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-44" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-44.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-45.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-45">
+Past versions of plot-various-features-all-cells-45.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-45" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-45.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-46.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-46">
+Past versions of plot-various-features-all-cells-46.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-46" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-46.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-47.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-47">
+Past versions of plot-various-features-all-cells-47.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-47" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-47.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-48.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-48">
+Past versions of plot-various-features-all-cells-48.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-48" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-48.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-49.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-49">
+Past versions of plot-various-features-all-cells-49.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-49" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-49.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-50.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-50">
+Past versions of plot-various-features-all-cells-50.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-50" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-50.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-51.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-51">
+Past versions of plot-various-features-all-cells-51.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-51" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-51.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-52.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-52">
+Past versions of plot-various-features-all-cells-52.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-52" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-52.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-53.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-53">
+Past versions of plot-various-features-all-cells-53.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-53" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-53.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-54.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-54">
+Past versions of plot-various-features-all-cells-54.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-54" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-54.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-55.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-55">
+Past versions of plot-various-features-all-cells-55.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-55" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-55.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-56.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-56">
+Past versions of plot-various-features-all-cells-56.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-56" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-56.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-57.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-57">
+Past versions of plot-various-features-all-cells-57.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-57" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-57.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-58.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-58">
+Past versions of plot-various-features-all-cells-58.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-58" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-58.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-59.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-59">
+Past versions of plot-various-features-all-cells-59.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-59" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-59.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-60.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-60">
+Past versions of plot-various-features-all-cells-60.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-60" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-60.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-61.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-61">
+Past versions of plot-various-features-all-cells-61.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-61" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-61.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-62.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-62">
+Past versions of plot-various-features-all-cells-62.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-62" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-62.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-63.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-63">
+Past versions of plot-various-features-all-cells-63.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-63" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-63.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-64.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-64">
+Past versions of plot-various-features-all-cells-64.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-64" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-64.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-65.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-65">
+Past versions of plot-various-features-all-cells-65.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-65" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-65.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-66.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-66">
+Past versions of plot-various-features-all-cells-66.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-66" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-66.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-67.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-67">
+Past versions of plot-various-features-all-cells-67.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-67" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-67.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-68.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-68">
+Past versions of plot-various-features-all-cells-68.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-68" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-68.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-69.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-69">
+Past versions of plot-various-features-all-cells-69.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-69" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-69.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-70.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-70">
+Past versions of plot-various-features-all-cells-70.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-70" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-70.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-71.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-71">
+Past versions of plot-various-features-all-cells-71.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-71" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-71.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-72.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-72">
+Past versions of plot-various-features-all-cells-72.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-72" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-72.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-73.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-73">
+Past versions of plot-various-features-all-cells-73.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-73" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-73.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-74.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-74">
+Past versions of plot-various-features-all-cells-74.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-74" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-74.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-75.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-75">
+Past versions of plot-various-features-all-cells-75.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-75" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-75.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-76.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-76">
+Past versions of plot-various-features-all-cells-76.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-76" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-76.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-77.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-77">
+Past versions of plot-various-features-all-cells-77.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-77" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-77.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-78.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-78">
+Past versions of plot-various-features-all-cells-78.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-78" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-78.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-79.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-79">
+Past versions of plot-various-features-all-cells-79.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-79" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-79.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-80.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-80">
+Past versions of plot-various-features-all-cells-80.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-80" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-80.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-81.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-81">
+Past versions of plot-various-features-all-cells-81.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-81" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-81.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-82.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-82">
+Past versions of plot-various-features-all-cells-82.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-82" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-82.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-83.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-83">
+Past versions of plot-various-features-all-cells-83.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-83" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-83.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-84.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-84">
+Past versions of plot-various-features-all-cells-84.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-84" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-84.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-85.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-85">
+Past versions of plot-various-features-all-cells-85.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-85" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-85.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-86.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-86">
+Past versions of plot-various-features-all-cells-86.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-86" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-86.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-87.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-87">
+Past versions of plot-various-features-all-cells-87.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-87" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-87.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-88.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-88">
+Past versions of plot-various-features-all-cells-88.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-88" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-88.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-89.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-89">
+Past versions of plot-various-features-all-cells-89.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-89" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-89.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-90.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-90">
+Past versions of plot-various-features-all-cells-90.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-90" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-90.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-91.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-91">
+Past versions of plot-various-features-all-cells-91.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-91" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-91.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-92.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-92">
+Past versions of plot-various-features-all-cells-92.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-92" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-92.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-93.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-93">
+Past versions of plot-various-features-all-cells-93.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-93" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-93.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-94.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-94">
+Past versions of plot-various-features-all-cells-94.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-94" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-94.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-95.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-95">
+Past versions of plot-various-features-all-cells-95.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-95" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-95.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-96.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-96">
+Past versions of plot-various-features-all-cells-96.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-96" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-96.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-97.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-97">
+Past versions of plot-various-features-all-cells-97.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-97" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-97.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-98.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-98">
+Past versions of plot-various-features-all-cells-98.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-98" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-98.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-99.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-99">
+Past versions of plot-various-features-all-cells-99.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-99" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-99.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-100.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-100">
+Past versions of plot-various-features-all-cells-100.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-100" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-100.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-101.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-101">
+Past versions of plot-various-features-all-cells-101.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-101" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-101.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-102.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-102">
+Past versions of plot-various-features-all-cells-102.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-102" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-102.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-103.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-103">
+Past versions of plot-various-features-all-cells-103.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-103" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-103.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-104.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-104">
+Past versions of plot-various-features-all-cells-104.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-104" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-104.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-105.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-105">
+Past versions of plot-various-features-all-cells-105.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-105" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-105.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-106.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-106">
+Past versions of plot-various-features-all-cells-106.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-106" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-106.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-107.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-107">
+Past versions of plot-various-features-all-cells-107.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-107" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-107.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-108.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-108">
+Past versions of plot-various-features-all-cells-108.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-108" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-108.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-109.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-109">
+Past versions of plot-various-features-all-cells-109.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-109" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-109.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-110.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-110">
+Past versions of plot-various-features-all-cells-110.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-110" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-110.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-111.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-111">
+Past versions of plot-various-features-all-cells-111.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-111" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-111.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-112.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-112">
+Past versions of plot-various-features-all-cells-112.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-112" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-112.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-113.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-113">
+Past versions of plot-various-features-all-cells-113.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-113" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-113.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-114.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-114">
+Past versions of plot-various-features-all-cells-114.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-114" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-114.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-115.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-115">
+Past versions of plot-various-features-all-cells-115.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-115" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-115.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-116.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-116">
+Past versions of plot-various-features-all-cells-116.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-116" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-116.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-117.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-117">
+Past versions of plot-various-features-all-cells-117.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-117" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-117.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-118.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-118">
+Past versions of plot-various-features-all-cells-118.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-118" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-118.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-119.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-119">
+Past versions of plot-various-features-all-cells-119.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-119" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-119.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-120.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-120">
+Past versions of plot-various-features-all-cells-120.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-120" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-120.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-121.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-121">
+Past versions of plot-various-features-all-cells-121.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-121" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-121.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-122.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-122">
+Past versions of plot-various-features-all-cells-122.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-122" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-122.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-123.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-123">
+Past versions of plot-various-features-all-cells-123.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-123" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-123.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-124.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-124">
+Past versions of plot-various-features-all-cells-124.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-124" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-124.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-125.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-125">
+Past versions of plot-various-features-all-cells-125.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-125" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-125.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-126.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-126">
+Past versions of plot-various-features-all-cells-126.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-126" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-126.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-127.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-127">
+Past versions of plot-various-features-all-cells-127.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-127" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-127.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-128.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-128">
+Past versions of plot-various-features-all-cells-128.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-128" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-128.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-129.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-129">
+Past versions of plot-various-features-all-cells-129.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-129" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-129.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-130.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-130">
+Past versions of plot-various-features-all-cells-130.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-130" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-130.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-131.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-131">
+Past versions of plot-various-features-all-cells-131.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-131" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-131.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-132.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-132">
+Past versions of plot-various-features-all-cells-132.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-132" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-132.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-133.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-133">
+Past versions of plot-various-features-all-cells-133.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-133" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-133.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-134.png" width="4608" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-various-features-all-cells-134">
+Past versions of plot-various-features-all-cells-134.png
+</button>
+</p>
+<div id="fig-plot-various-features-all-cells-134" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-various-features-all-cells-134.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>astro &lt;- subset(
   x = merged_cortex,
   subset = New_cellType == c(&quot;Apical progenitors&quot;,
@@ -1105,10 +6332,9 @@ astro &lt;- ScaleData(
 astro &lt;- RunPCA(astro, verbose = FALSE)
 
 # Find neighbors
-astro &lt;- FindNeighbors(astro, reduction = &quot;pca&quot;, dims = 1:30)</code></pre>
-<pre><code>Computing nearest neighbor graph</code></pre>
-<pre><code>Computing SNN</code></pre>
-<pre class="r"><code># Find clusters
+astro &lt;- FindNeighbors(astro, reduction = &quot;pca&quot;, dims = 1:30)
+
+# Find clusters
 astro &lt;- FindClusters(astro, resolution = 0.7, cluster.name = &quot;astro_clusters&quot;, algorithm = 4, random.seed = 42)</code></pre>
 <pre class="r"><code># Create DimPlot
 p1 &lt;- DimPlot(
@@ -1126,6 +6352,43 @@ p2 &lt;- DimPlot(
 )</code></pre>
 <pre class="r"><code>wrap_plots(c(p1, p2), ncol = 2, byrow = F)</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-stages-and-types-astro-cells-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-stages-and-types-astro-cells-1">
+Past versions of plot-stages-and-types-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-stages-and-types-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-stages-and-types-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(
   astro,
   reduction = &quot;umap&quot;,
@@ -1135,6 +6398,43 @@ p2 &lt;- DimPlot(
 )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-reclustered-astro-cells-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-reclustered-astro-cells-1">
+Past versions of plot-reclustered-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-reclustered-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-reclustered-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Create a custom FeaturePlot for each S100 gene
 # plot_list &lt;-
 #     lapply(
@@ -1178,7 +6478,44 @@ compact_plot &lt;- DotPlot(
 
 # Display the compact plot
 print(compact_plot)</code></pre>
-<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-astro-cells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-astro-cells-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-s100-dot-astro-cells-1">
+Past versions of plot-s100-dot-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-s100-dot-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-s100-dot-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Create a compact DotPlot
 compact_plot &lt;- DotPlot(
   object = astro,
@@ -1197,94 +6534,945 @@ compact_plot &lt;- DotPlot(
 # Display the compact plot
 print(compact_plot)</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-split-astro-cells-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-s100-dot-split-astro-cells-1">
+Past versions of plot-s100-dot-split-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-s100-dot-split-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-s100-dot-split-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Gja1&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Gja1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Gja1-astro-cells-1">
+Past versions of plot-density-s100a6-Gja1-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Gja1-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Gja1-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Gja1&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gja1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Gja1-astro-cells-1">
+Past versions of plot-density-CaCyBP-Gja1-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Gja1-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gja1-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Glul&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Glul-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Glul-astro-cells-1">
+Past versions of plot-density-s100a6-Glul-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Glul-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Glul-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Glul&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Glul-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Glul-astro-cells-1">
+Past versions of plot-density-CaCyBP-Glul-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Glul-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Glul-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Apoe&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Apoe-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Apoe-astro-cells-1">
+Past versions of plot-density-s100a6-Apoe-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Apoe-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Apoe-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Apoe&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Apoe-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Apoe-astro-cells-1">
+Past versions of plot-density-CaCyBP-Apoe-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Apoe-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Apoe-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Ntrk2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntrk2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Ntrk2-astro-cells-1">
+Past versions of plot-density-s100a6-Ntrk2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Ntrk2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntrk2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Ntrk2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntrk2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Ntrk2-astro-cells-1">
+Past versions of plot-density-CaCyBP-Ntrk2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Ntrk2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntrk2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Ntsr2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntsr2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Ntsr2-astro-cells-1">
+Past versions of plot-density-s100a6-Ntsr2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Ntsr2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntsr2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Ntsr2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntsr2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Ntsr2-astro-cells-1">
+Past versions of plot-density-CaCyBP-Ntsr2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Ntsr2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntsr2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Ndrg2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ndrg2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Ndrg2-astro-cells-1">
+Past versions of plot-density-s100a6-Ndrg2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Ndrg2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Ndrg2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Ndrg2&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ndrg2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Ndrg2-astro-cells-1">
+Past versions of plot-density-CaCyBP-Ndrg2-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Ndrg2-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ndrg2-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Aldoc&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Aldoc-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Aldoc-astro-cells-1">
+Past versions of plot-density-s100a6-Aldoc-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Aldoc-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Aldoc-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Aldoc&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aldoc-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Aldoc-astro-cells-1">
+Past versions of plot-density-CaCyBP-Aldoc-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Aldoc-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aldoc-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Slc1a3&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Slc1a3-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Slc1a3-astro-cells-1">
+Past versions of plot-density-s100a6-Slc1a3-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Slc1a3-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Slc1a3-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Slc1a3&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Slc1a3-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Slc1a3-astro-cells-1">
+Past versions of plot-density-CaCyBP-Slc1a3-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Slc1a3-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Slc1a3-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Gfap&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Gfap-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Gfap-astro-cells-1">
+Past versions of plot-density-s100a6-Gfap-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Gfap-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Gfap-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Gfap&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gfap-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Gfap-astro-cells-1">
+Past versions of plot-density-CaCyBP-Gfap-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Gfap-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gfap-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Htra1&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Htra1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Htra1-astro-cells-1">
+Past versions of plot-density-s100a6-Htra1-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Htra1-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Htra1-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Htra1&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Htra1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Htra1-astro-cells-1">
+Past versions of plot-density-CaCyBP-Htra1-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Htra1-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Htra1-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;S100a6&quot;, &quot;Aqp4&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Aqp4-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-s100a6-Aqp4-astro-cells-1">
+Past versions of plot-density-s100a6-Aqp4-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-s100a6-Aqp4-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-s100a6-Aqp4-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(astro,
             blend = TRUE,
             features = c(&quot;Cacybp&quot;, &quot;Aqp4&quot;))</code></pre>
 <p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aqp4-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-density-CaCyBP-Aqp4-astro-cells-1">
+Past versions of plot-density-CaCyBP-Aqp4-astro-cells-1.png
+</button>
+</p>
+<div id="fig-plot-density-CaCyBP-Aqp4-astro-cells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fd0e9b9c3f6357ace7bba2e0bc8307e4d6a9175f/docs/figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aqp4-astro-cells-1.png" target="_blank">fd0e9b9</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>sessioninfo::session_info()</code></pre>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -1761,6 +7949,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
