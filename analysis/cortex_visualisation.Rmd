@@ -1,24 +1,70 @@
+---
+title: "Exploratory analysis of CaCyBP and S100a6 expression in embryonic mice cortex dataset with focus on astrocytic lineage"
+author: "Evgenii O. Tretiakov"
+date: "`r Sys.Date()`"
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float: yes
+    theme: journal
+    highlight: textmate
+    code_folding: hide
+    df_print: paged
+editor_options:
+  markdown:
+    wrap: 72
+---
 
+```{r setup, echo=FALSE, include=FALSE}
+docname <- "cortex_visualisation"
+now <- Sys.time()
+# Time chunks during knitting
+knitr::knit_hooks$set(timeit = function(before) {
+  if (before) {
+    print(paste("Start:", Sys.time()))
+    now <<- Sys.time()
+  } else {
+    print(paste("Stop:", Sys.time()))
+    print(Sys.time() - now)
+  }
+})
 
+knitr::opts_chunk$set(
+  autodep        = TRUE,
+  cache          = FALSE,
+  cache.path     = paste0("cache/", docname, "/"),
+  cache.comments = FALSE,
+  cache.lazy     = FALSE,
+  dev            = c("png", "pdf"),
+  echo           = TRUE,
+  error          = FALSE,
+  fig.align      = "center",
+  fig.width      = 14,
+  fig.height     = 12,
+  message        = FALSE,
+  warning        = FALSE,
+  timeit         = TRUE
+)
 
-```{r}
-library(here)
-library(RColorBrewer)
-library(Seurat)
-library(scCustomize)
-library(SeuratData)
-library(SeuratWrappers)
-library(Azimuth)
-library(BPCells)
-library(dplyr)
-library(magrittr)
-library(stringr)
-library(readr)
-library(ggplot2)
-library(cowplot)
-library(patchwork)
-options(future.globals.maxSize = 1e9)
-options(Seurat.object.assay.version = "v5")
+suppressPackageStartupMessages({
+  library(here)
+  library(RColorBrewer)
+  library(Seurat)
+  library(scCustomize)
+  library(SeuratData)
+  library(SeuratWrappers)
+  library(Azimuth)
+  library(BPCells)
+  library(dplyr)
+  library(magrittr)
+  library(stringr)
+  library(readr)
+  library(ggplot2)
+  library(cowplot)
+  library(patchwork)
+  options(future.globals.maxSize = 1e9)
+  options(Seurat.object.assay.version = "v5")
+})
 ```
 
 
