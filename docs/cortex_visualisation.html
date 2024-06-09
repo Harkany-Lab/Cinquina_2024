@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>cortex_visualisation.knit.md</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cinquina_2024</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="MTT.html">MTT assay analysis of EDA-treated astrocytes</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-06-09
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240320code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240320)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240320code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240320)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treecd64ad04048de9354cfe9b302929ac8efb975e95targetblankcd64ad0a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/cd64ad04048de9354cfe9b302929ac8efb975e95" target="_blank">cd64ad0</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treecd64ad04048de9354cfe9b302929ac8efb975e95targetblankcd64ad0a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/cd64ad04048de9354cfe9b302929ac8efb975e95" target="_blank">cd64ad0</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/cortex.Rmd
+    Untracked:  analysis/cortex_visualisation.Rmd
+    Untracked:  analysis/figure/
+    Untracked:  data/SCP1290/
+    Untracked:  data/azimuth_integrated.rds
+    Untracked:  data/cfg.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>here() starts at /data/Cinquina_2024</code></pre>
+<pre class="r"><code>library(RColorBrewer)
+library(Seurat)</code></pre>
+<pre><code>Loading required package: SeuratObject</code></pre>
+<pre><code>Loading required package: sp</code></pre>
+<pre><code>
+Attaching package: &#39;SeuratObject&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    intersect</code></pre>
+<pre class="r"><code>library(scCustomize)</code></pre>
+<pre><code>scCustomize v2.0.1
+If you find the scCustomize useful please cite.
+See &#39;samuel-marsh.github.io/scCustomize/articles/FAQ.html&#39; for citation info.</code></pre>
+<pre class="r"><code>library(SeuratData)</code></pre>
+<pre><code>Using cached data manifest, last updated at 2024-05-07 11:22:16.949269</code></pre>
+<pre><code>── Installed datasets ──────────────────────────────── SeuratData v0.2.2.9001 ──</code></pre>
+<pre><code>✔ mousecortexref 1.0.0                  </code></pre>
+<pre><code>────────────────────────────────────── Key ─────────────────────────────────────</code></pre>
+<pre><code>✔ Dataset loaded successfully
+❯ Dataset built with a newer version of Seurat than installed
+❓ Unknown version of Seurat installed</code></pre>
+<pre class="r"><code>library(SeuratWrappers)
+library(Azimuth)</code></pre>
+<pre><code>Registered S3 method overwritten by &#39;SeuratDisk&#39;:
+  method            from  
+  as.sparse.H5Group Seurat</code></pre>
+<pre><code></code></pre>
+<pre><code>Attaching shinyBS</code></pre>
+<pre class="r"><code>library(BPCells)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(magrittr)
+library(stringr)
+library(readr)
+library(ggplot2)
+library(cowplot)
+library(patchwork)</code></pre>
+<pre><code>
+Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:cowplot&#39;:
+
+    align_plots</code></pre>
+<pre class="r"><code>options(future.globals.maxSize = 1e9)
+options(Seurat.object.assay.version = &quot;v5&quot;)</code></pre>
+<pre class="r"><code># Create a vector with the stage of development for each object
+stage_info &lt;- c(&quot;E11.5&quot;, &quot;E12.5&quot;, &quot;E13.5&quot;, &quot;E14.5&quot;, &quot;E15.5&quot;, &quot;E16&quot;, &quot;E18.5&quot;, &quot;E18&quot;, &quot;P1&quot;, &quot;P1&quot;, &quot;E10&quot;, &quot;E17.5&quot;, &quot;P4&quot;)</code></pre>
+<pre class="r"><code>merged_cortex_2 &lt;- SeuratObject::LoadSeuratRds(here::here(&quot;data/azimuth_integrated.rds&quot;))
+merged_cortex_2$cell_name &lt;- Cells(merged_cortex_2)
+merged_cortex_2</code></pre>
+<pre><code>An object of class Seurat 
+28186 features across 82415 samples within 5 assays 
+Active assay: RNA (27998 features, 2000 variable features)
+ 25 layers present: data.E11.5, data.E12.5, data.E13.5, data.E14.5, data.E15.5, data.E16, data.E18.5, data.E18, data.P1, data.E10, data.E17.5, data.P4, scale.data, counts.E11.5, counts.E12.5, counts.E13.5, counts.E14.5, counts.E15.5, counts.E16, counts.E18.5, counts.E18, counts.P1, counts.E10, counts.E17.5, counts.P4
+ 4 other assays present: prediction.score.class, prediction.score.cluster, prediction.score.subclass, prediction.score.cross_species_cluster
+ 7 dimensional reductions calculated: pca, integrated_dr, ref.umap, integrated.cca, umap.cca, harmony, umap.harmony</code></pre>
+<pre class="r"><code>orig_umap &lt;- readr::read_tsv(
+  here(&quot;data/SCP1290/cluster/cluster_scDevSC.merged.umap.txt&quot;),
+  skip = 2,
+  col_names = c(&quot;cell_name&quot;, &quot;UMAP_1&quot;, &quot;UMAP_2&quot;),
+  col_types = list(col_character(), col_double(), col_double())
+)
+
+glimpse(orig_umap)</code></pre>
+<pre><code>Rows: 98,047
+Columns: 3
+$ cell_name &lt;chr&gt; &quot;E10_v1_AAACCTGAGGGTCTCC-1&quot;, &quot;E10_v1_AAACCTGCACAACGCC-1&quot;, &quot;E…
+$ UMAP_1    &lt;dbl&gt; -3.0025911, -3.6729214, -3.8859395, -3.9020242, -2.9312939, …
+$ UMAP_2    &lt;dbl&gt; -10.453364, -6.552985, -10.773631, -10.869657, -10.769403, -…</code></pre>
+<pre class="r"><code>orig_umap %&lt;&gt;% tibble::column_to_rownames(&quot;cell_name&quot;)
+orig_umap %&lt;&gt;% as.matrix()
+orig_tsne &lt;- readr::read_tsv(
+  here(&quot;data/SCP1290/cluster/cluster_scDevSC.merged.tsne.txt&quot;),
+  skip = 2,
+  col_names = c(&quot;cell_name&quot;, &quot;tSNE_1&quot;, &quot;tSNE_2&quot;),
+  col_types = list(col_character(), col_double(), col_double())
+)
+glimpse(orig_tsne)</code></pre>
+<pre><code>Rows: 98,047
+Columns: 3
+$ cell_name &lt;chr&gt; &quot;E10_v1_AAACCTGAGGGTCTCC-1&quot;, &quot;E10_v1_AAACCTGCACAACGCC-1&quot;, &quot;E…
+$ tSNE_1    &lt;dbl&gt; 15.442958, 10.373660, 14.828413, 16.307658, 18.062250, 13.72…
+$ tSNE_2    &lt;dbl&gt; -19.603245, -17.062466, -20.102599, -20.003542, -18.636268, …</code></pre>
+<pre class="r"><code>orig_tsne %&lt;&gt;% tibble::column_to_rownames(&quot;cell_name&quot;)
+orig_tsne %&lt;&gt;% as.matrix()
+orig_metadata &lt;- readr::read_tsv(here(
+  &quot;data/SCP1290/metadata/metaData_scDevSC.txt&quot;))</code></pre>
+<pre><code>Rows: 98048 Columns: 28
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;\t&quot;
+chr (28): NAME, orig_ident, nCount_RNA, nFeature_RNA, percent_mito, n_hkgene...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>orig_metadata %&lt;&gt;% rename(&quot;cell_name&quot; = &quot;NAME&quot;)
+orig_metadata_types &lt;- orig_metadata[1,] |&gt; purrr::simplify()
+orig_metadata %&lt;&gt;% filter(!cell_name == &quot;TYPE&quot;)
+glimpse(orig_metadata)</code></pre>
+<pre><code>Rows: 98,047
+Columns: 28
+$ cell_name                                    &lt;chr&gt; &quot;E10_v1_AAACCTGAGGGTCTCC-…
+$ orig_ident                                   &lt;chr&gt; &quot;E10&quot;, &quot;E10&quot;, &quot;E10&quot;, &quot;E10…
+$ nCount_RNA                                   &lt;chr&gt; &quot;1544&quot;, &quot;1157&quot;, &quot;2081&quot;, &quot;…
+$ nFeature_RNA                                 &lt;chr&gt; &quot;1022&quot;, &quot;783&quot;, &quot;1200&quot;, &quot;1…
+$ percent_mito                                 &lt;chr&gt; &quot;0.02007772&quot;, &quot;0.01469317…
+$ n_hkgene                                     &lt;chr&gt; &quot;51&quot;, &quot;39&quot;, &quot;67&quot;, &quot;71&quot;, &quot;…
+$ S_Score                                      &lt;chr&gt; &quot;0.356987282&quot;, &quot;0.4538538…
+$ G2M_Score                                    &lt;chr&gt; &quot;0.330795055&quot;, &quot;0.2605599…
+$ Phase                                        &lt;chr&gt; &quot;S&quot;, &quot;S&quot;, &quot;S&quot;, &quot;G2M&quot;, &quot;S&quot;…
+$ CC_Difference                                &lt;chr&gt; &quot;0.026192226&quot;, &quot;0.1932938…
+$ seurat_clusters                              &lt;chr&gt; &quot;34&quot;, &quot;34&quot;, &quot;34&quot;, &quot;37&quot;, &quot;…
+$ RNA_snn_res_1                                &lt;chr&gt; &quot;20&quot;, &quot;20&quot;, &quot;20&quot;, &quot;20&quot;, &quot;…
+$ scrublet_doublet                             &lt;chr&gt; &quot;FALSE&quot;, &quot;FALSE&quot;, &quot;FALSE&quot;…
+$ RNA_snn_res_2                                &lt;chr&gt; &quot;34&quot;, &quot;34&quot;, &quot;34&quot;, &quot;37&quot;, &quot;…
+$ Doublet_intersect                            &lt;chr&gt; NA, NA, NA, NA, NA, NA, N…
+$ Gral_cellType                                &lt;chr&gt; NA, NA, NA, NA, NA, NA, N…
+$ New_cellType                                 &lt;chr&gt; &quot;Apical progenitors&quot;, &quot;In…
+$ biosample_id                                 &lt;chr&gt; &quot;E10&quot;, &quot;E10&quot;, &quot;E10&quot;, &quot;E10…
+$ donor_id                                     &lt;chr&gt; &quot;mouse_E10&quot;, &quot;mouse_E10&quot;,…
+$ species                                      &lt;chr&gt; &quot;NCBITaxon_10090&quot;, &quot;NCBIT…
+$ disease                                      &lt;chr&gt; &quot;PATO_0000461&quot;, &quot;PATO_000…
+$ disease__ontology_label                      &lt;chr&gt; &quot;normal&quot;, &quot;normal&quot;, &quot;norm…
+$ organ                                        &lt;chr&gt; &quot;UBERON_0008930&quot;, &quot;UBERON…
+$ organ__ontology_label                        &lt;chr&gt; &quot;somatosensory cortex&quot;, &quot;…
+$ library_preparation_protocol                 &lt;chr&gt; &quot;EFO_0009899&quot;, &quot;EFO_00098…
+$ library_preparation_protocol__ontology_label &lt;chr&gt; &quot;10X 3&#39; v2 sequencing&quot;, &quot;…
+$ sex                                          &lt;chr&gt; &quot;mixed&quot;, &quot;mixed&quot;, &quot;mixed&quot;…
+$ species__ontology_label                      &lt;chr&gt; &quot;Mus musculus&quot;, &quot;Mus musc…</code></pre>
+<pre class="r"><code>change_column_types &lt;- function(df, types) {
+  for (col_name in names(types)) {
+    col_type &lt;- types[col_name]
+    
+    if (col_type == &quot;character&quot;) {
+      df[[col_name]] &lt;- as.character(df[[col_name]])
+    } else if (col_type == &quot;numeric&quot;) {
+      df[[col_name]] &lt;- as.numeric(df[[col_name]])
+    } else if (col_type == &quot;integer&quot;) {
+      df[[col_name]] &lt;- as.integer(df[[col_name]])
+    } else if (col_type == &quot;logical&quot;) {
+      df[[col_name]] &lt;- as.logical(df[[col_name]])
+    } else if (col_type == &quot;factor&quot;) {
+      df[[col_name]] &lt;- as.factor(df[[col_name]])
+    } else if (col_type == &quot;group&quot;) {
+      df[[col_name]] &lt;- as.factor(df[[col_name]])
+    } else {
+      warning(paste(&quot;Unknown type:&quot;, col_type, &quot;for column&quot;, col_name))
+    }
+  }
+  
+  return(df)
+}
+
+# Apply the function to the metadata
+orig_metadata &lt;- change_column_types(orig_metadata, orig_metadata_types)
+
+# Print the modified metadata
+glimpse(orig_metadata)</code></pre>
+<pre><code>Rows: 98,047
+Columns: 28
+$ cell_name                                    &lt;chr&gt; &quot;E10_v1_AAACCTGAGGGTCTCC-…
+$ orig_ident                                   &lt;fct&gt; E10, E10, E10, E10, E10, …
+$ nCount_RNA                                   &lt;dbl&gt; 1544, 1157, 2081, 2490, 2…
+$ nFeature_RNA                                 &lt;dbl&gt; 1022, 783, 1200, 1430, 14…
+$ percent_mito                                 &lt;dbl&gt; 0.020077720, 0.014693172,…
+$ n_hkgene                                     &lt;dbl&gt; 51, 39, 67, 71, 70, 50, 4…
+$ S_Score                                      &lt;dbl&gt; 0.35698728, 0.45385381, 0…
+$ G2M_Score                                    &lt;dbl&gt; 0.33079506, 0.26055995, 0…
+$ Phase                                        &lt;fct&gt; S, S, S, G2M, S, S, S, S,…
+$ CC_Difference                                &lt;dbl&gt; 0.026192226, 0.193293862,…
+$ seurat_clusters                              &lt;fct&gt; 34, 34, 34, 37, 37, 34, 4…
+$ RNA_snn_res_1                                &lt;fct&gt; 20, 20, 20, 20, 20, 20, 3…
+$ scrublet_doublet                             &lt;fct&gt; FALSE, FALSE, FALSE, FALS…
+$ RNA_snn_res_2                                &lt;fct&gt; 34, 34, 34, 37, 37, 34, 4…
+$ Doublet_intersect                            &lt;fct&gt; NA, NA, NA, NA, NA, NA, N…
+$ Gral_cellType                                &lt;fct&gt; NA, NA, NA, NA, NA, NA, N…
+$ New_cellType                                 &lt;fct&gt; Apical progenitors, Inter…
+$ biosample_id                                 &lt;fct&gt; E10, E10, E10, E10, E10, …
+$ donor_id                                     &lt;fct&gt; mouse_E10, mouse_E10, mou…
+$ species                                      &lt;fct&gt; NCBITaxon_10090, NCBITaxo…
+$ disease                                      &lt;fct&gt; PATO_0000461, PATO_000046…
+$ disease__ontology_label                      &lt;fct&gt; normal, normal, normal, n…
+$ organ                                        &lt;fct&gt; UBERON_0008930, UBERON_00…
+$ organ__ontology_label                        &lt;fct&gt; somatosensory cortex, som…
+$ library_preparation_protocol                 &lt;fct&gt; EFO_0009899, EFO_0009899,…
+$ library_preparation_protocol__ontology_label &lt;fct&gt; 10X 3&#39; v2 sequencing, 10X…
+$ sex                                          &lt;fct&gt; mixed, mixed, mixed, mixe…
+$ species__ontology_label                      &lt;fct&gt; Mus musculus, Mus musculu…</code></pre>
+<pre class="r"><code>orig_srt &lt;- Read10X(data.dir = here(&quot;data/SCP1290/expression/601ae2f4771a5b0d72588bfb&quot;))
+
+# Convert the log1p normalized matrix to a standard matrix if it&#39;s not already
+normalized_matrix &lt;- as.matrix(orig_srt)
+
+# Reverse the log1p transformation to get the count matrix
+count_matrix &lt;- expm1(normalized_matrix)
+
+# Convert the count matrix to a sparse matrix format (dgCMatrix) if needed
+count_matrix_sparse &lt;- as(count_matrix, &quot;dgCMatrix&quot;)
+
+# Create a Seurat object using the recovered count matrix
+merged_cortex &lt;- CreateSeuratObject(counts = count_matrix_sparse, meta.data = orig_metadata)
+
+merged_cortex[[&quot;umap&quot;]] &lt;- CreateDimReducObject(embeddings = orig_umap, key = &quot;UMAP_&quot;, assay = DefaultAssay(merged_cortex))
+merged_cortex[[&quot;tsne&quot;]] &lt;- CreateDimReducObject(embeddings = orig_tsne, key = &quot;tSNE_&quot;, assay = DefaultAssay(merged_cortex))
+
+merged_cortex$stage &lt;- merged_cortex$orig.ident
+table(merged_cortex$New_cellType)</code></pre>
+<pre><code>
+      Apical progenitors               Astrocytes      Cajal Retzius cells 
+                   18491                     2976                      532 
+                   CThPN      Cycling glial cells                   DL CPN 
+                    4607                     1004                     3106 
+                DL_CPN_1                 DL_CPN_2                  Doublet 
+                     422                      146                     1854 
+       Endothelial cells            Ependymocytes         Immature neurons 
+                     291                       35                     3092 
+Intermediate progenitors             Interneurons                  Layer 4 
+                    8490                    10469                     5317 
+                Layer 6b        Low quality cells                Microglia 
+                     194                     4545                      263 
+       Migrating neurons                       NP         Oligodendrocytes 
+                   12332                      424                     1098 
+               Pericytes          Red blood cells                     SCPN 
+                     236                      330                     2987 
+                  UL CPN                     VLMC 
+                   14041                      765 </code></pre>
+<pre class="r"><code>Idents(merged_cortex) &lt;- &quot;New_cellType&quot;
+merged_cortex &lt;- subset(merged_cortex, idents = c(&quot;Doublet&quot;, &quot;Low quality cells&quot;, &quot;Red blood cells&quot;), invert = TRUE)
+
+merged_cortex &lt;-
+  Store_Palette_Seurat(
+    seurat_object = merged_cortex,
+    palette = rev(brewer.pal(n = 11, name = &quot;Spectral&quot;)),
+    palette_name = &quot;expr_Colour_Pal&quot;
+  )</code></pre>
+<pre><code>Seurat Object now contains the following items in @misc slot:
+ℹ &#39;expr_Colour_Pal&#39;</code></pre>
+<pre class="r"><code># Get the list of S100 family genes
+s100_genes &lt;- grep(&quot;^S100&quot;, rownames(merged_cortex), value = TRUE)
+
+genes.embed &lt;- c(
+  &quot;Abcd1&quot;,
+  &quot;Abcd2&quot;,
+  &quot;Abcd3&quot;,
+  &quot;Acaa1&quot;,
+  &quot;Acaa2&quot;,
+  &quot;Acox1&quot;,
+  &quot;Agrn&quot;,
+  &quot;Agt&quot;,
+  &quot;Alcam&quot;,
+  &quot;Aldh1a1&quot;,
+  &quot;Aldh1l1&quot;,
+  &quot;Aldoc&quot;,
+  &quot;Angpt1&quot;,
+  &quot;Apoe&quot;,
+  &quot;App&quot;,
+  &quot;Aqp4&quot;,
+  &quot;Arf1&quot;,
+  &quot;Bmp7&quot;,
+  &quot;Bsg&quot;,
+  &quot;Cacybp&quot;,
+  &quot;Caf4&quot;,
+  &quot;Ccl25&quot;,
+  &quot;Ckb&quot;,
+  &quot;Cnr1&quot;,
+  &quot;Cnr2&quot;,
+  &quot;Col4a5&quot;,
+  &quot;Cst3&quot;,
+  &quot;Dagla&quot;,
+  &quot;Daglb&quot;,
+  &quot;Decr2&quot;,
+  &quot;Dcc&quot;,
+  &quot;Dnm1&quot;,
+  &quot;Drp1&quot;,
+  &quot;Ech1&quot;,
+  &quot;Efna5&quot;,
+  &quot;Egfr&quot;,
+  &quot;Enho&quot;,
+  &quot;Eno1&quot;,
+  &quot;Faah&quot;,
+  &quot;Fgf1&quot;,
+  &quot;Fgfr3&quot;,
+  &quot;Fis1&quot;,
+  &quot;Fos&quot;,
+  &quot;Fth1&quot;,
+  &quot;Ftl1&quot;,
+  &quot;Gfap&quot;,
+  &quot;Gja1&quot;,
+  &quot;Gli1&quot;,
+  &quot;Glul&quot;,
+  &quot;Gnai2&quot;,
+  &quot;Gnas&quot;,
+  &quot;H2-K1&quot;,
+  &quot;Hacd2&quot;,
+  &quot;Hadhb&quot;,
+  &quot;Hbegf&quot;,
+  &quot;Hepacam&quot;,
+  &quot;Hif1&quot;,
+  &quot;Htra1&quot;,
+  &quot;Igsf1&quot;,
+  &quot;Il18&quot;,
+  &quot;Il1rapl1&quot;,
+  &quot;Itgav&quot;,
+  &quot;Jam2&quot;,
+  &quot;Lama2&quot;,
+  &quot;Lamb2&quot;,
+  &quot;Lcat&quot;,
+  &quot;Lgi1&quot;,
+  &quot;Lgi4&quot;,
+  &quot;Lpcat3&quot;,
+  &quot;Lrpap1&quot;,
+  &quot;Lrrc4b&quot;,
+  &quot;Lxn&quot;,
+  &quot;Mdk&quot;,
+  &quot;Mdv1&quot;,
+  &quot;Mfn1&quot;,
+  &quot;Mfn2&quot;,
+  &quot;Mgll&quot;,
+  &quot;Mief1&quot;,
+  &quot;Napepld&quot;,
+  &quot;Ncam1&quot;,
+  &quot;Ncan&quot;,
+  &quot;Ndrg2&quot;,
+  &quot;Nfasc&quot;,
+  &quot;Nfia&quot;,
+  &quot;Nlgn3&quot;,
+  &quot;Nrxn1&quot;,
+  &quot;Nrxn2&quot;,
+  &quot;Ntn1&quot;,
+  &quot;Ntrk3&quot;,
+  &quot;Opa1&quot;,
+  &quot;Otp&quot;,
+  &quot;Pex1&quot;,
+  &quot;Pex10&quot;,
+  &quot;Pex12&quot;,
+  &quot;Pex13&quot;,
+  &quot;Pex14&quot;,
+  &quot;Pex16&quot;,
+  &quot;Pex2&quot;,
+  &quot;Pex26&quot;,
+  &quot;Pex3&quot;,
+  &quot;Pex6&quot;,
+  &quot;Pkm&quot;,
+  &quot;Pla2g7&quot;,
+  &quot;Plcb1&quot;,
+  &quot;Psap&quot;,
+  &quot;Ptn&quot;,
+  &quot;Pygb&quot;,
+  &quot;Ralyl&quot;,
+  &quot;Rgma&quot;,
+  &quot;Rtn4&quot;,
+  &quot;S100a1&quot;,
+  &quot;S100a6&quot;,
+  &quot;S100b&quot;,
+  &quot;Siah1a&quot;,
+  &quot;Siah1b&quot;,
+  &quot;Scd2&quot;,
+  &quot;Sdc2&quot;,
+  &quot;Sema6a&quot;,
+  &quot;Sema6d&quot;,
+  &quot;Sgcd&quot;,
+  &quot;Sirpa&quot;,
+  &quot;Slc1a2&quot;,
+  &quot;Slc1a3&quot;,
+  &quot;Slc38a1&quot;,
+  &quot;Slc4a4&quot;,
+  &quot;Slc6a11&quot;,
+  &quot;Slc7a10&quot;,
+  &quot;Slit1&quot;,
+  &quot;Slit2&quot;,
+  &quot;Slitrk2&quot;,
+  &quot;Sorbs1&quot;,
+  &quot;Sox9&quot;,
+  &quot;Sparc&quot;,
+  &quot;Spon1&quot;,
+  &quot;Tafa1&quot;,
+  &quot;Timp3&quot;,
+  &quot;Tkt&quot;,
+  &quot;Trpv1&quot;,
+  &quot;Vcam1&quot;,
+  &quot;Vegfa&quot;
+) %&gt;% .[. %in% rownames(merged_cortex)]
+
+merged_cortex &lt;- FindVariableFeatures(merged_cortex, nfeatures = 5000, verbose = FALSE)
+merged_cortex &lt;- NormalizeData(
+  merged_cortex,
+  features = c(
+    VariableFeatures(merged_cortex),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)
+# Scale data
+merged_cortex &lt;- ScaleData(
+  merged_cortex,
+  features = c(
+    VariableFeatures(merged_cortex),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)</code></pre>
+<pre class="r"><code># Create DimPlot
+p1 &lt;- DimPlot(
+  merged_cortex,
+  reduction = &quot;umap&quot;,
+  group.by = c(&quot;stage&quot;, &quot;New_cellType&quot;),
+  combine = FALSE, label.size = 2
+)
+
+p2 &lt;- DimPlot(
+  merged_cortex,
+  reduction = &quot;tsne&quot;,
+  group.by = c(&quot;stage&quot;, &quot;New_cellType&quot;),
+  combine = FALSE, label.size = 2
+)</code></pre>
+<pre class="r"><code>wrap_plots(c(p1, p2), ncol = 2, byrow = F)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-stages-and-types-all-cells-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create a custom FeaturePlot for each S100 gene
+plot_list &lt;-
+    lapply(
+        c(s100_genes, &quot;Cacybp&quot;, &quot;Siah1a&quot;, &quot;Siah1b&quot;),
+        function(gene) {
+            FeaturePlot_scCustom(
+                seurat_object = merged_cortex,
+                features = gene,
+                colors_use = merged_cortex@misc$expr_Colour_Pal,
+                na_color = &quot;lightgray&quot;,
+                layer = &quot;data&quot;,
+                order = TRUE,
+                pt.size = 1,
+                reduction = &quot;umap&quot;,
+                split.by = &quot;stage&quot;,
+                split_collect = FALSE,
+                label = F,
+                label_feature_yaxis = TRUE,
+                combine = FALSE
+            )
+        })</code></pre>
+<pre><code>
+NOTE: FeaturePlot_scCustom uses a specified `na_cutoff` when plotting to
+color cells with no expression as background color separate from color scale.
+Please ensure `na_cutoff` value is appropriate for feature being plotted.
+Default setting is appropriate for use when plotting from &#39;RNA&#39; assay.
+When `na_cutoff` not appropriate (e.g., module scores) set to NULL to
+plot all cells in gradient color palette.
+
+-----This message will be shown once per session.-----</code></pre>
+<pre class="r"><code># Combine the plots into a single grid
+combined_plot &lt;- patchwork::wrap_plots(plot_list, ncol = 1)
+
+# Display the combined plot
+print(combined_plot)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-features-all-cells-1.png" width="4608" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create a compact DotPlot
+compact_plot &lt;- DotPlot(
+  object = merged_cortex,
+  features = c(s100_genes,
+               &quot;Cacybp&quot;,
+               &quot;Siah1a&quot;,
+               &quot;Siah1b&quot;),
+  group.by = &quot;stage&quot;,
+  cluster.idents = FALSE,
+  scale = TRUE,
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-all-cells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_gene_by_dev &lt;- function(x) {
+  f_plot &lt;- FeaturePlot_scCustom(
+    merged_cortex,
+    colors_use = merged_cortex@misc$expr_Colour_Pal,
+    features = x,
+    layer = &quot;data&quot;,
+    max.cutoff = &quot;q99&quot;,
+    na_color = &quot;lightgray&quot;,
+    figure_plot = T,
+    pt.size = 1,
+    reduction = &quot;umap&quot;,
+    split.by = &quot;stage&quot;,
+    split_collect = FALSE,
+    label = F,
+    label_feature_yaxis = TRUE,
+    combine = FALSE
+  )
+  
+  print(f_plot)
+}
+
+genes.embed |&gt; purrr::walk(plot_gene_by_dev)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-1.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-2.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-3.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-4.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-5.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-6.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-7.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-8.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-9.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-10.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-11.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-12.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-13.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-14.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-15.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-16.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-17.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-18.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-19.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-20.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-21.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-22.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-23.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-24.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-25.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-26.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-27.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-28.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-29.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-30.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-31.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-32.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-33.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-34.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-35.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-36.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-37.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-38.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-39.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-40.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-41.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-42.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-43.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-44.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-45.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-46.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-47.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-48.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-49.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-50.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-51.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-52.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-53.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-54.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-55.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-56.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-57.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-58.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-59.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-60.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-61.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-62.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-63.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-64.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-65.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-66.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-67.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-68.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-69.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-70.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-71.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-72.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-73.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-74.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-75.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-76.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-77.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-78.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-79.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-80.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-81.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-82.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-83.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-84.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-85.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-86.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-87.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-88.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-89.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-90.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-91.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-92.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-93.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-94.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-95.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-96.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-97.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-98.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-99.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-100.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-101.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-102.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-103.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-104.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-105.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-106.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-107.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-108.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-109.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-110.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-111.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-112.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-113.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-114.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-115.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-116.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-117.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-118.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-119.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-120.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-121.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-122.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-123.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-124.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-125.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-126.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-127.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-128.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-129.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-130.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-131.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-132.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-133.png" width="4608" style="display: block; margin: auto;" /><img src="figure/cortex_visualisation.Rmd/plot-various-features-all-cells-134.png" width="4608" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>astro &lt;- subset(
+  x = merged_cortex,
+  subset = New_cellType == c(&quot;Apical progenitors&quot;,
+                             &quot;Cycling glial cells&quot;,
+                             &quot;Astrocytes&quot;))
+
+astro &lt;- FindVariableFeatures(astro, nfeatures = 5000, verbose = FALSE)
+
+# Scale data
+astro &lt;- ScaleData(
+  astro,
+  features = c(
+    VariableFeatures(astro),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)
+
+# Run PCA
+astro &lt;- RunPCA(astro, verbose = FALSE)
+
+# Find neighbors
+astro &lt;- FindNeighbors(astro, reduction = &quot;pca&quot;, dims = 1:30)</code></pre>
+<pre><code>Computing nearest neighbor graph</code></pre>
+<pre><code>Computing SNN</code></pre>
+<pre class="r"><code># Find clusters
+astro &lt;- FindClusters(astro, resolution = 0.7, cluster.name = &quot;astro_clusters&quot;, algorithm = 4, random.seed = 42)</code></pre>
+<pre class="r"><code># Create DimPlot
+p1 &lt;- DimPlot(
+  astro,
+  reduction = &quot;umap&quot;,
+  group.by = c(&quot;stage&quot;, &quot;New_cellType&quot;),
+  combine = FALSE, label.size = 2
+)
+
+p2 &lt;- DimPlot(
+  astro,
+  reduction = &quot;tsne&quot;,
+  group.by = c(&quot;stage&quot;, &quot;New_cellType&quot;),
+  combine = FALSE, label.size = 2
+)</code></pre>
+<pre class="r"><code>wrap_plots(c(p1, p2), ncol = 2, byrow = F)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-stages-and-types-astro-cells-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(
+  astro,
+  reduction = &quot;umap&quot;,
+  group.by = c(&quot;astro_clusters&quot;),
+  combine = FALSE, label.size = 2,
+  label = T
+)</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-reclustered-astro-cells-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create a custom FeaturePlot for each S100 gene
+# plot_list &lt;-
+#     lapply(
+#         c(s100_genes, &quot;Cacybp&quot;, &quot;Siah1a&quot;, &quot;Siah1b&quot;),
+#         function(gene) {
+#             FeaturePlot_scCustom(
+#                 seurat_object = astro,
+#                 features = gene,
+#                 colors_use = merged_cortex@misc$expr_Colour_Pal,
+#                 na_color = &quot;lightgray&quot;,
+#                 layer = &quot;data&quot;,
+#                 order = TRUE,
+#                 pt.size = 1,
+#                 reduction = &quot;umap&quot;,
+#                 split.by = &quot;stage&quot;,
+#                 split_collect = FALSE,
+#                 label = F,
+#                 label_feature_yaxis = TRUE,
+#                 combine = FALSE
+#             )
+#         })
+# 
+# 
+# # Combine the plots into a single grid
+# combined_plot &lt;- patchwork::wrap_plots(plot_list, ncol = 1)
+# 
+# # Display the combined plot
+# print(combined_plot)</code></pre>
+<pre class="r"><code># Create a compact DotPlot
+compact_plot &lt;- DotPlot(
+  object = astro,
+  features = c(s100_genes,
+               &quot;Cacybp&quot;,
+               &quot;Siah1a&quot;,
+               &quot;Siah1b&quot;),
+  group.by = &quot;stage&quot;,
+  cluster.idents = F,
+  scale = TRUE,
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-astro-cells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create a compact DotPlot
+compact_plot &lt;- DotPlot(
+  object = astro,
+  features = c(s100_genes,
+               &quot;Cacybp&quot;,
+               &quot;Siah1a&quot;,
+               &quot;Siah1b&quot;),
+  group.by = &quot;stage&quot;,
+  cluster.idents = F,
+  cols = c(&quot;yellow&quot;, &quot;cyan&quot;, &quot;magenta&quot;),
+  scale = TRUE,
+  split.by = &quot;New_cellType&quot;,
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-s100-dot-split-astro-cells-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Gja1&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Gja1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Gja1&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gja1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Glul&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Glul-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Glul&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Glul-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Apoe&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Apoe-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Apoe&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Apoe-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Ntrk2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntrk2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Ntrk2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntrk2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Ntsr2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ntsr2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Ntsr2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ntsr2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Ndrg2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Ndrg2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Ndrg2&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Ndrg2-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Aldoc&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Aldoc-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Aldoc&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aldoc-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Slc1a3&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Slc1a3-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Slc1a3&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Slc1a3-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Gfap&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Gfap-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Gfap&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Gfap-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Htra1&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Htra1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Htra1&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Htra1-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;S100a6&quot;, &quot;Aqp4&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-s100a6-Aqp4-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(astro,
+            blend = TRUE,
+            features = c(&quot;Cacybp&quot;, &quot;Aqp4&quot;))</code></pre>
+<p><img src="figure/cortex_visualisation.Rmd/plot-density-CaCyBP-Aqp4-astro-cells-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>sessioninfo::session_info()</code></pre>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.3.2 (2023-10-31)
+ os       Ubuntu 22.04.3 LTS
+ system   x86_64, linux-gnu
+ ui       X11
+ language en_US:en
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       Etc/UTC
+ date     2024-06-09
+ pandoc   3.1.3 @ /opt/python/3.8.8/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package                     * version     date (UTC) lib source
+ abind                         1.4-5       2016-07-21 [2] RSPM (R 4.3.0)
+ annotate                      1.80.0      2023-10-24 [2] RSPM (R 4.3.2)
+ AnnotationDbi                 1.64.1      2023-11-03 [2] RSPM (R 4.3.2)
+ AnnotationFilter              1.26.0      2023-10-24 [2] RSPM (R 4.3.2)
+ Azimuth                     * 0.5.0       2024-01-27 [2] Github (satijalab/azimuth@243ee5d)
+ beeswarm                      0.4.0       2021-06-01 [2] RSPM (R 4.3.0)
+ Biobase                       2.62.0      2023-10-24 [2] RSPM (R 4.3.2)
+ BiocFileCache                 2.10.1      2023-10-26 [2] RSPM (R 4.3.2)
+ BiocGenerics                  0.48.1      2023-11-01 [2] RSPM (R 4.3.2)
+ BiocIO                        1.12.0      2023-10-24 [2] RSPM (R 4.3.2)
+ BiocManager                   1.30.22     2023-08-08 [2] RSPM (R 4.3.0)
+ BiocParallel                  1.36.0      2023-10-24 [2] RSPM (R 4.3.2)
+ biomaRt                       2.58.0      2023-10-24 [2] RSPM (R 4.3.2)
+ Biostrings                    2.70.1      2023-10-25 [2] RSPM (R 4.3.2)
+ bit                           4.0.5       2022-11-15 [2] RSPM (R 4.3.0)
+ bit64                         4.0.5       2020-08-30 [2] RSPM (R 4.3.0)
+ bitops                        1.0-7       2021-04-24 [2] RSPM (R 4.3.0)
+ blob                          1.2.4       2023-03-17 [2] RSPM (R 4.3.0)
+ BPCells                     * 0.1.0       2024-01-27 [2] Github (bnprks/BPCells@0d56524)
+ BSgenome                      1.70.1      2023-11-01 [2] RSPM (R 4.3.2)
+ BSgenome.Hsapiens.UCSC.hg38   1.4.5       2024-01-26 [2] RSPM (R 4.3.2)
+ bslib                         0.6.1       2023-11-28 [2] RSPM (R 4.3.0)
+ cachem                        1.0.8       2023-05-01 [2] RSPM (R 4.3.0)
+ callr                         3.7.3       2022-11-02 [2] RSPM (R 4.3.0)
+ caTools                       1.18.2      2021-03-28 [2] RSPM (R 4.3.0)
+ cellranger                    1.1.0       2016-07-27 [2] RSPM (R 4.3.0)
+ circlize                      0.4.16      2024-01-26 [2] Github (jokergoo/circlize@9b21578)
+ cli                           3.6.2       2023-12-11 [2] RSPM (R 4.3.0)
+ cluster                       2.1.6       2023-12-01 [2] RSPM (R 4.3.0)
+ CNEr                          1.38.0      2023-10-24 [2] RSPM (R 4.3.2)
+ codetools                     0.2-19      2023-02-01 [2] RSPM (R 4.3.0)
+ colorspace                    2.1-0       2023-01-23 [2] RSPM (R 4.3.0)
+ cowplot                     * 1.1.3       2024-01-22 [2] RSPM (R 4.3.0)
+ crayon                        1.5.2       2022-09-29 [2] RSPM (R 4.3.0)
+ curl                          5.2.0       2023-12-08 [2] RSPM (R 4.3.0)
+ data.table                    1.14.10     2023-12-08 [2] RSPM (R 4.3.0)
+ DBI                           1.2.1       2024-01-12 [2] RSPM (R 4.3.0)
+ dbplyr                        2.4.0       2023-10-26 [2] RSPM (R 4.3.0)
+ DelayedArray                  0.28.0      2023-10-24 [2] RSPM (R 4.3.2)
+ deldir                        2.0-2       2023-11-23 [2] RSPM (R 4.3.0)
+ digest                        0.6.34      2024-01-11 [2] RSPM (R 4.3.0)
+ DirichletMultinomial          1.44.0      2023-10-24 [2] RSPM (R 4.3.2)
+ dotCall64                     1.1-1       2023-11-28 [2] RSPM (R 4.3.0)
+ dplyr                       * 1.1.4       2023-11-17 [2] RSPM (R 4.3.0)
+ DT                            0.31        2023-12-09 [2] RSPM (R 4.3.0)
+ ellipsis                      0.3.2       2021-04-29 [2] RSPM (R 4.3.0)
+ EnsDb.Hsapiens.v86            2.99.0      2024-01-26 [2] RSPM (R 4.3.2)
+ ensembldb                     2.26.0      2023-10-24 [2] RSPM (R 4.3.2)
+ evaluate                      0.23        2023-11-01 [2] RSPM (R 4.3.0)
+ fansi                         1.0.6       2023-12-08 [2] RSPM (R 4.3.0)
+ farver                        2.1.1       2022-07-06 [2] RSPM (R 4.3.0)
+ fastDummies                   1.7.3       2023-07-06 [2] RSPM (R 4.3.0)
+ fastmap                       1.1.1       2023-02-24 [2] RSPM (R 4.3.0)
+ fastmatch                     1.1-4       2023-08-18 [2] RSPM (R 4.3.0)
+ filelock                      1.0.3       2023-12-11 [2] RSPM (R 4.3.0)
+ fitdistrplus                  1.1-11      2023-04-25 [2] RSPM (R 4.3.0)
+ forcats                       1.0.0       2023-01-29 [2] RSPM (R 4.3.0)
+ fs                            1.6.3       2023-07-20 [2] RSPM (R 4.3.0)
+ future                        1.33.1      2023-12-22 [2] RSPM (R 4.3.0)
+ future.apply                  1.11.1      2023-12-21 [2] RSPM (R 4.3.0)
+ gargle                        1.5.2       2023-07-20 [2] RSPM (R 4.3.0)
+ generics                      0.1.3       2022-07-05 [2] RSPM (R 4.3.0)
+ GenomeInfoDb                  1.38.5      2023-12-28 [2] RSPM (R 4.3.2)
+ GenomeInfoDbData              1.2.11      2024-01-26 [2] RSPM (R 4.3.2)
+ GenomicAlignments             1.38.2      2024-01-16 [2] RSPM (R 4.3.2)
+ GenomicFeatures               1.54.1      2023-10-29 [2] RSPM (R 4.3.2)
+ GenomicRanges                 1.54.1      2023-10-29 [2] RSPM (R 4.3.2)
+ getPass                       0.2-4       2023-12-10 [2] RSPM (R 4.3.0)
+ ggbeeswarm                    0.7.2       2024-01-26 [2] Github (eclarke/ggbeeswarm@3cf58a9)
+ ggplot2                     * 3.4.4.9000  2024-01-26 [2] Github (tidyverse/ggplot2@a4be39d)
+ ggprism                       1.0.4       2024-01-26 [2] Github (csdaw/ggprism@0e411f4)
+ ggrastr                       1.0.2       2024-01-26 [2] Github (VPetukhov/ggrastr@50ca3e0)
+ ggrepel                       0.9.5.9999  2024-01-26 [2] Github (slowkow/ggrepel@1144585)
+ ggridges                      0.5.6       2024-01-23 [2] RSPM (R 4.3.0)
+ git2r                         0.33.0      2023-11-26 [2] RSPM (R 4.3.0)
+ GlobalOptions                 0.1.2       2020-06-10 [2] RSPM (R 4.3.0)
+ globals                       0.16.2      2022-11-21 [2] RSPM (R 4.3.0)
+ glue                          1.7.0       2024-01-09 [2] RSPM (R 4.3.0)
+ GO.db                         3.18.0      2024-01-26 [2] RSPM (R 4.3.2)
+ goftest                       1.2-3       2021-10-07 [2] RSPM (R 4.3.0)
+ googledrive                   2.1.1       2023-06-11 [2] RSPM (R 4.3.0)
+ googlesheets4                 1.1.1       2023-06-11 [2] RSPM (R 4.3.0)
+ gridExtra                     2.3         2017-09-09 [2] RSPM (R 4.3.0)
+ gtable                        0.3.4       2023-08-21 [2] RSPM (R 4.3.0)
+ gtools                        3.9.5       2023-11-20 [2] RSPM (R 4.3.0)
+ hdf5r                         1.3.9       2024-01-14 [2] RSPM (R 4.3.2)
+ here                        * 1.0.1       2020-12-13 [2] RSPM (R 4.3.0)
+ highr                         0.10        2022-12-22 [2] RSPM (R 4.3.0)
+ hms                           1.1.3       2023-03-21 [2] RSPM (R 4.3.0)
+ htmltools                     0.5.7       2023-11-03 [2] RSPM (R 4.3.0)
+ htmlwidgets                   1.6.4       2023-12-06 [2] RSPM (R 4.3.0)
+ httpuv                        1.6.13      2023-12-06 [2] RSPM (R 4.3.0)
+ httr                          1.4.7       2023-08-15 [2] RSPM (R 4.3.0)
+ ica                           1.0-3       2022-07-08 [2] RSPM (R 4.3.0)
+ igraph                        1.6.0       2023-12-11 [2] RSPM (R 4.3.0)
+ IRanges                       2.36.0      2023-10-24 [2] RSPM (R 4.3.2)
+ irlba                         2.3.5.1     2022-10-03 [2] RSPM (R 4.3.0)
+ janitor                       2.2.0.9000  2024-01-26 [2] Github (sfirke/janitor@ad52765)
+ JASPAR2020                    0.99.10     2024-01-26 [2] RSPM (R 4.3.2)
+ jquerylib                     0.1.4       2021-04-26 [2] RSPM (R 4.3.0)
+ jsonlite                      1.8.8       2023-12-04 [2] RSPM (R 4.3.0)
+ KEGGREST                      1.42.0      2023-10-24 [2] RSPM (R 4.3.2)
+ KernSmooth                    2.23-22     2023-07-10 [2] RSPM (R 4.3.0)
+ knitr                         1.45        2023-10-30 [2] RSPM (R 4.3.0)
+ labeling                      0.4.3       2023-08-29 [2] RSPM (R 4.3.0)
+ later                         1.3.2       2023-12-06 [2] RSPM (R 4.3.0)
+ lattice                       0.22-5      2023-10-24 [2] RSPM (R 4.3.0)
+ lazyeval                      0.2.2       2019-03-15 [2] RSPM (R 4.3.0)
+ leiden                        0.4.3.1     2023-11-17 [2] RSPM (R 4.3.0)
+ lifecycle                     1.0.4       2023-11-07 [2] RSPM (R 4.3.0)
+ listenv                       0.9.0       2022-12-16 [2] RSPM (R 4.3.0)
+ lmtest                        0.9-40      2022-03-21 [2] RSPM (R 4.3.0)
+ lubridate                     1.9.3       2023-09-27 [2] RSPM (R 4.3.0)
+ magrittr                    * 2.0.3       2022-03-30 [2] RSPM (R 4.3.0)
+ MASS                          7.3-60.0.1  2024-01-13 [2] RSPM (R 4.3.0)
+ Matrix                        1.6-5       2024-01-11 [2] RSPM (R 4.3.0)
+ MatrixGenerics                1.14.0      2023-10-24 [2] RSPM (R 4.3.2)
+ matrixStats                   1.2.0       2023-12-11 [2] RSPM (R 4.3.0)
+ memoise                       2.0.1       2021-11-26 [2] RSPM (R 4.3.0)
+ mime                          0.12        2021-09-28 [2] RSPM (R 4.3.0)
+ miniUI                        0.1.1.1     2018-05-18 [2] RSPM (R 4.3.0)
+ mousecortexref.SeuratData   * 1.0.0       2023-10-20 [1] local
+ munsell                       0.5.0       2018-06-12 [2] RSPM (R 4.3.0)
+ nlme                          3.1-164     2023-11-27 [2] RSPM (R 4.3.0)
+ paletteer                     1.6.0       2024-01-21 [2] RSPM (R 4.3.0)
+ parallelly                    1.36.0      2023-05-26 [2] RSPM (R 4.3.0)
+ patchwork                   * 1.2.0.9000  2024-01-26 [2] Github (thomasp85/patchwork@d943757)
+ pbapply                       1.7-2       2023-06-27 [2] RSPM (R 4.3.0)
+ pillar                        1.9.0       2023-03-22 [2] RSPM (R 4.3.0)
+ pkgconfig                     2.0.3       2019-09-22 [2] RSPM (R 4.3.0)
+ plotly                        4.10.4      2024-01-13 [2] RSPM (R 4.3.0)
+ plyr                          1.8.9       2023-10-02 [2] RSPM (R 4.3.0)
+ png                           0.1-8       2022-11-29 [2] RSPM (R 4.3.0)
+ polyclip                      1.10-6      2023-09-27 [2] RSPM (R 4.3.0)
+ poweRlaw                      0.80.0      2024-01-25 [2] RSPM (R 4.3.2)
+ pracma                        2.4.4       2023-11-10 [2] RSPM (R 4.3.0)
+ presto                        1.0.0       2024-01-26 [2] Github (immunogenomics/presto@31dc97f)
+ prettyunits                   1.2.0       2023-09-24 [2] RSPM (R 4.3.0)
+ processx                      3.8.3       2023-12-10 [2] RSPM (R 4.3.0)
+ progress                      1.2.3       2023-12-06 [2] RSPM (R 4.3.0)
+ progressr                     0.14.0      2023-08-10 [2] RSPM (R 4.3.0)
+ promises                      1.2.1       2023-08-10 [2] RSPM (R 4.3.0)
+ ProtGenerics                  1.34.0      2023-10-24 [2] RSPM (R 4.3.2)
+ ps                            1.7.6       2024-01-18 [2] RSPM (R 4.3.0)
+ purrr                         1.0.2       2023-08-10 [2] RSPM (R 4.3.0)
+ R.methodsS3                   1.8.2       2022-06-13 [2] RSPM (R 4.3.0)
+ R.oo                          1.26.0      2024-01-24 [2] RSPM (R 4.3.0)
+ R.utils                       2.12.3      2023-11-18 [2] RSPM (R 4.3.0)
+ R6                            2.5.1       2021-08-19 [2] RSPM (R 4.3.0)
+ RANN                          2.6.1       2019-01-08 [2] RSPM (R 4.3.0)
+ rappdirs                      0.3.3       2021-01-31 [2] RSPM (R 4.3.0)
+ RColorBrewer                * 1.1-3       2022-04-03 [2] RSPM (R 4.3.0)
+ Rcpp                          1.0.12      2024-01-09 [2] RSPM (R 4.3.0)
+ RcppAnnoy                     0.0.22      2024-01-23 [2] RSPM (R 4.3.0)
+ RcppHNSW                      0.5.0       2023-09-19 [2] RSPM (R 4.3.0)
+ RcppRoll                      0.3.0       2018-06-05 [2] RSPM (R 4.3.0)
+ RCurl                         1.98-1.14   2024-01-09 [2] RSPM (R 4.3.0)
+ readr                       * 2.1.5       2024-01-10 [2] RSPM (R 4.3.0)
+ rematch2                      2.1.2       2020-05-01 [2] RSPM (R 4.3.0)
+ remotes                       2.4.2.1     2023-07-18 [2] RSPM (R 4.3.0)
+ reshape2                      1.4.4       2020-04-09 [2] RSPM (R 4.3.0)
+ restfulr                      0.0.15      2022-06-16 [2] RSPM (R 4.3.2)
+ reticulate                    1.34.0      2023-10-12 [2] RSPM (R 4.3.0)
+ rhdf5                         2.46.1      2023-11-29 [2] RSPM (R 4.3.2)
+ rhdf5filters                  1.14.1      2023-11-06 [2] RSPM (R 4.3.2)
+ Rhdf5lib                      1.24.1      2023-12-11 [2] RSPM (R 4.3.2)
+ rjson                         0.2.21      2022-01-09 [2] RSPM (R 4.3.0)
+ rlang                         1.1.3       2024-01-10 [2] RSPM (R 4.3.0)
+ rmarkdown                     2.25        2023-09-18 [2] RSPM (R 4.3.0)
+ ROCR                          1.0-11      2020-05-02 [2] RSPM (R 4.3.0)
+ rprojroot                     2.0.4       2023-11-05 [2] RSPM (R 4.3.0)
+ Rsamtools                     2.18.0      2023-10-24 [2] RSPM (R 4.3.2)
+ RSpectra                      0.16-1      2022-04-24 [2] RSPM (R 4.3.0)
+ RSQLite                       2.3.5       2024-01-21 [2] RSPM (R 4.3.0)
+ rstudioapi                    0.15.0      2023-07-07 [2] RSPM (R 4.3.0)
+ rsvd                          1.0.5       2021-04-16 [2] RSPM (R 4.3.0)
+ rtracklayer                   1.62.0      2024-01-26 [2] bioc_git2r (@58efbf9)
+ Rtsne                         0.17        2023-12-07 [2] RSPM (R 4.3.0)
+ S4Arrays                      1.2.0       2023-10-24 [2] RSPM (R 4.3.2)
+ S4Vectors                     0.40.2      2023-11-23 [2] RSPM (R 4.3.2)
+ sass                          0.4.8       2023-12-06 [2] RSPM (R 4.3.0)
+ scales                        1.3.0       2023-11-28 [2] RSPM (R 4.3.0)
+ scattermore                   1.2         2023-06-12 [2] RSPM (R 4.3.0)
+ scCustomize                 * 2.0.1       2024-01-26 [2] Github (samuel-marsh/scCustomize@0aefbe9)
+ sctransform                   0.4.1       2023-10-19 [2] RSPM (R 4.3.0)
+ seqLogo                       1.68.0      2023-10-24 [2] RSPM (R 4.3.2)
+ sessioninfo                   1.2.2       2021-12-06 [2] RSPM (R 4.3.0)
+ Seurat                      * 5.0.1.9003  2024-01-27 [2] Github (satijalab/seurat@938698c)
+ SeuratData                  * 0.2.2.9001  2024-01-26 [2] Github (satijalab/seurat-data@4dc08e0)
+ SeuratDisk                    0.0.0.9021  2024-01-26 [2] Github (mojaveazure/seurat-disk@877d4e1)
+ SeuratObject                * 5.0.1       2024-01-27 [2] Github (satijalab/seurat-object@4d3739b)
+ SeuratWrappers              * 0.3.3       2024-01-26 [2] Github (satijalab/seurat-wrappers@17b8d5a)
+ shape                         1.4.6       2021-05-19 [2] RSPM (R 4.3.0)
+ shiny                         1.8.0       2023-11-17 [2] RSPM (R 4.3.0)
+ shinyBS                     * 0.61.1      2022-04-17 [2] RSPM (R 4.3.0)
+ shinydashboard                0.7.2       2021-09-30 [2] RSPM (R 4.3.0)
+ shinyjs                       2.1.0       2021-12-23 [2] RSPM (R 4.3.0)
+ Signac                        1.12.9004   2024-01-27 [2] Github (stuart-lab/signac@0c43d88)
+ snakecase                     0.11.1      2023-08-27 [2] RSPM (R 4.3.0)
+ sp                          * 2.1-2       2023-11-26 [2] RSPM (R 4.3.0)
+ spam                          2.10-0      2023-10-23 [2] RSPM (R 4.3.0)
+ SparseArray                   1.2.3       2023-12-25 [2] RSPM (R 4.3.2)
+ spatstat.data                 3.0-4       2024-01-15 [2] RSPM (R 4.3.0)
+ spatstat.explore              3.2-5       2023-10-22 [2] RSPM (R 4.3.0)
+ spatstat.geom                 3.2-7       2023-10-20 [2] RSPM (R 4.3.0)
+ spatstat.random               3.2-2       2023-11-29 [2] RSPM (R 4.3.0)
+ spatstat.sparse               3.0-3       2023-10-24 [2] RSPM (R 4.3.0)
+ spatstat.utils                3.0-4       2023-10-24 [2] RSPM (R 4.3.0)
+ stringi                       1.8.3       2023-12-11 [2] RSPM (R 4.3.0)
+ stringr                     * 1.5.1       2023-11-14 [2] RSPM (R 4.3.0)
+ SummarizedExperiment          1.32.0      2023-10-24 [2] RSPM (R 4.3.2)
+ survival                      3.5-7       2023-08-14 [2] RSPM (R 4.3.0)
+ tensor                        1.5         2012-05-05 [2] RSPM (R 4.3.0)
+ TFBSTools                     1.40.0      2023-10-24 [2] RSPM (R 4.3.2)
+ TFMPvalue                     0.0.9       2022-10-21 [2] RSPM (R 4.3.0)
+ tibble                        3.2.1       2023-03-20 [2] RSPM (R 4.3.0)
+ tidyr                         1.3.1       2024-01-24 [2] RSPM (R 4.3.0)
+ tidyselect                    1.2.0       2022-10-10 [2] RSPM (R 4.3.0)
+ timechange                    0.3.0       2024-01-18 [2] RSPM (R 4.3.0)
+ tzdb                          0.4.0       2023-05-12 [2] RSPM (R 4.3.0)
+ utf8                          1.2.4       2023-10-22 [2] RSPM (R 4.3.0)
+ uwot                          0.1.16      2023-06-29 [2] RSPM (R 4.3.0)
+ vctrs                         0.6.5       2023-12-01 [2] RSPM (R 4.3.0)
+ vipor                         0.4.7       2023-12-18 [2] RSPM (R 4.3.0)
+ viridisLite                   0.4.2       2023-05-02 [2] RSPM (R 4.3.0)
+ vroom                         1.6.5       2023-12-05 [2] RSPM (R 4.3.0)
+ whisker                       0.4.1       2022-12-05 [2] RSPM (R 4.3.0)
+ withr                         3.0.0       2024-01-16 [2] RSPM (R 4.3.0)
+ workflowr                   * 1.7.1       2023-08-23 [2] RSPM (R 4.3.0)
+ xfun                          0.41        2023-11-01 [2] RSPM (R 4.3.0)
+ XML                           3.99-0.16.1 2024-01-22 [2] RSPM (R 4.3.0)
+ xml2                          1.3.6       2023-12-04 [2] RSPM (R 4.3.0)
+ xtable                        1.8-4       2019-04-21 [2] RSPM (R 4.3.0)
+ XVector                       0.42.0      2023-10-24 [2] RSPM (R 4.3.2)
+ yaml                          2.3.8       2023-12-11 [2] RSPM (R 4.3.0)
+ zlibbioc                      1.48.0      2023-10-24 [2] RSPM (R 4.3.2)
+ zoo                           1.8-12      2023-04-13 [2] RSPM (R 4.3.0)
+
+ [1] /home/etretiakov/R/x86_64-pc-linux-gnu-library/4.3
+ [2] /opt/R/4.3.2/lib/R/library
+
+─ Python configuration ───────────────────────────────────────────────────────
+ python:         /opt/python/3.8.8/bin/python
+ libpython:      /opt/python/3.8.8/lib/libpython3.8.so
+ pythonhome:     /opt/python/3.8.8:/opt/python/3.8.8
+ version:        3.8.8 | packaged by conda-forge | (default, Feb 20 2021, 16:22:27)  [GCC 9.3.0]
+ numpy:          /opt/python/3.8.8/lib/python3.8/site-packages/numpy
+ numpy_version:  1.23.5
+ leidenalg:      /opt/python/3.8.8/lib/python3.8/site-packages/leidenalg
+ 
+ NOTE: Python version was forced by RETICULATE_PYTHON
+
+──────────────────────────────────────────────────────────────────────────────</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.2 (2023-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 22.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: Etc/UTC
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.2.0.9000            cowplot_1.1.3                  
+ [3] ggplot2_3.4.4.9000              readr_2.1.5                    
+ [5] stringr_1.5.1                   magrittr_2.0.3                 
+ [7] dplyr_1.1.4                     BPCells_0.1.0                  
+ [9] Azimuth_0.5.0                   shinyBS_0.61.1                 
+[11] SeuratWrappers_0.3.3            mousecortexref.SeuratData_1.0.0
+[13] SeuratData_0.2.2.9001           scCustomize_2.0.1              
+[15] Seurat_5.0.1.9003               SeuratObject_5.0.1             
+[17] sp_2.1-2                        RColorBrewer_1.1-3             
+[19] here_1.0.1                      workflowr_1.7.1                
+
+loaded via a namespace (and not attached):
+  [1] IRanges_2.36.0                    R.methodsS3_1.8.2                
+  [3] vroom_1.6.5                       progress_1.2.3                   
+  [5] poweRlaw_0.80.0                   goftest_1.2-3                    
+  [7] DT_0.31                           Biostrings_2.70.1                
+  [9] vctrs_0.6.5                       spatstat.random_3.2-2            
+ [11] digest_0.6.34                     png_0.1-8                        
+ [13] shape_1.4.6                       git2r_0.33.0                     
+ [15] ggrepel_0.9.5.9999                deldir_2.0-2                     
+ [17] parallelly_1.36.0                 MASS_7.3-60.0.1                  
+ [19] Signac_1.12.9004                  reshape2_1.4.4                   
+ [21] httpuv_1.6.13                     BiocGenerics_0.48.1              
+ [23] withr_3.0.0                       ggrastr_1.0.2                    
+ [25] xfun_0.41                         ellipsis_0.3.2                   
+ [27] survival_3.5-7                    EnsDb.Hsapiens.v86_2.99.0        
+ [29] memoise_2.0.1                     ggbeeswarm_0.7.2                 
+ [31] janitor_2.2.0.9000                zoo_1.8-12                       
+ [33] GlobalOptions_0.1.2               gtools_3.9.5                     
+ [35] pbapply_1.7-2                     R.oo_1.26.0                      
+ [37] prettyunits_1.2.0                 rematch2_2.1.2                   
+ [39] KEGGREST_1.42.0                   promises_1.2.1                   
+ [41] httr_1.4.7                        restfulr_0.0.15                  
+ [43] rhdf5filters_1.14.1               globals_0.16.2                   
+ [45] fitdistrplus_1.1-11               rhdf5_2.46.1                     
+ [47] ps_1.7.6                          rstudioapi_0.15.0                
+ [49] miniUI_0.1.1.1                    generics_0.1.3                   
+ [51] processx_3.8.3                    curl_5.2.0                       
+ [53] S4Vectors_0.40.2                  zlibbioc_1.48.0                  
+ [55] polyclip_1.10-6                   GenomeInfoDbData_1.2.11          
+ [57] SparseArray_1.2.3                 xtable_1.8-4                     
+ [59] pracma_2.4.4                      evaluate_0.23                    
+ [61] S4Arrays_1.2.0                    BiocFileCache_2.10.1             
+ [63] hms_1.1.3                         GenomicRanges_1.54.1             
+ [65] irlba_2.3.5.1                     colorspace_2.1-0                 
+ [67] filelock_1.0.3                    hdf5r_1.3.9                      
+ [69] ROCR_1.0-11                       reticulate_1.34.0                
+ [71] spatstat.data_3.0-4               lmtest_0.9-40                    
+ [73] snakecase_0.11.1                  later_1.3.2                      
+ [75] lattice_0.22-5                    spatstat.geom_3.2-7              
+ [77] future.apply_1.11.1               getPass_0.2-4                    
+ [79] scattermore_1.2                   XML_3.99-0.16.1                  
+ [81] matrixStats_1.2.0                 RcppAnnoy_0.0.22                 
+ [83] pillar_1.9.0                      nlme_3.1-164                     
+ [85] caTools_1.18.2                    compiler_4.3.2                   
+ [87] RSpectra_0.16-1                   stringi_1.8.3                    
+ [89] tensor_1.5                        SummarizedExperiment_1.32.0      
+ [91] lubridate_1.9.3                   GenomicAlignments_1.38.2         
+ [93] plyr_1.8.9                        crayon_1.5.2                     
+ [95] abind_1.4-5                       BiocIO_1.12.0                    
+ [97] googledrive_2.1.1                 bit_4.0.5                        
+ [99] fastmatch_1.1-4                   whisker_0.4.1                    
+[101] codetools_0.2-19                  bslib_0.6.1                      
+[103] paletteer_1.6.0                   plotly_4.10.4                    
+[105] mime_0.12                         splines_4.3.2                    
+[107] circlize_0.4.16                   Rcpp_1.0.12                      
+[109] fastDummies_1.7.3                 dbplyr_2.4.0                     
+[111] cellranger_1.1.0                  knitr_1.45                       
+[113] blob_1.2.4                        utf8_1.2.4                       
+[115] seqLogo_1.68.0                    AnnotationFilter_1.26.0          
+[117] fs_1.6.3                          listenv_0.9.0                    
+[119] tibble_3.2.1                      Matrix_1.6-5                     
+[121] callr_3.7.3                       tzdb_0.4.0                       
+[123] pkgconfig_2.0.3                   tools_4.3.2                      
+[125] cachem_1.0.8                      RSQLite_2.3.5                    
+[127] viridisLite_0.4.2                 DBI_1.2.1                        
+[129] fastmap_1.1.1                     rmarkdown_2.25                   
+[131] scales_1.3.0                      grid_4.3.2                       
+[133] ica_1.0-3                         shinydashboard_0.7.2             
+[135] Rsamtools_2.18.0                  sass_0.4.8                       
+[137] ggprism_1.0.4                     BiocManager_1.30.22              
+[139] dotCall64_1.1-1                   RANN_2.6.1                       
+[141] farver_2.1.1                      yaml_2.3.8                       
+[143] MatrixGenerics_1.14.0             rtracklayer_1.62.0               
+[145] cli_3.6.2                         purrr_1.0.2                      
+[147] stats4_4.3.2                      leiden_0.4.3.1                   
+[149] lifecycle_1.0.4                   uwot_0.1.16                      
+[151] Biobase_2.62.0                    sessioninfo_1.2.2                
+[153] presto_1.0.0                      BSgenome.Hsapiens.UCSC.hg38_1.4.5
+[155] BiocParallel_1.36.0               annotate_1.80.0                  
+[157] timechange_0.3.0                  gtable_0.3.4                     
+[159] rjson_0.2.21                      ggridges_0.5.6                   
+[161] progressr_0.14.0                  parallel_4.3.2                   
+[163] jsonlite_1.8.8                    RcppHNSW_0.5.0                   
+[165] TFBSTools_1.40.0                  bitops_1.0-7                     
+[167] bit64_4.0.5                       Rtsne_0.17                       
+[169] spatstat.utils_3.0-4              CNEr_1.38.0                      
+[171] highr_0.10                        jquerylib_0.1.4                  
+[173] shinyjs_2.1.0                     SeuratDisk_0.0.0.9021            
+[175] R.utils_2.12.3                    lazyeval_0.2.2                   
+[177] shiny_1.8.0                       htmltools_0.5.7                  
+[179] GO.db_3.18.0                      sctransform_0.4.1                
+[181] rappdirs_0.3.3                    ensembldb_2.26.0                 
+[183] glue_1.7.0                        TFMPvalue_0.0.9                  
+[185] spam_2.10-0                       googlesheets4_1.1.1              
+[187] XVector_0.42.0                    RCurl_1.98-1.14                  
+[189] rprojroot_2.0.4                   BSgenome_1.70.1                  
+[191] gridExtra_2.3                     JASPAR2020_0.99.10               
+[193] igraph_1.6.0                      R6_2.5.1                         
+[195] tidyr_1.3.1                       labeling_0.4.3                   
+[197] forcats_1.0.0                     RcppRoll_0.3.0                   
+[199] GenomicFeatures_1.54.1            cluster_2.1.6                    
+[201] Rhdf5lib_1.24.1                   gargle_1.5.2                     
+[203] GenomeInfoDb_1.38.5               DirichletMultinomial_1.44.0      
+[205] DelayedArray_0.28.0               tidyselect_1.2.0                 
+[207] vipor_0.4.7                       ProtGenerics_1.34.0              
+[209] xml2_1.3.6                        AnnotationDbi_1.64.1             
+[211] future_1.33.1                     rsvd_1.0.5                       
+[213] munsell_0.5.0                     KernSmooth_2.23-22               
+[215] data.table_1.14.10                htmlwidgets_1.6.4                
+[217] biomaRt_2.58.0                    rlang_1.1.3                      
+[219] spatstat.sparse_3.0-3             spatstat.explore_3.2-5           
+[221] remotes_2.4.2.1                   fansi_1.0.6                      
+[223] beeswarm_0.4.0                   </code></pre>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

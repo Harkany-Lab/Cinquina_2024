@@ -3,6 +3,7 @@
 .Rapp.history
 
 # Session Data files
+*.rds
 .RData
 .RDataTmp
 
@@ -44,3 +45,6 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Original data from Broad Single-Cell portal
+data/SCP1290

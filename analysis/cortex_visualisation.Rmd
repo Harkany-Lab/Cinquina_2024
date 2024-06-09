@@ -1,0 +1,655 @@
+
+
+
+```{r}
+library(here)
+library(RColorBrewer)
+library(Seurat)
+library(scCustomize)
+library(SeuratData)
+library(SeuratWrappers)
+library(Azimuth)
+library(BPCells)
+library(dplyr)
+library(magrittr)
+library(stringr)
+library(readr)
+library(ggplot2)
+library(cowplot)
+library(patchwork)
+options(future.globals.maxSize = 1e9)
+options(Seurat.object.assay.version = "v5")
+```
+
+
+
+```{r}
+# Create a vector with the stage of development for each object
+stage_info <- c("E11.5", "E12.5", "E13.5", "E14.5", "E15.5", "E16", "E18.5", "E18", "P1", "P1", "E10", "E17.5", "P4")
+```
+
+
+```{r}
+merged_cortex_2 <- SeuratObject::LoadSeuratRds(here::here("data/azimuth_integrated.rds"))
+merged_cortex_2$cell_name <- Cells(merged_cortex_2)
+merged_cortex_2
+```
+
+```{r read-study-info}
+orig_umap <- readr::read_tsv(
+  here("data/SCP1290/cluster/cluster_scDevSC.merged.umap.txt"),
+  skip = 2,
+  col_names = c("cell_name", "UMAP_1", "UMAP_2"),
+  col_types = list(col_character(), col_double(), col_double())
+)
+
+glimpse(orig_umap)
+orig_umap %<>% tibble::column_to_rownames("cell_name")
+orig_umap %<>% as.matrix()
+orig_tsne <- readr::read_tsv(
+  here("data/SCP1290/cluster/cluster_scDevSC.merged.tsne.txt"),
+  skip = 2,
+  col_names = c("cell_name", "tSNE_1", "tSNE_2"),
+  col_types = list(col_character(), col_double(), col_double())
+)
+glimpse(orig_tsne)
+orig_tsne %<>% tibble::column_to_rownames("cell_name")
+orig_tsne %<>% as.matrix()
+orig_metadata <- readr::read_tsv(here(
+  "data/SCP1290/metadata/metaData_scDevSC.txt"))
+orig_metadata %<>% rename("cell_name" = "NAME")
+orig_metadata_types <- orig_metadata[1,] |> purrr::simplify()
+orig_metadata %<>% filter(!cell_name == "TYPE")
+glimpse(orig_metadata)
+
+change_column_types <- function(df, types) {
+  for (col_name in names(types)) {
+    col_type <- types[col_name]
+    
+    if (col_type == "character") {
+      df[[col_name]] <- as.character(df[[col_name]])
+    } else if (col_type == "numeric") {
+      df[[col_name]] <- as.numeric(df[[col_name]])
+    } else if (col_type == "integer") {
+      df[[col_name]] <- as.integer(df[[col_name]])
+    } else if (col_type == "logical") {
+      df[[col_name]] <- as.logical(df[[col_name]])
+    } else if (col_type == "factor") {
+      df[[col_name]] <- as.factor(df[[col_name]])
+    } else if (col_type == "group") {
+      df[[col_name]] <- as.factor(df[[col_name]])
+    } else {
+      warning(paste("Unknown type:", col_type, "for column", col_name))
+    }
+  }
+  
+  return(df)
+}
+
+# Apply the function to the metadata
+orig_metadata <- change_column_types(orig_metadata, orig_metadata_types)
+
+# Print the modified metadata
+glimpse(orig_metadata)
+
+orig_srt <- Read10X(data.dir = here("data/SCP1290/expression/601ae2f4771a5b0d72588bfb"))
+
+# Convert the log1p normalized matrix to a standard matrix if it's not already
+normalized_matrix <- as.matrix(orig_srt)
+
+# Reverse the log1p transformation to get the count matrix
+count_matrix <- expm1(normalized_matrix)
+
+# Convert the count matrix to a sparse matrix format (dgCMatrix) if needed
+count_matrix_sparse <- as(count_matrix, "dgCMatrix")
+
+# Create a Seurat object using the recovered count matrix
+merged_cortex <- CreateSeuratObject(counts = count_matrix_sparse, meta.data = orig_metadata)
+
+merged_cortex[["umap"]] <- CreateDimReducObject(embeddings = orig_umap, key = "UMAP_", assay = DefaultAssay(merged_cortex))
+merged_cortex[["tsne"]] <- CreateDimReducObject(embeddings = orig_tsne, key = "tSNE_", assay = DefaultAssay(merged_cortex))
+
+merged_cortex$stage <- merged_cortex$orig.ident
+table(merged_cortex$New_cellType)
+Idents(merged_cortex) <- "New_cellType"
+merged_cortex <- subset(merged_cortex, idents = c("Doublet", "Low quality cells", "Red blood cells"), invert = TRUE)
+
+merged_cortex <-
+  Store_Palette_Seurat(
+    seurat_object = merged_cortex,
+    palette = rev(brewer.pal(n = 11, name = "Spectral")),
+    palette_name = "expr_Colour_Pal"
+  )
+
+# Get the list of S100 family genes
+s100_genes <- grep("^S100", rownames(merged_cortex), value = TRUE)
+
+genes.embed <- c(
+  "Abcd1",
+  "Abcd2",
+  "Abcd3",
+  "Acaa1",
+  "Acaa2",
+  "Acox1",
+  "Agrn",
+  "Agt",
+  "Alcam",
+  "Aldh1a1",
+  "Aldh1l1",
+  "Aldoc",
+  "Angpt1",
+  "Apoe",
+  "App",
+  "Aqp4",
+  "Arf1",
+  "Bmp7",
+  "Bsg",
+  "Cacybp",
+  "Caf4",
+  "Ccl25",
+  "Ckb",
+  "Cnr1",
+  "Cnr2",
+  "Col4a5",
+  "Cst3",
+  "Dagla",
+  "Daglb",
+  "Decr2",
+  "Dcc",
+  "Dnm1",
+  "Drp1",
+  "Ech1",
+  "Efna5",
+  "Egfr",
+  "Enho",
+  "Eno1",
+  "Faah",
+  "Fgf1",
+  "Fgfr3",
+  "Fis1",
+  "Fos",
+  "Fth1",
+  "Ftl1",
+  "Gfap",
+  "Gja1",
+  "Gli1",
+  "Glul",
+  "Gnai2",
+  "Gnas",
+  "H2-K1",
+  "Hacd2",
+  "Hadhb",
+  "Hbegf",
+  "Hepacam",
+  "Hif1",
+  "Htra1",
+  "Igsf1",
+  "Il18",
+  "Il1rapl1",
+  "Itgav",
+  "Jam2",
+  "Lama2",
+  "Lamb2",
+  "Lcat",
+  "Lgi1",
+  "Lgi4",
+  "Lpcat3",
+  "Lrpap1",
+  "Lrrc4b",
+  "Lxn",
+  "Mdk",
+  "Mdv1",
+  "Mfn1",
+  "Mfn2",
+  "Mgll",
+  "Mief1",
+  "Napepld",
+  "Ncam1",
+  "Ncan",
+  "Ndrg2",
+  "Nfasc",
+  "Nfia",
+  "Nlgn3",
+  "Nrxn1",
+  "Nrxn2",
+  "Ntn1",
+  "Ntrk3",
+  "Opa1",
+  "Otp",
+  "Pex1",
+  "Pex10",
+  "Pex12",
+  "Pex13",
+  "Pex14",
+  "Pex16",
+  "Pex2",
+  "Pex26",
+  "Pex3",
+  "Pex6",
+  "Pkm",
+  "Pla2g7",
+  "Plcb1",
+  "Psap",
+  "Ptn",
+  "Pygb",
+  "Ralyl",
+  "Rgma",
+  "Rtn4",
+  "S100a1",
+  "S100a6",
+  "S100b",
+  "Siah1a",
+  "Siah1b",
+  "Scd2",
+  "Sdc2",
+  "Sema6a",
+  "Sema6d",
+  "Sgcd",
+  "Sirpa",
+  "Slc1a2",
+  "Slc1a3",
+  "Slc38a1",
+  "Slc4a4",
+  "Slc6a11",
+  "Slc7a10",
+  "Slit1",
+  "Slit2",
+  "Slitrk2",
+  "Sorbs1",
+  "Sox9",
+  "Sparc",
+  "Spon1",
+  "Tafa1",
+  "Timp3",
+  "Tkt",
+  "Trpv1",
+  "Vcam1",
+  "Vegfa"
+) %>% .[. %in% rownames(merged_cortex)]
+
+merged_cortex <- FindVariableFeatures(merged_cortex, nfeatures = 5000, verbose = FALSE)
+merged_cortex <- NormalizeData(
+  merged_cortex,
+  features = c(
+    VariableFeatures(merged_cortex),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)
+# Scale data
+merged_cortex <- ScaleData(
+  merged_cortex,
+  features = c(
+    VariableFeatures(merged_cortex),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)
+```
+
+
+```{r}
+# Create DimPlot
+p1 <- DimPlot(
+  merged_cortex,
+  reduction = "umap",
+  group.by = c("stage", "New_cellType"),
+  combine = FALSE, label.size = 2
+)
+
+p2 <- DimPlot(
+  merged_cortex,
+  reduction = "tsne",
+  group.by = c("stage", "New_cellType"),
+  combine = FALSE, label.size = 2
+)
+```
+
+```{r plot-stages-and-types-all-cells, fig.height=18, fig.width=20}
+wrap_plots(c(p1, p2), ncol = 2, byrow = F)
+```
+
+
+
+```{r plot-s100-features-all-cells, fig.height=72, fig.width=48}
+# Create a custom FeaturePlot for each S100 gene
+plot_list <-
+    lapply(
+        c(s100_genes, "Cacybp", "Siah1a", "Siah1b"),
+        function(gene) {
+            FeaturePlot_scCustom(
+                seurat_object = merged_cortex,
+                features = gene,
+                colors_use = merged_cortex@misc$expr_Colour_Pal,
+                na_color = "lightgray",
+                layer = "data",
+                order = TRUE,
+                pt.size = 1,
+                reduction = "umap",
+                split.by = "stage",
+                split_collect = FALSE,
+                label = F,
+                label_feature_yaxis = TRUE,
+                combine = FALSE
+            )
+        })
+
+
+# Combine the plots into a single grid
+combined_plot <- patchwork::wrap_plots(plot_list, ncol = 1)
+
+# Display the combined plot
+print(combined_plot)
+```
+
+
+```{r plot-s100-dot-all-cells}
+# Create a compact DotPlot
+compact_plot <- DotPlot(
+  object = merged_cortex,
+  features = c(s100_genes,
+               "Cacybp",
+               "Siah1a",
+               "Siah1b"),
+  group.by = "stage",
+  cluster.idents = FALSE,
+  scale = TRUE,
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)
+```
+
+```{r plot-various-features-all-cells, fig.height=6.54545455, fig.width=48}
+plot_gene_by_dev <- function(x) {
+  f_plot <- FeaturePlot_scCustom(
+    merged_cortex,
+    colors_use = merged_cortex@misc$expr_Colour_Pal,
+    features = x,
+    layer = "data",
+    max.cutoff = "q99",
+    na_color = "lightgray",
+    figure_plot = T,
+    pt.size = 1,
+    reduction = "umap",
+    split.by = "stage",
+    split_collect = FALSE,
+    label = F,
+    label_feature_yaxis = TRUE,
+    combine = FALSE
+  )
+  
+  print(f_plot)
+}
+
+genes.embed |> purrr::walk(plot_gene_by_dev)
+
+```
+
+
+```{r}
+astro <- subset(
+  x = merged_cortex,
+  subset = New_cellType == c("Apical progenitors",
+                             "Cycling glial cells",
+                             "Astrocytes"))
+
+astro <- FindVariableFeatures(astro, nfeatures = 5000, verbose = FALSE)
+
+# Scale data
+astro <- ScaleData(
+  astro,
+  features = c(
+    VariableFeatures(astro),
+    s100_genes,
+    genes.embed),
+  verbose = FALSE)
+
+# Run PCA
+astro <- RunPCA(astro, verbose = FALSE)
+
+# Find neighbors
+astro <- FindNeighbors(astro, reduction = "pca", dims = 1:30)
+
+# Find clusters
+astro <- FindClusters(astro, resolution = 0.7, cluster.name = "astro_clusters", algorithm = 4, random.seed = 42)
+```
+
+```{r}
+# Create DimPlot
+p1 <- DimPlot(
+  astro,
+  reduction = "umap",
+  group.by = c("stage", "New_cellType"),
+  combine = FALSE, label.size = 2
+)
+
+p2 <- DimPlot(
+  astro,
+  reduction = "tsne",
+  group.by = c("stage", "New_cellType"),
+  combine = FALSE, label.size = 2
+)
+```
+
+```{r plot-stages-and-types-astro-cells, fig.height=18, fig.width=20}
+wrap_plots(c(p1, p2), ncol = 2, byrow = F)
+```
+
+```{r plot-reclustered-astro-cells, fig.height=4.5, fig.width=5}
+DimPlot(
+  astro,
+  reduction = "umap",
+  group.by = c("astro_clusters"),
+  combine = FALSE, label.size = 2,
+  label = T
+)
+```
+
+```{r plot-s100-features-astro-cells, fig.height=72, fig.width=48}
+# Create a custom FeaturePlot for each S100 gene
+# plot_list <-
+#     lapply(
+#         c(s100_genes, "Cacybp", "Siah1a", "Siah1b"),
+#         function(gene) {
+#             FeaturePlot_scCustom(
+#                 seurat_object = astro,
+#                 features = gene,
+#                 colors_use = merged_cortex@misc$expr_Colour_Pal,
+#                 na_color = "lightgray",
+#                 layer = "data",
+#                 order = TRUE,
+#                 pt.size = 1,
+#                 reduction = "umap",
+#                 split.by = "stage",
+#                 split_collect = FALSE,
+#                 label = F,
+#                 label_feature_yaxis = TRUE,
+#                 combine = FALSE
+#             )
+#         })
+# 
+# 
+# # Combine the plots into a single grid
+# combined_plot <- patchwork::wrap_plots(plot_list, ncol = 1)
+# 
+# # Display the combined plot
+# print(combined_plot)
+```
+
+
+```{r plot-s100-dot-astro-cells}
+# Create a compact DotPlot
+compact_plot <- DotPlot(
+  object = astro,
+  features = c(s100_genes,
+               "Cacybp",
+               "Siah1a",
+               "Siah1b"),
+  group.by = "stage",
+  cluster.idents = F,
+  scale = TRUE,
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)
+```
+
+```{r plot-s100-dot-split-astro-cells, fig.height=9, fig.width=10}
+# Create a compact DotPlot
+compact_plot <- DotPlot(
+  object = astro,
+  features = c(s100_genes,
+               "Cacybp",
+               "Siah1a",
+               "Siah1b"),
+  group.by = "stage",
+  cluster.idents = F,
+  cols = c("yellow", "cyan", "magenta"),
+  scale = TRUE,
+  split.by = "New_cellType",
+  dot.scale = 12
+) + RotatedAxis()
+
+# Display the compact plot
+print(compact_plot)
+```
+
+
+
+```{r plot-density-s100a6-Gja1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Gja1"))
+```
+
+```{r plot-density-CaCyBP-Gja1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Gja1"))
+```
+
+```{r plot-density-s100a6-Glul-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Glul"))
+```
+
+```{r plot-density-CaCyBP-Glul-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Glul"))
+```
+
+```{r plot-density-s100a6-Apoe-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Apoe"))
+```
+
+```{r plot-density-CaCyBP-Apoe-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Apoe"))
+```
+
+```{r plot-density-s100a6-Ntrk2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Ntrk2"))
+```
+
+```{r plot-density-CaCyBP-Ntrk2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Ntrk2"))
+```
+
+```{r plot-density-s100a6-Ntsr2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Ntsr2"))
+```
+
+```{r plot-density-CaCyBP-Ntsr2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Ntsr2"))
+```
+
+```{r plot-density-s100a6-Ndrg2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Ndrg2"))
+```
+
+```{r plot-density-CaCyBP-Ndrg2-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Ndrg2"))
+```
+
+```{r plot-density-s100a6-Aldoc-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Aldoc"))
+```
+
+```{r plot-density-CaCyBP-Aldoc-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Aldoc"))
+```
+
+```{r plot-density-s100a6-Slc1a3-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Slc1a3"))
+```
+
+```{r plot-density-CaCyBP-Slc1a3-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Slc1a3"))
+```
+
+```{r plot-density-s100a6-Gfap-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Gfap"))
+```
+
+```{r plot-density-CaCyBP-Gfap-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Gfap"))
+```
+
+```{r plot-density-s100a6-Htra1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Htra1"))
+```
+
+```{r plot-density-CaCyBP-Htra1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Htra1"))
+```
+
+```{r plot-density-s100a6-Aqp4-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Aqp4"))
+```
+
+```{r plot-density-CaCyBP-Aqp4-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Aqp4"))
+```
+
+```{r}
+sessioninfo::session_info()
+```
+
