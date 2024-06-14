@@ -482,6 +482,21 @@ FeaturePlot(merged_cortex,
             alpha = 0.35)
 ```
 
+```{r plot-vln-markers-of-astrocytes-all-cells, fig.height=18, fig.width=21}
+VlnPlot(merged_cortex, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", "Ndrg2", "Aldoc", "Slc1a3", "Glul", "Apoe", "Aldh1l1", "Ntrk2", "Gfap", "Gja1", "Htra1", "Aqp4", "Ntsr2"), group.by = "New_cellType",
+  cols = merged_cortex@misc$types_Colour_Pal) 
+```
+
+```{r plot-stckd-vln-markers-of-astrocytes-all-cells-by-type, fig.height=27, fig.width=31.5}
+Stacked_VlnPlot(seurat_object = merged_cortex, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", "Ndrg2", "Aldoc", "Slc1a3", "Glul", "Apoe", "Aldh1l1", "Ntrk2", "Gfap", "Gja1", "Htra1", "Aqp4", "Ntsr2"), x_lab_rotate = TRUE,
+    colors_use = merged_cortex@misc$types_Colour_Pal, group.by = "stage", split.by = "New_cellType")
+```
+
+```{r plot-stckd-vln-markers-of-astrocytes-all-cells-by-stage, fig.height=27, fig.width=31.5}
+Stacked_VlnPlot(seurat_object = merged_cortex, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", "Ndrg2", "Aldoc", "Slc1a3", "Glul", "Apoe", "Aldh1l1", "Ntrk2", "Gfap", "Gja1", "Htra1", "Aqp4", "Ntsr2"), x_lab_rotate = TRUE,
+    colors_use = merged_cortex@misc$stage_Colour_Pal, group.by = "New_cellType", split.by = "stage")
+```
+
 
 ```{r}
 astro <- subset(
@@ -556,7 +571,7 @@ DimPlot(
 )
 ```
 
-## Differential Gene expression of astrocytic clusters 5 vs. 8 {.tabset}
+## Differential Gene expression of astrocytic clusters {.tabset}
 
 ```{r subset-astro-clusters-for-dge-analysis}
 Idents(astro) <- "New_cellType"
@@ -645,6 +660,9 @@ print(merge_dat[merge_dat$gene %in% common[1:25],c('gene','p_val.sc','p_val.bulk
 
 
 ```{r plot-vln-markers-of-astrocytic-subgroups, fig.height=18, fig.width=12}
+VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", "Ndrg2", "Aldoc", "Slc1a3", "Glul", "Apoe", "Aldh1l1", "Ntrk2", "Gfap", "Gja1", "Htra1", "Aqp4", "Ntsr2"), group.by = "astro_clusters",
+  cols = astro@misc$clusters_Colour_Pal) 
+
 VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]), group.by = "astro_clusters",
   cols = astro@misc$clusters_Colour_Pal) 
 
