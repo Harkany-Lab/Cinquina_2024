@@ -65,6 +65,9 @@ suppressPackageStartupMessages({
   options(future.globals.maxSize = 1e9)
   options(Seurat.object.assay.version = "v5")
 })
+
+reseed <- 42
+set.seed(reseed)
 ```
 
 
@@ -143,11 +146,18 @@ orig_srt <- Read10X(data.dir = here("data/SCP1290/expression/601ae2f4771a5b0d725
 # Convert the log1p normalized matrix to a standard matrix if it's not already
 normalized_matrix <- as.matrix(orig_srt)
 
-# Reverse the log1p transformation to get the count matrix
+# Reverse the log1p transformation to get the scaled count matrix
 count_matrix <- expm1(normalized_matrix)
 
-# Convert the count matrix to a sparse matrix format (dgCMatrix) if needed
-count_matrix_sparse <- as(count_matrix, "dgCMatrix")
+# Extract scaling factors
+scaling_factors <- orig_metadata[orig_metadata$cell_name == colnames(count_matrix),]$nCount_RNA / 1e4
+
+# Multiply each column by its scaling factor and round the results (it's not necessary but just to be sure)
+scaled_count_matrix <- sweep(count_matrix, 2, scaling_factors, FUN = "*")
+scaled_count_matrix <- round(scaled_count_matrix)
+
+# Convert the count matrix to a sparse matrix format (dgCMatrix) as needed
+count_matrix_sparse <- as(scaled_count_matrix, "dgCMatrix")
 
 # Create a Seurat object using the recovered count matrix
 merged_cortex <- CreateSeuratObject(counts = count_matrix_sparse, meta.data = orig_metadata)
@@ -166,6 +176,24 @@ merged_cortex <-
     palette = rev(brewer.pal(n = 11, name = "Spectral")),
     palette_name = "expr_Colour_Pal"
   )
+
+merged_cortex <- Store_Palette_Seurat(
+  seurat_object = merged_cortex,
+  palette = ggsci::pal_ucscgb("default")(length(levels(merged_cortex$New_cellType))),
+  palette_name = "types_Colour_Pal",
+  overwrite = T
+)
+names(merged_cortex@misc$types_Colour_Pal) <- levels(merged_cortex$New_cellType)
+
+merged_cortex <- Store_Palette_Seurat(
+  seurat_object = merged_cortex,
+  palette = ggsci::pal_gsea("default")(length(levels(merged_cortex$stage))),
+  palette_name = "stage_Colour_Pal",
+  overwrite = T
+)
+names(merged_cortex@misc$stage_Colour_Pal) <- levels(merged_cortex$stage)
+
+
 
 # Get the list of S100 family genes
 s100_genes <- grep("^S100", rownames(merged_cortex), value = TRUE)
@@ -338,14 +366,18 @@ p1 <- DimPlot(
   merged_cortex,
   reduction = "umap",
   group.by = c("stage", "New_cellType"),
-  combine = FALSE, label.size = 2
+  combine = FALSE, label.size = 2,
+  alpha = 0.7,
+  cols = c(merged_cortex@misc$types_Colour_Pal, merged_cortex@misc$stage_Colour_Pal)
 )
 
 p2 <- DimPlot(
   merged_cortex,
   reduction = "tsne",
   group.by = c("stage", "New_cellType"),
-  combine = FALSE, label.size = 2
+  combine = FALSE, label.size = 2,
+  alpha = 0.7,
+  cols = c(merged_cortex@misc$types_Colour_Pal, merged_cortex@misc$stage_Colour_Pal)
 )
 ```
 
@@ -405,30 +437,49 @@ compact_plot <- DotPlot(
 print(compact_plot)
 ```
 
+```{r}
+table(merged_cortex$New_cellType)
+
+merged_cortex@meta.data |> janitor::tabyl(New_cellType, stage)
+```
+
+
 ```{r plot-various-features-all-cells, fig.height=6.54545455, fig.width=48}
 plot_gene_by_dev <- function(x) {
-  f_plot <- FeaturePlot_scCustom(
+  f_plot <- FeaturePlot(
     merged_cortex,
-    colors_use = merged_cortex@misc$expr_Colour_Pal,
+    cols = merged_cortex@misc$expr_Colour_Pal,
     features = x,
-    layer = "data",
     max.cutoff = "q99",
-    na_color = "lightgray",
-    figure_plot = T,
     pt.size = 1,
+    alpha = 0.6,
+    order = TRUE,
     reduction = "umap",
     split.by = "stage",
-    split_collect = FALSE,
-    label = F,
-    label_feature_yaxis = TRUE,
-    combine = FALSE
+    combine = T
   )
   
-  print(f_plot)
+  # Combine the plots into a single grid
+  combined_plot <- patchwork::wrap_plots(f_plot, nrow = 1)
+  
+  # Display the combined plot
+  print(combined_plot)
 }
 
 genes.embed |> purrr::walk(plot_gene_by_dev)
+```
 
+```{r plot-density-s100a6-CaCyBP-all-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(merged_cortex,
+            blend = TRUE,
+            features = c("S100a6", "Cacybp"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q50",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 
@@ -466,14 +517,18 @@ p1 <- DimPlot(
   astro,
   reduction = "umap",
   group.by = c("stage", "New_cellType"),
-  combine = FALSE, label.size = 2
+  alpha = 0.6,
+  combine = FALSE, label.size = 2,
+  cols = c(merged_cortex@misc$types_Colour_Pal, merged_cortex@misc$stage_Colour_Pal)
 )
 
 p2 <- DimPlot(
   astro,
   reduction = "tsne",
   group.by = c("stage", "New_cellType"),
-  combine = FALSE, label.size = 2
+  alpha = 0.6,
+  combine = FALSE, label.size = 2,
+  cols = c(merged_cortex@misc$types_Colour_Pal, merged_cortex@misc$stage_Colour_Pal)
 )
 ```
 
@@ -482,45 +537,123 @@ wrap_plots(c(p1, p2), ncol = 2, byrow = F)
 ```
 
 ```{r plot-reclustered-astro-cells, fig.height=4.5, fig.width=5}
+astro <- Store_Palette_Seurat(
+  seurat_object = astro,
+  palette = ggsci::pal_igv("default")(length(levels(astro$astro_clusters))),
+  palette_name = "clusters_Colour_Pal",
+  overwrite = T
+)
+names(astro@misc$clusters_Colour_Pal) <- levels(astro$astro_clusters)
+
 DimPlot(
   astro,
   reduction = "umap",
   group.by = c("astro_clusters"),
   combine = FALSE, label.size = 2,
-  label = T
+  alpha = 0.6,
+  label = T,
+  cols = astro@misc$clusters_Colour_Pal
 )
 ```
 
-```{r plot-s100-features-astro-cells, fig.height=72, fig.width=48}
-# Create a custom FeaturePlot for each S100 gene
-# plot_list <-
-#     lapply(
-#         c(s100_genes, "Cacybp", "Siah1a", "Siah1b"),
-#         function(gene) {
-#             FeaturePlot_scCustom(
-#                 seurat_object = astro,
-#                 features = gene,
-#                 colors_use = merged_cortex@misc$expr_Colour_Pal,
-#                 na_color = "lightgray",
-#                 layer = "data",
-#                 order = TRUE,
-#                 pt.size = 1,
-#                 reduction = "umap",
-#                 split.by = "stage",
-#                 split_collect = FALSE,
-#                 label = F,
-#                 label_feature_yaxis = TRUE,
-#                 combine = FALSE
-#             )
-#         })
-# 
-# 
-# # Combine the plots into a single grid
-# combined_plot <- patchwork::wrap_plots(plot_list, ncol = 1)
-# 
-# # Display the combined plot
-# print(combined_plot)
+## Differential Gene expression of astrocytic clusters 5 vs. 8 {.tabset}
+
+```{r subset-astro-clusters-for-dge-analysis}
+Idents(astro) <- "New_cellType"
+astro_subset <- subset(astro, idents = c("Astrocytes"))
+Idents(astro_subset) <- "astro_clusters"
+astro_subset <- subset(astro_subset, idents = c("7", "9", "13", "15", "16"))
+
+
+# pseudobulk the counts based on donor-condition-celltype
+pseudo_combined_astro_subset <- AggregateExpression(
+  astro_subset,
+  assays = "RNA",
+  return.seurat = TRUE,
+  group.by = c("stage", "astro_clusters"))
+
+# each 'cell' is a donor-condition-celltype pseudobulk profile
+tail(Cells(pseudo_combined_astro_subset))
+
+# the metadata for the pseudobulk object is missing, so we need to add it back
+pseudo_combined_astro_subset$astro_clusters <- sapply(strsplit(Cells(pseudo_combined_astro_subset), split = "_"), "[", 2)
+pseudo_combined_astro_subset$stage <- sapply(strsplit(Cells(pseudo_combined_astro_subset), split = "_"), "[", 1)
 ```
+
+```{r plot-subset-astro-cells, fig.height=4.5, fig.width=5}
+DimPlot(
+  astro_subset,
+  reduction = "umap",
+  group.by = c("astro_clusters"),
+  combine = FALSE, label.size = 2,
+  alpha = 0.6,
+  label = T,
+  cols = astro@misc$clusters_Colour_Pal
+)
+```
+
+### Violin plots
+
+```{r find-markers-of-astrocytic-subgroups, fig.height=18, fig.width=12}
+## DEG by two methods
+
+astros.de <- FindAllMarkers(astro_subset, min.cells.group = 1, test.use = "LR", base = 10, only.pos = F, verbose = FALSE)
+head(astros.de, n = 10)
+
+Idents(pseudo_combined_astro_subset) <- "astro_clusters"
+bulk.astros.de <- FindAllMarkers(object = pseudo_combined_astro_subset, 
+                         min.cells.group = 1,
+                         test.use = "DESeq2",
+                         only.pos = F)
+head(bulk.astros.de, n = 15)
+
+# compare the DE P-values between the single-cell level and the pseudobulk level results
+names(bulk.astros.de) <- paste0(names(bulk.astros.de), ".bulk")
+bulk.astros.de$gene <- rownames(bulk.astros.de)
+
+names(astros.de) <- paste0(names(astros.de), ".sc")
+astros.de$gene <- rownames(astros.de)
+
+merge_dat <- merge(astros.de, bulk.astros.de, by = "gene")
+merge_dat <- merge_dat[order(merge_dat$p_val.bulk), ]
+
+# Number of genes that are marginally significant in both; marginally significant only in bulk; and marginally significant only in single-cell
+common <-
+  merge_dat |>
+  filter(merge_dat$p_val.bulk < 0.05 & 
+           merge_dat$p_val.sc < 0.05) |>
+  group_by(cluster.bulk) |> 
+  slice_max(order_by = avg_log10FC.sc, n = 5) |> 
+  pull(gene)
+
+only_sc <- merge_dat$gene[which(merge_dat$p_val.bulk > 0.05 & 
+                                  merge_dat$p_val.sc < 0.05)]
+only_bulk <- merge_dat$gene[which(merge_dat$p_val.bulk < 0.05 & 
+                                    merge_dat$p_val.sc > 0.05)]
+print(paste0('# Common: ',length(common)))
+print(paste0('# Only in single-cell: ',length(only_sc)))
+print(paste0('# Only in bulk: ',length(only_bulk)))
+
+
+# create a new column to annotate sample-condition-celltype in the single-cell dataset
+astro_subset$stage.astro_clusters <- paste0(astro_subset$astro_clusters, "-", astro_subset$stage)
+
+# generate violin plot 
+Idents(astro_subset) <- "astro_clusters"
+print(merge_dat[merge_dat$gene %in% common[1:25],c('gene','p_val.sc','p_val.bulk', 'cluster.bulk')])
+```
+
+
+```{r plot-vln-markers-of-astrocytic-subgroups, fig.height=18, fig.width=12}
+VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]), group.by = "astro_clusters",
+  cols = astro@misc$clusters_Colour_Pal) 
+
+VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:6]), group.by = "stage.astro_clusters", ncol = 1) 
+```
+
+
+
+## Distribution of S100-proteins family across development of astrocytic lineage
 
 
 ```{r plot-s100-dot-astro-cells}
@@ -551,7 +684,7 @@ compact_plot <- DotPlot(
                "Siah1b"),
   group.by = "stage",
   cluster.idents = F,
-  cols = c("yellow", "cyan", "magenta"),
+  cols = merged_cortex@misc$types_Colour_Pal[unique(astro$New_cellType)],
   scale = TRUE,
   split.by = "New_cellType",
   dot.scale = 12
@@ -561,138 +694,323 @@ compact_plot <- DotPlot(
 print(compact_plot)
 ```
 
+```{r plot-s100-dot-split-astro-cells-cluster, fig.height=21, fig.width=10}
+astro$type.cluster <- str_c(astro$New_cellType, astro$astro_clusters, sep = "_")
+# Create a compact DotPlot
+compact_plot <- DotPlot(
+  object = astro,
+  features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]),
+  group.by = "stage",
+  cluster.idents = F,
+  cols = ggsci::pal_igv("default")(35),
+  scale = TRUE,
+  split.by = "type.cluster",
+  dot.scale = 12
+) + RotatedAxis()
 
+# Display the compact plot
+print(compact_plot)
+```
+
+## Blend plots of S100a6 and CaCyBP
+
+```{r plot-density-s100a6-CaCyBP-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Cacybp"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
+```
 
 ```{r plot-density-s100a6-Gja1-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Gja1"))
+            features = c("S100a6", "Gja1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Gja1-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Gja1"))
+            features = c("Cacybp", "Gja1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Glul-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Glul"))
+            features = c("S100a6", "Glul"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Glul-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Glul"))
+            features = c("Cacybp", "Glul"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Apoe-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Apoe"))
+            features = c("S100a6", "Apoe"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Apoe-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Apoe"))
+            features = c("Cacybp", "Apoe"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Ntrk2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Ntrk2"))
+            features = c("S100a6", "Ntrk2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Ntrk2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Ntrk2"))
+            features = c("Cacybp", "Ntrk2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Ntsr2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Ntsr2"))
+            features = c("S100a6", "Ntsr2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Ntsr2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Ntsr2"))
+            features = c("Cacybp", "Ntsr2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Ndrg2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Ndrg2"))
+            features = c("S100a6", "Ndrg2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Ndrg2-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Ndrg2"))
+            features = c("Cacybp", "Ndrg2"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Aldoc-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Aldoc"))
+            features = c("S100a6", "Aldoc"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Aldoc-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Aldoc"))
+            features = c("Cacybp", "Aldoc"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Slc1a3-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Slc1a3"))
+            features = c("S100a6", "Slc1a3"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Slc1a3-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Slc1a3"))
+            features = c("Cacybp", "Slc1a3"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Gfap-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Gfap"))
+            features = c("S100a6", "Gfap"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Gfap-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Gfap"))
+            features = c("Cacybp", "Gfap"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Htra1-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Htra1"))
+            features = c("S100a6", "Htra1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Htra1-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Htra1"))
+            features = c("Cacybp", "Htra1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-s100a6-Aqp4-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("S100a6", "Aqp4"))
+            features = c("S100a6", "Aqp4"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r plot-density-CaCyBP-Aqp4-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
-            features = c("Cacybp", "Aqp4"))
+            features = c("Cacybp", "Aqp4"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
 ```
 
 ```{r}
