@@ -89,7 +89,14 @@ write_bib(c("base", "Seurat", "SeuratWrappers", "SeuratData", "sctransform",
 
 # Introduction
 
-This methods section details the analytical approaches used in our study of astrocyte modulation of neuronal development through S100A6 signaling. We employed state-of-the-art single-cell RNA sequencing analysis techniques to explore gene expression patterns in the developing mouse cortex, and used robust statistical methods to analyze MTT assay data measuring astrocyte viability under various conditions. Our approach emphasizes reproducibility, statistical rigor, and comprehensive data visualization.
+This methods section details the analytical approaches used in our study
+of astrocyte modulation of neuronal development through S100A6
+signaling. We employed state-of-the-art single-cell RNA sequencing
+analysis techniques to explore gene expression patterns in the
+developing mouse cortex, and used robust statistical methods to analyze
+MTT assay data measuring astrocyte viability under various conditions.
+Our approach emphasizes reproducibility, statistical rigor, and
+comprehensive data visualization.
 
 ```{r load}
 versions <- list(
@@ -110,38 +117,83 @@ versions <- list(
 
 # Single-cell RNA sequencing data analysis
 
-We analyzed single-cell RNA sequencing data from developing mouse cortex spanning embryonic day (E) 10 to postnatal day (P) 4. The dataset was obtained from [@dibellaMolecularLogicCellular2021] and accessed through the Single Cell Portal (SCP1290; [@tarhanSingleCellPortal2023]). Raw count data and metadata were downloaded and processed using Seurat (v`r packageVersion("Seurat")`) in R (v`r R.version.string`). We chose Seurat for its comprehensive toolset for quality control, analysis, and exploration of single-cell RNA-seq data, as well as its wide adoption in the field.
+We analyzed single-cell RNA sequencing data from developing mouse cortex
+spanning embryonic day (E) 10 to postnatal day (P) 4. The dataset was
+obtained from [@dibellaMolecularLogicCellular2021] and accessed through
+the Single Cell Portal (SCP1290; [@tarhanSingleCellPortal2023]). Raw
+count data and metadata were downloaded and processed using Seurat
+(v`r packageVersion("Seurat")`),
+[@satijaSpatialReconstructionSinglecell2015;
+@stuartIntegrativeSinglecellAnalysis2019] in R (v`r R.version.string`).
+We chose Seurat for its comprehensive toolset for quality control,
+analysis, and exploration of single-cell RNA-seq data, as well as its
+wide adoption in the field.
 
 ## Data preprocessing and quality control
 
-The raw count matrix was loaded using the `Read10X()` function from Seurat. We performed the following preprocessing steps:
+The raw count matrix was loaded using the `Read10X()` function from
+Seurat. We performed the following preprocessing steps:
 
-The log1p normalized matrix was converted back to raw counts by applying `expm1()`.
-Scaling factors were calculated based on the total UMI counts per cell.
-The count matrix was scaled by multiplying each cell's counts by its scaling factor.
-A new Seurat object was created using the scaled count matrix.
-Cells annotated as doublets, low quality, or red blood cells were removed using the `subset()` function. The data was then normalized using the `NormalizeData()` function, and 5000 highly variable features were identified using `FindVariableFeatures()`.
+The log1p normalized matrix was converted back to raw counts by applying
+`expm1()`. Scaling factors were calculated based on the total UMI counts
+per cell. The count matrix was scaled by multiplying each cell's counts
+by its scaling factor. A new Seurat object was created using the scaled
+count matrix. Cells annotated as doublets, low quality, or red blood
+cells were removed using the `subset()` function. The data was then
+normalized using the `NormalizeData()` function, and 5000 highly
+variable features were identified using `FindVariableFeatures()`.
 
 ## Dimensionality reduction and clustering
 
-We performed principal component analysis (PCA) on the variable features using `RunPCA()`. Based on the Elbow plot, which indicates the explained variability of each principal component, we selected the first 30 out of 50 PCs for downstream analysis. This choice helps reduce noise in the data while ensuring biological reproducibility of results. 
+We performed principal component analysis (PCA) on the variable features
+using `RunPCA()`. Based on the Elbow plot, which indicates the explained
+variability of each principal component, we selected the first 30 out of
+50 PCs for downstream analysis. This choice helps reduce noise in the
+data while ensuring biological reproducibility of results.
 
-Uniform Manifold Approximation and Projection (UMAP) and t-distributed Stochastic Neighbor Embedding (t-SNE) were used for dimensionality reduction, with embeddings stored in the Seurat object. Both techniques used the selected 30 PCs as input.
+Uniform Manifold Approximation and Projection (UMAP;
+[@mcinnesUMAPUniformManifold2018]) and t-distributed Stochastic Neighbor
+Embedding (t-SNE; [@maatenVisualizingDataUsing2008;
+@kobakInitializationCriticalPreserving2021]) were used for
+dimensionality reduction, with embeddings stored in the Seurat object.
+Both techniques used the selected 30 PCs as input.
 
-Cells were clustered using the `FindNeighbors()` and `FindClusters()` functions. For community detection, we employed the Leiden algorithm (resolution = 0.7) instead of the commonly used Louvain algorithm or alternatives such as walktrap, multilevel, or infomap. The Leiden algorithm was chosen for its ability to find converged optimal solutions more efficiently, which is particularly beneficial for large-scale single-cell datasets [@traagLouvainLeidenGuaranteeing2019].
-
+Cells were clustered using the `FindNeighbors()` and `FindClusters()`
+functions. For community detection, we employed the Leiden algorithm
+(resolution = 0.7) instead of the commonly used Louvain algorithm or
+alternatives such as walktrap, multilevel, or infomap. The Leiden
+algorithm was chosen for its ability to find converged optimal solutions
+more efficiently, which is particularly beneficial for large-scale
+single-cell datasets [@traagLouvainLeidenGuaranteeing2019].
 
 ## Gene expression analysis
 
-We analyzed the expression of S100 family genes and a curated list of genes of interest across different developmental stages and cell types. Feature plots, violin plots, and dot plots were generated using Seurat's visualization functions (`FeaturePlot()`, `VlnPlot()`, `DotPlot()`) and custom functions from the scCustomize package (v`r packageVersion("scCustomize")`).
+We analyzed the expression of S100 family genes and a curated list of
+genes of interest across different developmental stages and cell types.
+Feature plots, violin plots, and dot plots were generated using Seurat's
+visualization functions (`FeaturePlot()`, `VlnPlot()`, `DotPlot()`) and
+custom functions from the scCustomize package
+(v`r packageVersion("scCustomize")`).
 
 ## Analysis of astrocyte lineage
 
-Cells annotated as astrocytes, apical progenitors, and cycling glial cells were subset for focused analysis of the astrocyte lineage. This subset was re-clustered using the same approach as described above. We performed differential expression analysis between astrocyte clusters using both the `FindAllMarkers` function in Seurat (using a logistic regression test) and DESeq2 (v`r packageVersion("DESeq2")`) on pseudobulk data aggregated by cluster and developmental stage. The combination of these two approaches allows us to leverage the strengths of both single-cell and bulk RNA-seq differential expression methods.
+Cells annotated as astrocytes, apical progenitors, and cycling glial
+cells were subset for focused analysis of the astrocyte lineage. This
+subset was re-clustered using the same approach as described above. We
+performed differential expression analysis between astrocyte clusters
+using both the `FindAllMarkers` function in Seurat (using a logistic
+regression test; [@ntranosDiscriminativeLearningApproach2019]) and
+DESeq2 (v`r packageVersion("DESeq2")`), @loveModeratedEstimationFold2014
+on pseudobulk data aggregated by cluster and developmental stage. The
+combination of these two approaches allows us to leverage the strengths
+of both single-cell and bulk RNA-seq differential expression methods.
 
 ## Visualization
 
-Two-dimensional UMAP plots were generated using `FeaturePlot()` with the `blend = TRUE` option to examine co-expression patterns of key genes. We used custom color palettes and the patchwork package to create composite figures.
+Two-dimensional UMAP plots were generated using `FeaturePlot()` with the
+`blend = TRUE` option to examine co-expression patterns of key genes. We
+used custom color palettes and the patchwork package to create composite
+figures.
 
 # MTT Assay Analysis
 
@@ -154,25 +206,38 @@ using estimation statistics [@hoMovingValuesData2019].
 
 The analysis workflow was as follows:
 
-1.  Data was loaded from a TSV file using `read_tsv()` and reshaped into long format using `tidyr::gather()`.
+1.  Data was loaded from a TSV file using `read_tsv()` and reshaped into
+    long format using `tidyr::gather()`.
 
-2.  For each EPA concentration (5 μM, 10 μM, and 30 μM), control and treatment groups were compared using the `load()` function from DABEST. The data was loaded with the `minimeta = TRUE` argument to enable mini-meta analysis across multiple experimental replicates.
+2.  For each EPA concentration (5 μM, 10 μM, and 30 μM), control and
+    treatment groups were compared using the `load()` function from
+    DABEST. The data was loaded with the `minimeta = TRUE` argument to
+    enable mini-meta analysis across multiple experimental replicates.
 
-3.  Mean differences between EPA-treated and control samples were calculated using the `mean_diff()` function. This function computes:
+3.  Mean differences between EPA-treated and control samples were
+    calculated using the `mean_diff()` function. This function computes:
 
     -   The individual mean differences for each experimental replicate
-    -   A weighted average of the mean differences (mini-meta delta) using the generic inverse-variance method
+    -   A weighted average of the mean differences (mini-meta delta)
+        using the generic inverse-variance method
 
-4.  5000 bootstrap resamples were used to generate effect size estimates with 95% confidence intervals. The confidence intervals are bias-corrected and accelerated.
+4.  5000 bootstrap resamples were used to generate effect size estimates
+    with 95% confidence intervals. The confidence intervals are
+    bias-corrected and accelerated.
 
-5.  Results were visualized using the `dabest_plot()` function to create Cumming estimation plots. These plots show:
+5.  Results were visualized using the `dabest_plot()` function to create
+    Cumming estimation plots. These plots show:
 
     -   Raw data points for each group
     -   Group means with 95% confidence intervals
-    -   The mean difference for each replicate with its 95% confidence interval
+    -   The mean difference for each replicate with its 95% confidence
+        interval
     -   The weighted mini-meta delta with its 95% confidence interval
 
-6.  Additional statistical information, including p-values from permutation t-tests, was also calculated and reported, although the focus of the analysis was on effect sizes and their confidence intervals rather than null hypothesis significance testing.
+6.  Additional statistical information, including p-values from
+    permutation t-tests, was also calculated and reported, although the
+    focus of the analysis was on effect sizes and their confidence
+    intervals rather than null hypothesis significance testing.
 
 This approach allows for a comprehensive view of the treatment effects
 across multiple replicates, taking into account both the magnitude of
@@ -204,7 +269,18 @@ results and output. Reproducible reports were produced using knitr
 
 # Conclusion
 
-Our methodological approach combines cutting-edge single-cell RNA sequencing analysis techniques with robust statistical methods for analyzing experimental data. By using tools like 1) Seurat for scRNA-seq analysis with two different frameworks for differential gene expression analysis: logit tailored for the analysis of scRNA-seq data, and DESeq2 on pseudo-bulk data, and 2) DABEST for MTT assay analysis, we ensure a comprehensive and statistically sound exploration of astrocyte-mediated neuronal development. The use of estimation statistics and mini-meta analysis allows for a nuanced interpretation of experimental results, while our focus on reproducibility and open science practices ensures that our findings can be thoroughly validated and built upon by the scientific community.
+Our methodological approach combines cutting-edge single-cell RNA
+sequencing analysis techniques with robust statistical methods for
+analyzing experimental data. By using tools like 1) Seurat for scRNA-seq
+analysis with two different frameworks for differential gene expression
+analysis: logit tailored for the analysis of scRNA-seq data, and DESeq2
+on pseudo-bulk data, and 2) DABEST for MTT assay analysis, we ensure a
+comprehensive and statistically sound exploration of astrocyte-mediated
+neuronal development. The use of estimation statistics and mini-meta
+analysis allows for a nuanced interpretation of experimental results,
+while our focus on reproducibility and open science practices ensures
+that our findings can be thoroughly validated and built upon by the
+scientific community.
 
 # Summary
 

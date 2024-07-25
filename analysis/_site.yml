@@ -14,7 +14,7 @@ navbar:
         - text: Exploratory analysis of CaCyBP and S100a6 expression in embryonic mice cortex dataset with focus on astrocytic lineage
           href: cortex_visualisation.html
     - text: "Methods"
-        href: methods.html
+      href: methods.html
   right:
     - text: "License"
       href: license.html
