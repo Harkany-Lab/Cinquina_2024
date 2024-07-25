@@ -69,7 +69,6 @@ library(scCustomize)
 library(SeuratData)
 library(SeuratWrappers)
 library(Azimuth)
-library(BPCells)
 library(magrittr)
 library(cowplot)
 library(patchwork)
@@ -82,7 +81,7 @@ write_bib(c("base", "Seurat", "SeuratWrappers", "SeuratData", "sctransform",
             "patchwork", "scCustomize", "cowplot", "UpSetR", "gridExtra", 
             "tidyverse", "dplyr", "tidyr", "magrittr", "stringr", "purrr", 
             "here", "workflowr", "knitr", "rmarkdown", "dabestr", 
-            "RColorBrewer", "Azimuth", "BPCells", "DESeq2", "ggplot2", 
+            "RColorBrewer", "Azimuth", "DESeq2", "ggplot2", 
             "viridis", "jsonlite", "glue"),
           file = here::here("output", DOCNAME, "packages.bib"))
 ```
@@ -108,7 +107,6 @@ versions <- list(
     SeuratData = packageVersion("SeuratData"),
     SeuratWrappers = packageVersion("SeuratWrappers"),
     Azimuth = packageVersion("Azimuth"),
-    BPCells = packageVersion("BPCells"),
     cowplot = packageVersion("cowplot"),
     patchwork = packageVersion("patchwork"),
     R = R.version.string
