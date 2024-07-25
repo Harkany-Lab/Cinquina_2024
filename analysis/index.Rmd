@@ -6,6 +6,82 @@ output:
     toc: false
 editor_options:
   chunk_output_type: console
+bibliography:
+    - "`r here::here('data/references/references.bib')`"
 ---
 
-Welcome to my research website.
+Welcome to the analysis website for the manuscript "Astrocytes modulate
+neuronal development by S100A6 signaling". This site contains the code
+and detailed methods used in our study.
+
+1.  System requirements
+
+-   All software dependencies and operating systems (including version
+    numbers) are available in the [methods
+    section](methods.html "Methods section of the analysis website")
+-   This analysis has been tested on x86_64-pc-linux-gnu (64-bit)
+    platform running under Ubuntu 22.04.1 LTS
+-   The analysis is performed within a Docker container, which can be
+    obtained from Docker Hub
+
+2.  Installation guide
+
+-   To reproduce the analysis environment, pull the Docker image using:
+
+    ```         
+    docker pull etretiakov/workbench-session-complete:jammy-2024.06.19-custom-12.8
+    ```
+
+-   Typical pull time on a standard desktop computer with good internet
+    connection should be within 30 minutes
+
+3.  Data availability
+
+-   Raw data were obtained from the Single Cell Portal
+    [@tarhanSingleCellPortal2023; @dibellaMolecularLogicCellular2021]
+-   All generated data are available in this repository
+
+4.  Analysis reproduction
+
+-   To reproduce the analysis and figures, use the following command
+    within the Docker container:
+
+``` r
+workflowr::wflow_publish(
+ c(
+   "analysis/index.Rmd",
+   "analysis/methods.Rmd",
+   "analysis/cortex_visualisation.Rmd",
+   "analysis/MTT.Rmd"
+ ),
+ message = "Reproduce analysis site",
+ project = "."
+)
+```
+
+This command will:
+
+1.  Publish the main index page, methods page, cortical development
+    analysis, and MTT assay analysis.
+2.  Use the commit message "Reproduce analysis site".
+3.  Assume the current working directory is the project root (specified
+    by `project = "."`).
+
+Make sure to run this command from within your Docker container to
+ensure all dependencies are available. You may need to adjust the file
+paths if your R Markdown files are located in a different directory
+within your project structure.
+
+-   Expected run time for full analysis reproduction on a resonably
+    powerful cluster node or workstation is within several hours
+
+5.  Additional resources
+
+-   [Seurat analysis of cortical
+    development](cortex_visualisation.html "Cortical development analysis")
+-   [MTT assay analysis](MTT.html "MTT assay analysis")
+-   [Full methods
+    description](methods.html "Methods section of the analysis website")
+
+For any questions or issues, please open an issue on the [GitHub
+repository](https://github.com/harkany-lab/Cinquina_2024).

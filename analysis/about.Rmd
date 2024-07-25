@@ -5,6 +5,40 @@ output:
     toc: false
 editor_options:
   chunk_output_type: console
+bibliography:
+    - "`r here::here('data/references/references.bib')`"
 ---
 
-Describe your project.
+# Astrocytes modulate neuronal development by S100A6 signaling
+
+This repository contains code and output of the analysis of single-cell RNA sequencing data and experimental results for the article [Cinquina V et al., 2024][publication].
+
+Please see file `CITATION` in the root of your Git repo that contains the citation information.
+
+To see the results of the analysis please visit the [analysis website][website].
+
+## Purpose:
+
+We aimed to investigate the role of astrocyte-derived factors in regulating neuronal morphogenesis during brain development. Specifically, we hypothesized that S100A6, a Ca²⁺-binding protein expressed by astrocytes, could act as a gliotransmitter to modulate neuronal development through its interaction with calcyclin-binding protein (CaCyBP) in neurons.
+
+## Results:
+
+1. S100A6 is specifically expressed in astrocytes during late embryonic and early postnatal development of the mouse cortex.
+2. CaCyBP, the binding partner of S100A6, is expressed in neurons during the same developmental period.
+3. S100A6 is released by astrocytes in response to glutamate and eicosapentaenoic acid (EPA) stimulation.
+4. Exogenous S100A6 inhibits neurite outgrowth and reduces CaCyBP levels in neurons.
+5. CaCyBP regulates protein turnover in neurons through the unfolded protein response (UPR) pathway.
+6. Maternal diet, particularly EPA intake, influences S100A6-CaCyBP signaling in the developing fetal brain.
+
+## Conclusions:
+
+Our results describe a novel molecular axis of astrocyte-neuron communication, which is unique in limiting neuronal morphogenesis through the ER/UPS pathway. S100A6 acts as an astrocyte-specific gliotransmitter, which regulates neuronal proteostasis through CaCyBP. This signaling pathway is sensitive to environmental factors, particularly maternal nutrition during pregnancy.
+
+## Data and Code Availability:
+
+Raw data were obtained from the Single Cell Portal [@tarhanSingleCellPortal2023; @dibellaMolecularLogicCellular2021]. All generated data are available in this repository.
+
+The code for the analysis is available at https://github.com/harkany-lab/Cinquina_2024.
+
+[publication]: https://doi.org/ "Cinquina V et al., 2024"
+[website]: https://harkany-lab.github.io/Cinquina_2024/index.html "Analysis website"

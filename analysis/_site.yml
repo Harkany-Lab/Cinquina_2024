@@ -1,21 +1,30 @@
-name: "Cinquina_2024"
+name: "Cinquina et al., 2024"
 output_dir: ../docs
 navbar:
-  title: "Cinquina_2024"
+  title: "Cinquina et al., 2024"
   left:
-  - text: Home
-    href: index.html
-  - text: Analysis
-    menu:
-      - text: MTT assay analysis of EDA-treated astrocytes
-        href: MTT.html
-  - text: About
-    href: about.html
-  - text: License
-    href: license.html
+    - text: Home
+      href: index.html
+    - text: About
+      href: about.html
+    - text: Analysis
+      menu:
+        - text: MTT assay analysis of EDA-treated astrocytes
+          href: MTT.html
+        - text: Exploratory analysis of CaCyBP and S100a6 expression in embryonic mice cortex dataset with focus on astrocytic lineage
+          href: cortex_visualisation.html
+    - text: "Methods"
+        href: methods.html
+  right:
+    - text: "License"
+      href: license.html
+    - icon: fa-github
+      href: https://github.com/Harkany-Lab/Cinquina_2024
 output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
     theme: cosmo
     highlight: textmate
+    code_folding: hide
+    df_print: paged
