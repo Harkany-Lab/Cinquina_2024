@@ -54,7 +54,7 @@ suppressPackageStartupMessages({
   library(SeuratData)
   library(SeuratWrappers)
   library(Azimuth)
-  library(BPCells)
+  # library(BPCells)
   library(dplyr)
   library(magrittr)
   library(stringr)
