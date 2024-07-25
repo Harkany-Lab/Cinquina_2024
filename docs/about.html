@@ -343,7 +343,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -354,8 +354,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -368,9 +368,9 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
@@ -393,18 +393,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -495,15 +498,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treec7313e908bdae10e52f4bf6fa1ecd2d1a9c7fb74targetblankc7313e9a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree5a9e7bace91eb867ebaf10de67db8e959846c7f3targetblank5a9e7baa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/c7313e908bdae10e52f4bf6fa1ecd2d1a9c7fb74" target="_blank">c7313e9</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/5a9e7bace91eb867ebaf10de67db8e959846c7f3" target="_blank">5a9e7ba</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treec7313e908bdae10e52f4bf6fa1ecd2d1a9c7fb74targetblankc7313e9a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree5a9e7bace91eb867ebaf10de67db8e959846c7f3targetblank5a9e7baa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -513,7 +516,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/c7313e908bdae10e52f4bf6fa1ecd2d1a9c7fb74" target="_blank">c7313e9</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/5a9e7bace91eb867ebaf10de67db8e959846c7f3" target="_blank">5a9e7ba</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -534,6 +537,7 @@ Ignored files:
     Ignored:    data/azimuth_integrated.rds
 
 Unstaged changes:
+    Modified:   analysis/about.Rmd
     Modified:   analysis/methods.Rmd
     Modified:   output/methods/package-versions.json
     Modified:   output/methods/packages.bib
@@ -580,6 +584,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/5a9e7bace91eb867ebaf10de67db8e959846c7f3/docs/about.html" target="_blank">5a9e7ba</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -693,6 +714,9 @@ generated data are available in this repository.</p>
 <p>The code for the analysis is available at <a
 href="https://github.com/harkany-lab/Cinquina_2024"
 class="uri">https://github.com/harkany-lab/Cinquina_2024</a>.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
 <div id="ref-dibellaMolecularLogicCellular2021" class="csl-entry">

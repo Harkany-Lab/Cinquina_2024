@@ -52,14 +52,14 @@ knitr::opts_chunk$set(
 
 ```{r libaries, cache = FALSE}
 # Presentation
-library("glue")
-library("knitr")
+library(glue)
+library(knitr)
 
 # JSON
-library("jsonlite")
+library(jsonlite)
 
 # Tidyverse
-library("tidyverse")
+library(tidyverse)
 
 library(Seurat)
 library(dabestr)
@@ -282,7 +282,7 @@ scientific community.
 
 # Summary
 
-All analyses were performed using R v`r R.version.string`. Key packages
+All analyses were performed using `r R.version.string`. Key packages
 used include Seurat v`r packageVersion("Seurat")`, patchwork
 v`r packageVersion("patchwork")`, ggplot2
 v`r packageVersion("ggplot2")`, dplyr v`r packageVersion("dplyr")`, and

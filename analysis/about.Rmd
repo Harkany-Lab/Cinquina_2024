@@ -40,5 +40,7 @@ Raw data were obtained from the Single Cell Portal [@tarhanSingleCellPortal2023;
 
 The code for the analysis is available at https://github.com/harkany-lab/Cinquina_2024.
 
+## References
+
 [publication]: https://doi.org/ "Cinquina V et al., 2024"
 [website]: https://harkany-lab.github.io/Cinquina_2024/index.html "Analysis website"

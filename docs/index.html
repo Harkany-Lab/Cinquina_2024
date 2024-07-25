@@ -13,7 +13,7 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,8 +30,13 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -67,6 +72,29 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -226,6 +254,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -248,12 +279,15 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Cinquina_2024</a>
+      <a class="navbar-brand" href="index.html">Cinquina et al., 2024</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -265,23 +299,39 @@ $(document).ready(function () {
     <li>
       <a href="MTT.html">MTT assay analysis of EDA-treated astrocytes</a>
     </li>
+    <li>
+      <a href="cortex_visualisation.html">Exploratory analysis of CaCyBP and S100a6 expression in embryonic mice cortex dataset with focus on astrocytic lineage</a>
+    </li>
   </ul>
 </li>
 <li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="license.html">License</a>
+  <a href="methods.html">Methods</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="license.html">License</a>
+</li>
+<li>
+  <a href="https://github.com/Harkany-Lab/Cinquina_2024">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -293,7 +343,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -304,8 +354,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -314,13 +364,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-03-20
+<strong>Last updated:</strong> 2024-07-25
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
@@ -343,33 +393,120 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treefbebf814c4451560c1f362a248bb124bd2ee4fbatargetblankfbebf81a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240320code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240320)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240320code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240320)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree5a9e7bace91eb867ebaf10de67db8e959846c7f3targetblank5a9e7baa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/fbebf814c4451560c1f362a248bb124bd2ee4fba" target="_blank">fbebf81</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/5a9e7bace91eb867ebaf10de67db8e959846c7f3" target="_blank">5a9e7ba</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treefbebf814c4451560c1f362a248bb124bd2ee4fbatargetblankfbebf81a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree5a9e7bace91eb867ebaf10de67db8e959846c7f3targetblank5a9e7baa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -379,7 +516,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/fbebf814c4451560c1f362a248bb124bd2ee4fba" target="_blank">fbebf81</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/5a9e7bace91eb867ebaf10de67db8e959846c7f3" target="_blank">5a9e7ba</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -394,14 +531,17 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  analysis/MTT.Rmd
-    Untracked:  data/ASTRO_MTT_EPA.tsv
+    Ignored:    data/SCP1290/
+    Ignored:    data/azimuth_integrated.rds
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
+    Modified:   analysis/about.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/methods.Rmd
+    Modified:   output/methods/package-versions.json
+    Modified:   output/methods/packages.bib
 
 </code></pre>
 <p>
@@ -416,7 +556,6 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
 These are the previous versions of the repository in which changes were
 made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
@@ -451,6 +590,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/78f7fe4d55c950ff8ca12d6bc847278a91f40f7b/analysis/index.Rmd" target="_blank">78f7fe4</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-25
+</td>
+<td>
+add description
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/d69bcf7aed8ee80915dcfc71e123ee76de314394/docs/index.html" target="_blank">d69bcf7</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2024-03-20
+</td>
+<td>
+fix .gitignore
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/fbebf814c4451560c1f362a248bb124bd2ee4fba/analysis/index.Rmd" target="_blank">fbebf81</a>
 </td>
 <td>
@@ -470,7 +643,157 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
+<p>Welcome to the analysis website for the manuscript “Astrocytes
+modulate neuronal development by S100A6 signaling”. This site contains
+the code and detailed methods used in our study.</p>
+<ol style="list-style-type: decimal">
+<li>System requirements</li>
+</ol>
+<ul>
+<li>All software dependencies and operating systems (including version
+numbers) are available in the <a href="methods.html"
+title="Methods section of the analysis website">methods section</a></li>
+<li>This analysis has been tested on x86_64-pc-linux-gnu (64-bit)
+platform running under Ubuntu 22.04.1 LTS</li>
+<li>The analysis is performed within a Docker container, which can be
+obtained from Docker Hub</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Installation guide</li>
+</ol>
+<ul>
+<li><p>To reproduce the analysis environment, pull the Docker image
+using:</p>
+<pre><code>docker pull etretiakov/workbench-session-complete:jammy-2024.06.19-custom-12.8</code></pre></li>
+<li><p>Typical pull time on a standard desktop computer with good
+internet connection should be within 30 minutes</p></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Data availability</li>
+</ol>
+<ul>
+<li>Raw data were obtained from the Single Cell Portal <span
+class="citation">(Tarhan et al., n.d.; Di Bella et al. 2021)</span></li>
+<li>All generated data are available in this repository</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Analysis reproduction</li>
+</ol>
+<ul>
+<li>To reproduce the analysis and figures, use the following command
+within the Docker container:</li>
+</ul>
+<pre class="r"><code>workflowr::wflow_publish(
+ c(
+   &quot;analysis/cortex_visualisation.Rmd&quot;,
+   &quot;analysis/MTT.Rmd&quot;
+ ),
+ message = &quot;Reproduce analysis site&quot;,
+ project = &quot;.&quot;
+)</code></pre>
+<p>This command will:</p>
+<ol style="list-style-type: decimal">
+<li>Publish the main index page, methods page, cortical development
+analysis, and MTT assay analysis.</li>
+<li>Use the commit message “Reproduce analysis site”.</li>
+<li>Assume the current working directory is the project root (specified
+by <code>project = "."</code>).</li>
+</ol>
+<p>Make sure to run this command from within your Docker container to
+ensure all dependencies are available. You may need to adjust the file
+paths if your R Markdown files are located in a different directory
+within your project structure.</p>
+<ul>
+<li>Expected run time for full analysis reproduction on a resonably
+powerful cluster node or workstation is within several hours</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Additional resources</li>
+</ol>
+<ul>
+<li><a href="cortex_visualisation.html"
+title="Cortical development analysis">Seurat analysis of cortical
+development</a></li>
+<li><a href="MTT.html" title="MTT assay analysis">MTT assay
+analysis</a></li>
+<li><a href="methods.html"
+title="Methods section of the analysis website">Full methods
+description</a></li>
+</ul>
+<p>For any questions or issues, please open an issue on the <a
+href="https://github.com/harkany-lab/Cinquina_2024">GitHub
+repository</a>.</p>
+<div id="references" class="section level3">
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-dibellaMolecularLogicCellular2021" class="csl-entry">
+Di Bella, Daniela J., Ehsan Habibi, Robert R. Stickels, Gabriele Scalia,
+Juliana Brown, Payman Yadollahpour, Sung Min Yang, et al. 2021.
+<span>“Molecular logic of cellular diversification in the mouse cerebral
+cortex.”</span> <em>Nature</em> 595 (7868): 554–59. <a
+href="https://doi.org/10.1038/s41586-021-03670-5">https://doi.org/10.1038/s41586-021-03670-5</a>.
+</div>
+<div id="ref-tarhanSingleCellPortal2023" class="csl-entry">
+Tarhan, Leyla, Jon Bistline, Jean Chang, Bryan Galloway, Emily Hanna,
+and Eric Weitz. n.d. <span>“Single Cell Portal: An Interactive Home for
+Single-Cell Genomics Data.”</span> <a
+href="https://doi.org/10.1101/2023.07.13.548886">https://doi.org/10.1101/2023.07.13.548886</a>.
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-pc-linux-gnu
+Running under: Ubuntu 22.04.4 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: Etc/UTC
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] workflowr_1.7.1
+
+loaded via a namespace (and not attached):
+ [1] jsonlite_1.8.8    compiler_4.4.0    promises_1.3.0    Rcpp_1.0.12      
+ [5] stringr_1.5.1     git2r_0.33.0      callr_3.7.6       later_1.3.2      
+ [9] jquerylib_0.1.4   yaml_2.3.8        fastmap_1.2.0     here_1.0.1       
+[13] R6_2.5.1          knitr_1.47        tibble_3.2.1      rprojroot_2.0.4  
+[17] bslib_0.7.0       pillar_1.9.0      rlang_1.1.4       utf8_1.2.4       
+[21] cachem_1.1.0      stringi_1.8.4     httpuv_1.6.15     xfun_0.45        
+[25] getPass_0.2-4     fs_1.6.4          sass_0.4.9        cli_3.6.2        
+[29] magrittr_2.0.3    ps_1.7.6          digest_0.6.35     processx_3.8.4   
+[33] rstudioapi_0.16.0 lifecycle_1.0.4   vctrs_0.6.5       evaluate_0.24.0  
+[37] glue_1.7.0        whisker_0.4.1     fansi_1.0.6       rmarkdown_2.27   
+[41] httr_1.4.7        tools_4.4.0       pkgconfig_2.0.3   htmltools_0.5.8.1</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -519,6 +842,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
