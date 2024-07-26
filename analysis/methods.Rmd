@@ -7,7 +7,7 @@ output:
   workflowr::wflow_html:
     toc: true
     toc_float: yes
-    theme: cosmo
+    theme: journal
     highlight: textmate
     code_folding: hide
     df_print: paged

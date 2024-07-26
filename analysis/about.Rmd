@@ -3,6 +3,8 @@ title: "About"
 output:
   workflowr::wflow_html:
     toc: false
+    theme: journal
+    highlight: textmate
 editor_options:
   chunk_output_type: console
 bibliography:

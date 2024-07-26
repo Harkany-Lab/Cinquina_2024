@@ -4,7 +4,15 @@ author: "Evgenii O. Tretiakov"
 date: "`r Sys.Date()`"
 output:
   workflowr::wflow_html:
-    toc: true
+    toc: yes
+    toc_float: yes
+    theme: journal
+    highlight: textmate
+    code_folding: hide
+    df_print: paged
+editor_options:
+  markdown:
+    wrap: 72
 ---
 
 ```{r setup, echo=FALSE, include=FALSE}
