@@ -18,7 +18,7 @@
 <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -553,15 +553,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree7a9f863604ad3129acbc54465518b8fbd7e170cctargetblank7a9f863a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree373fd42326a22ee38503b5d148a022ce1134729dtargetblank373fd42a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/7a9f863604ad3129acbc54465518b8fbd7e170cc" target="_blank">7a9f863</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/373fd42326a22ee38503b5d148a022ce1134729d" target="_blank">373fd42</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree7a9f863604ad3129acbc54465518b8fbd7e170cctargetblank7a9f863a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree373fd42326a22ee38503b5d148a022ce1134729dtargetblank373fd42a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -571,7 +571,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/7a9f863604ad3129acbc54465518b8fbd7e170cc" target="_blank">7a9f863</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/373fd42326a22ee38503b5d148a022ce1134729d" target="_blank">373fd42</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -633,6 +633,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/373fd42326a22ee38503b5d148a022ce1134729d/analysis/MTT.Rmd" target="_blank">373fd42</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-26
+</td>
+<td>
+added MTT analysis figure legends
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/160fe90a1329a73fffed50bb5bf1fcebc5ba3a91/analysis/MTT.Rmd" target="_blank">160fe90</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-26
+</td>
+<td>
+added MTT analysis with Glutamate for consistency
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/285dc118673ed504914858cf29f96f96f9c260c5/analysis/MTT.Rmd" target="_blank">285dc11</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-26
+</td>
+<td>
+update theme in Rmds
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/1d9d8ea897a89a49c23dbbf0357c88d2090fccea/docs/MTT.html" target="_blank">1d9d8ea</a>
+</td>
+<td>
+Evgenii O. Tretiakov
+</td>
+<td>
+2024-07-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1508,8 +1576,791 @@ kable(df)</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="μm-of-epa" class="section level2">
-<h2>5 μM of EPA</h2>
+<pre class="r"><code>df_glut &lt;- read_tsv(here(data_dir, &quot;ASTRO_MTT_Glut_24h.tsv&quot;), col_types = &quot;d&quot;)
+df_glut &lt;- df_glut %&gt;%
+  tidyr::gather(key = Group, value = Measurement)
+
+kable(df_glut)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="right">Measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.702</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.683</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.704</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.714</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.702</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.670</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.688</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.664</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.767</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.723</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.718</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.757</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.710</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.689</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="right">0.721</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_1</td>
+<td align="right">0.674</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.703</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.740</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.715</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.825</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.715</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.755</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.710</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.685</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.679</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.746</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.729</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.693</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.748</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.723</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_1</td>
+<td align="right">0.700</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_1</td>
+<td align="right">0.744</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.647</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.657</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.580</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.622</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.644</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.589</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.604</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.561</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.590</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.609</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.627</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.613</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.604</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.601</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_2</td>
+<td align="right">0.586</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="right">0.590</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.625</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.629</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.624</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.648</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.666</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.675</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.658</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.571</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.621</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.693</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.638</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.630</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.670</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.669</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_2</td>
+<td align="right">0.698</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_2</td>
+<td align="right">0.605</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.830</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.847</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.824</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.832</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.900</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.877</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.857</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.767</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.803</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.855</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.823</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.818</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.783</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.799</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="right">0.833</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_3</td>
+<td align="right">0.855</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.844</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.961</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.910</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.965</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.939</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.891</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.908</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.855</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.915</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.927</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.943</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.913</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.969</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.947</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_3</td>
+<td align="right">0.875</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_3</td>
+<td align="right">0.826</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.731</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.745</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.705</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.692</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.748</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.744</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.771</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.661</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.698</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.691</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.682</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.668</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.672</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.715</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_4</td>
+<td align="right">0.707</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="right">0.659</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.713</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.734</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.729</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.736</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.678</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.718</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.735</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.662</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.724</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.711</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.703</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.716</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.673</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.711</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_4</td>
+<td align="right">0.704</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_4</td>
+<td align="right">0.659</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.840</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.754</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.744</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.798</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.788</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.810</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.820</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.825</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.818</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.773</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.759</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.760</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.741</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.755</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="right">0.744</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_5</td>
+<td align="right">0.737</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.784</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.757</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.779</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.789</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.757</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.784</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.751</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.795</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.777</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.726</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.718</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.739</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.762</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.737</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_5</td>
+<td align="right">0.776</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_5</td>
+<td align="right">0.778</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.571</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.541</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.539</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.529</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.509</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.568</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.504</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.516</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.494</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.491</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.491</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.486</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.504</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.513</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_6</td>
+<td align="right">0.521</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="right">0.504</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.543</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.536</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.540</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.572</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.518</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.534</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.526</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.523</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.514</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.516</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.514</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.505</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.503</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.504</td>
+</tr>
+<tr class="odd">
+<td align="left">Glu_6</td>
+<td align="right">0.529</td>
+</tr>
+<tr class="even">
+<td align="left">Glu_6</td>
+<td align="right">0.503</td>
+</tr>
+</tbody>
+</table>
+<div id="μm-of-epa---figure-s5b" class="section level2">
+<h2>5 μM of EPA - Figure S5b</h2>
 <pre class="r"><code>unpaired5 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -1526,8 +2377,8 @@ kable(df)</code></pre>
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
 1. EPA_5μM_1 minus Ctr_1
@@ -1545,8 +2396,8 @@ print(unpaired5.mean_diff)</code></pre>
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 The unpaired mean difference between EPA_5μM_1 and Ctr_1 is 0.036 [95%CI 0.011, 0.063].
 The p-value of the two-sided permutation t-test is 0.0266, calculated for legacy purposes only.
@@ -1758,8 +2609,8 @@ EugOT
 </div>
 </div>
 </div>
-<div id="μm-of-epa-1" class="section level2">
-<h2>10 μM of EPA</h2>
+<div id="μm-of-epa---figure-s5b1" class="section level2">
+<h2>10 μM of EPA - Figure S5b1</h2>
 <pre class="r"><code>unpaired10 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -1776,8 +2627,8 @@ EugOT
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
 1. EPA_10μM_1 minus Ctr_1
@@ -1795,8 +2646,8 @@ print(unpaired10.mean_diff)</code></pre>
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 The unpaired mean difference between EPA_10μM_1 and Ctr_1 is 0.06 [95%CI 0.033, 0.093].
 The p-value of the two-sided permutation t-test is 0.0026, calculated for legacy purposes only.
@@ -2007,9 +2858,20 @@ EugOT
 </table>
 </div>
 </div>
+<p>Supplementary Figure 5. Effects of low EPA concentrations on
+astrocyte viability. b, b1. Cumming estimation plots showing astroglia
+viability (MTT assay) after 5 μM (b) or 10 μM (b1) EPA treatment. Left
+panel: Colored circles represent individual data points for control
+(Ctr) and EPA-treated groups from 6 independent experiments. Black
+circles and vertical lines indicate group means with 95% confidence
+intervals. Right panel: Floating plots show mean differences (EPA minus
+Ctr) for each experiment and the overall weighted mean difference
+(bottom). Circles represent the point estimate of the mean difference,
+with vertical lines indicating 95% confidence intervals. The shaded
+curve represents the resampled distribution of the effect size.</p>
 </div>
-<div id="μm-of-epa-2" class="section level2">
-<h2>30 μM of EPA</h2>
+<div id="μm-of-epa---figure-5c" class="section level2">
+<h2>30 μM of EPA - Figure 5c</h2>
 <pre class="r"><code>unpaired30 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -2026,8 +2888,8 @@ EugOT
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 Effect size(s) with 95% confidence intervals will be computed for:
 1. EPA_30μM_1 minus Ctr_1
@@ -2045,8 +2907,8 @@ print(unpaired30.mean_diff)</code></pre>
 <pre><code>DABESTR v2023.9.12
 ==================
 
-Good morning!
-The current time is 09:51 AM on Friday July 26, 2024.
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
 
 The unpaired mean difference between EPA_30μM_1 and Ctr_1 is 0.096 [95%CI 0.007, 0.14].
 The p-value of the two-sided permutation t-test is 0.0175, calculated for legacy purposes only.
@@ -2257,6 +3119,208 @@ EugOT
 </table>
 </div>
 </div>
+<p>Figure 5. Effects of EPA on astrocyte viability. c. Cumming
+estimation plot showing astroglia viability (MTT assay) after 30 μM EPA
+treatment. Left panel: Colored circles represent individual data points
+for control (Ctr) and EPA-treated groups from 6 independent experiments.
+Black circles and vertical lines indicate group means with 95%
+confidence intervals. Right panel: Floating plots show mean differences
+(EPA minus Ctr) for each experiment and the overall weighted mean
+difference (bottom). Circles represent the point estimate of the mean
+difference, with vertical lines indicating 95% confidence intervals. The
+shaded curve represents the resampled distribution of the effect
+size.</p>
+</div>
+<div id="μm-of-glutamate---figure-3c" class="section level2">
+<h2>100 μM of Glutamate - Figure 3c</h2>
+<pre class="r"><code>unpaired_glut &lt;- load(df_glut,
+  x = Group, y = Measurement,
+  idx = list(
+    c(&quot;Ctr_1&quot;, &quot;Glu_1&quot;),
+    c(&quot;Ctr_2&quot;, &quot;Glu_2&quot;),
+    c(&quot;Ctr_3&quot;, &quot;Glu_3&quot;),
+    c(&quot;Ctr_4&quot;, &quot;Glu_4&quot;),
+    c(&quot;Ctr_5&quot;, &quot;Glu_5&quot;),
+    c(&quot;Ctr_6&quot;, &quot;Glu_6&quot;)
+  ),
+  minimeta = TRUE
+)</code></pre>
+<pre class="r"><code>print(unpaired_glut)</code></pre>
+<pre><code>DABESTR v2023.9.12
+==================
+
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
+
+Effect size(s) with 95% confidence intervals will be computed for:
+1. Glu_1 minus Ctr_1
+2. Glu_2 minus Ctr_2
+3. Glu_3 minus Ctr_3
+4. Glu_4 minus Ctr_4
+5. Glu_5 minus Ctr_5
+6. Glu_6 minus Ctr_6
+7. weighted delta (only for mean difference)
+
+5000 resamples will be used to generate the effect size bootstraps.</code></pre>
+<pre class="r"><code>unpaired_glut.mean_diff &lt;- mean_diff(unpaired_glut)
+
+print(unpaired_glut.mean_diff)</code></pre>
+<pre><code>DABESTR v2023.9.12
+==================
+
+Good afternoon!
+The current time is 12:20 PM on Friday July 26, 2024.
+
+The unpaired mean difference between Glu_1 and Ctr_1 is 0.02 [95%CI 0, 0.043].
+The p-value of the two-sided permutation t-test is 0.0856, calculated for legacy purposes only.
+
+The unpaired mean difference between Glu_2 and Ctr_2 is 0.037 [95%CI 0.016, 0.057].
+The p-value of the two-sided permutation t-test is 0.0016, calculated for legacy purposes only.
+
+The unpaired mean difference between Glu_3 and Ctr_3 is 0.08 [95%CI 0.052, 0.104].
+The p-value of the two-sided permutation t-test is 0.0000, calculated for legacy purposes only.
+
+The unpaired mean difference between Glu_4 and Ctr_4 is 0.001 [95%CI -0.022, 0.019].
+The p-value of the two-sided permutation t-test is 0.9214, calculated for legacy purposes only.
+
+The unpaired mean difference between Glu_5 and Ctr_5 is -0.016 [95%CI -0.037, 0.003].
+The p-value of the two-sided permutation t-test is 0.1375, calculated for legacy purposes only.
+
+The unpaired mean difference between Glu_6 and Ctr_6 is 0.006 [95%CI -0.01, 0.02].
+The p-value of the two-sided permutation t-test is 0.4451, calculated for legacy purposes only.
+
+5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
+Any p-value reported is the probability of observing the effect size (or greater),
+assuming the null hypothesis of zero difference is true.
+For each p-value, 5000 reshuffles of the control and test labels were performed.</code></pre>
+<pre class="r"><code>kable(unpaired_glut.mean_diff$boot_result |&gt; select(-bootstraps))</code></pre>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="2%" />
+<col width="9%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">control_group</th>
+<th align="left">test_group</th>
+<th align="right">nboots</th>
+<th align="right">bca_ci_low</th>
+<th align="right">bca_ci_high</th>
+<th align="right">pct_ci_low</th>
+<th align="right">pct_ci_high</th>
+<th align="right">ci</th>
+<th align="right">difference</th>
+<th align="right">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ctr_1</td>
+<td align="left">Glu_1</td>
+<td align="right">5000</td>
+<td align="right">0.0003849</td>
+<td align="right">0.0432387</td>
+<td align="right">-0.0006859</td>
+<td align="right">0.0420594</td>
+<td align="right">95</td>
+<td align="right">0.0202500</td>
+<td align="right">965.8881</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_2</td>
+<td align="left">Glu_2</td>
+<td align="right">5000</td>
+<td align="right">0.0163698</td>
+<td align="right">0.0566875</td>
+<td align="right">0.0168125</td>
+<td align="right">0.0568125</td>
+<td align="right">95</td>
+<td align="right">0.0372500</td>
+<td align="right">1102.0093</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_3</td>
+<td align="left">Glu_3</td>
+<td align="right">5000</td>
+<td align="right">0.0521250</td>
+<td align="right">0.1041250</td>
+<td align="right">0.0531891</td>
+<td align="right">0.1056234</td>
+<td align="right">95</td>
+<td align="right">0.0803125</td>
+<td align="right">649.9001</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_4</td>
+<td align="left">Glu_4</td>
+<td align="right">5000</td>
+<td align="right">-0.0216248</td>
+<td align="right">0.0194375</td>
+<td align="right">-0.0196875</td>
+<td align="right">0.0210000</td>
+<td align="right">95</td>
+<td align="right">0.0010625</td>
+<td align="right">1098.9137</td>
+</tr>
+<tr class="odd">
+<td align="left">Ctr_5</td>
+<td align="left">Glu_5</td>
+<td align="right">5000</td>
+<td align="right">-0.0365625</td>
+<td align="right">0.0033125</td>
+<td align="right">-0.0359359</td>
+<td align="right">0.0039984</td>
+<td align="right">95</td>
+<td align="right">-0.0160625</td>
+<td align="right">1136.8508</td>
+</tr>
+<tr class="even">
+<td align="left">Ctr_6</td>
+<td align="left">Glu_6</td>
+<td align="right">5000</td>
+<td align="right">-0.0099801</td>
+<td align="right">0.0201875</td>
+<td align="right">-0.0090625</td>
+<td align="right">0.0207500</td>
+<td align="right">95</td>
+<td align="right">0.0061875</td>
+<td align="right">1960.9205</td>
+</tr>
+<tr class="odd">
+<td align="left">Minimeta Overall Test</td>
+<td align="left">Minimeta Overall Test</td>
+<td align="right">5000</td>
+<td align="right">0.0049018</td>
+<td align="right">0.0269089</td>
+<td align="right">0.0154685</td>
+<td align="right">0.0157784</td>
+<td align="right">95</td>
+<td align="right">0.0155969</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>dabest_plot(unpaired_glut.mean_diff)</code></pre>
+<p><img src="figure/MTT.Rmd/unnamed-chunk-20-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>Figure 3. Effects of glutamate on astrocyte viability. c. Cumming
+estimation plot showing astroglia viability (MTT assay) after 100 μM
+glutamate treatment. Left panel: Colored circles represent individual
+data points for control (Ctr) and glutamate-treated (Glu) groups from 6
+independent experiments. Black circles and vertical lines indicate group
+means with 95% confidence intervals. Right panel: Floating plots show
+mean differences (Glu minus Ctr) for each experiment and the overall
+weighted mean difference (bottom). Circles represent the point estimate
+of the mean difference, with vertical lines indicating 95% confidence
+intervals. The shaded curve represents the resampled distribution of the
+effect size.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
