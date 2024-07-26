@@ -82,6 +82,15 @@ df <- df %>%
 
 kable(df)
 ```
+
+```{r load-glut}
+df_glut <- read_tsv(here(data_dir, "ASTRO_MTT_Glut_24h.tsv"), col_types = "d")
+df_glut <- df_glut %>%
+  tidyr::gather(key = Group, value = Measurement)
+
+kable(df_glut)
+```
+
 ## 5 μM of EPA
 
 ```{r}
@@ -185,4 +194,39 @@ kable(unpaired30.mean_diff$boot_result |> select(-bootstraps))
 
 ```{r}
 dabest_plot(unpaired30.mean_diff)
+```
+
+## 100 μM of Glutamate
+
+```{r}
+unpaired_glut <- load(df_glut,
+  x = Group, y = Measurement,
+  idx = list(
+    c("Ctr_1", "Glu_1"),
+    c("Ctr_2", "Glu_2"),
+    c("Ctr_3", "Glu_3"),
+    c("Ctr_4", "Glu_4"),
+    c("Ctr_5", "Glu_5"),
+    c("Ctr_6", "Glu_6")
+  ),
+  minimeta = TRUE
+)
+```
+
+```{r}
+print(unpaired_glut)
+```
+
+```{r}
+unpaired_glut.mean_diff <- mean_diff(unpaired_glut)
+
+print(unpaired_glut.mean_diff)
+```
+
+```{r}
+kable(unpaired_glut.mean_diff$boot_result |> select(-bootstraps))
+```
+
+```{r}
+dabest_plot(unpaired_glut.mean_diff)
 ```
