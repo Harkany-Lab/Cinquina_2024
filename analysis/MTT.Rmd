@@ -91,7 +91,7 @@ df_glut <- df_glut %>%
 kable(df_glut)
 ```
 
-## 5 μM of EPA
+## 5 μM of EPA - Figure S5b
 
 ```{r}
 unpaired5 <- load(df,
@@ -126,7 +126,7 @@ kable(unpaired5.mean_diff$boot_result |> select(-bootstraps))
 dabest_plot(unpaired5.mean_diff)
 ```
 
-## 10 μM of EPA
+## 10 μM of EPA - Figure S5b1
 
 ```{r}
 unpaired10 <- load(df,
@@ -161,7 +161,10 @@ kable(unpaired10.mean_diff$boot_result |> select(-bootstraps))
 dabest_plot(unpaired10.mean_diff)
 ```
 
-## 30 μM of EPA
+Supplementary Figure 5. Effects of low EPA concentrations on astrocyte viability.
+b, b1. Cumming estimation plots showing astroglia viability (MTT assay) after 5 μM (b) or 10 μM (b1) EPA treatment. Left panel: Colored circles represent individual data points for control (Ctr) and EPA-treated groups from 6 independent experiments. Black circles and vertical lines indicate group means with 95% confidence intervals. Right panel: Floating plots show mean differences (EPA minus Ctr) for each experiment and the overall weighted mean difference (bottom). Circles represent the point estimate of the mean difference, with vertical lines indicating 95% confidence intervals. The shaded curve represents the resampled distribution of the effect size.
+
+## 30 μM of EPA - Figure 5c
 
 ```{r}
 unpaired30 <- load(df,
@@ -196,7 +199,10 @@ kable(unpaired30.mean_diff$boot_result |> select(-bootstraps))
 dabest_plot(unpaired30.mean_diff)
 ```
 
-## 100 μM of Glutamate
+Figure 5. Effects of EPA on astrocyte viability.
+c. Cumming estimation plot showing astroglia viability (MTT assay) after 30 μM EPA treatment. Left panel: Colored circles represent individual data points for control (Ctr) and EPA-treated groups from 6 independent experiments. Black circles and vertical lines indicate group means with 95% confidence intervals. Right panel: Floating plots show mean differences (EPA minus Ctr) for each experiment and the overall weighted mean difference (bottom). Circles represent the point estimate of the mean difference, with vertical lines indicating 95% confidence intervals. The shaded curve represents the resampled distribution of the effect size.
+
+## 100 μM of Glutamate - Figure 3c
 
 ```{r}
 unpaired_glut <- load(df_glut,
@@ -230,3 +236,10 @@ kable(unpaired_glut.mean_diff$boot_result |> select(-bootstraps))
 ```{r}
 dabest_plot(unpaired_glut.mean_diff)
 ```
+
+Figure 3. Effects of glutamate on astrocyte viability.
+c. Cumming estimation plot showing astroglia viability (MTT assay) after 100 μM glutamate treatment. Left panel: Colored circles represent individual data points for control (Ctr) and glutamate-treated (Glu) groups from 6 independent experiments. Black circles and vertical lines indicate group means with 95% confidence intervals. Right panel: Floating plots show mean differences (Glu minus Ctr) for each experiment and the overall weighted mean difference (bottom). Circles represent the point estimate of the mean difference, with vertical lines indicating 95% confidence intervals. The shaded curve represents the resampled distribution of the effect size.
+
+
+
+

@@ -196,7 +196,7 @@ figures.
 # MTT Assay Analysis
 
 MTT assay data measuring astrocyte viability after treatment with
-eicosapentaenoic acid (EPA) at 5 μM, 10 μM, and 30 μM concentrations was
+eicosapentaenoic acid (EPA) at 5 μM, 10 μM, and 30 μM concentrations were
 analyzed using the DABEST (Data Analysis using Bootstrap-Coupled
 ESTimation) package v`r packageVersion("dabestr")` in R. The analysis
 was performed to calculate effect sizes and their confidence intervals
@@ -236,6 +236,8 @@ The analysis workflow was as follows:
     permutation t-tests, was also calculated and reported, although the
     focus of the analysis was on effect sizes and their confidence
     intervals rather than null hypothesis significance testing.
+    
+MTT assay data of 100 μM glutamate treatment were analyzed the same way.
 
 This approach allows for a comprehensive view of the treatment effects
 across multiple replicates, taking into account both the magnitude of
