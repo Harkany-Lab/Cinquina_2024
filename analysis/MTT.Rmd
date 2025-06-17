@@ -92,13 +92,13 @@ df_glut <- df_glut %>%
 kable(df_glut)
 ```
 
-## 1 μM of EPA - Figure S7a
+## 1 and 5 μM of EPA on Neurons - Figure S7a
 
 ```{r}
 unpaired1 <- load(df,
   x = Group, y = Measurement,
   idx = list(
-    c("Ctr_7", "EPA_1μM_7")
+    c("Ctr_7", "EPA_1μM_7", "EPA_5μM_7")
   )
 )
 ```
@@ -122,7 +122,7 @@ dabest_plot(unpaired1.mean_diff)
 ```
 
 
-## 5 μM of EPA - Figure S5b
+## 5 μM of EPA on Astrocytes - Figure S7c1
 
 ```{r}
 unpaired5 <- load(df,
@@ -133,8 +133,7 @@ unpaired5 <- load(df,
     c("Ctr_3", "EPA_5μM_3"),
     c("Ctr_4", "EPA_5μM_4"),
     c("Ctr_5", "EPA_5μM_5"),
-    c("Ctr_6", "EPA_5μM_6"),
-    c("Ctr_7", "EPA_5μM_7")
+    c("Ctr_6", "EPA_5μM_6")
   ),
   minimeta = TRUE
 )
@@ -158,7 +157,7 @@ kable(unpaired5.mean_diff$boot_result |> select(-bootstraps))
 dabest_plot(unpaired5.mean_diff)
 ```
 
-## 10 μM of EPA - Figure S5b1
+## 10 μM of EPA on Astrocytes - Figure S7c2
 
 ```{r}
 unpaired10 <- load(df,
@@ -196,7 +195,7 @@ dabest_plot(unpaired10.mean_diff)
 Supplementary Figure 5. Effects of low EPA concentrations on astrocyte viability.
 b, b1. Cumming estimation plots showing astroglia viability (MTT assay) after 5 μM (b) or 10 μM (b1) EPA treatment. Left panel: Colored circles represent individual data points for control (Ctr) and EPA-treated groups from 6 independent experiments. Black circles and vertical lines indicate group means with 95% confidence intervals. Right panel: Floating plots show mean differences (EPA minus Ctr) for each experiment and the overall weighted mean difference (bottom). Circles represent the point estimate of the mean difference, with vertical lines indicating 95% confidence intervals. The shaded curve represents the resampled distribution of the effect size.
 
-## 30 μM of EPA - Figure 5c
+## 30 μM of EPA on Astrocytes - Figure S7c3
 
 ```{r}
 unpaired30 <- load(df,
@@ -234,7 +233,7 @@ dabest_plot(unpaired30.mean_diff)
 Figure 5. Effects of EPA on astrocyte viability.
 c. Cumming estimation plot showing astroglia viability (MTT assay) after 30 μM EPA treatment. Left panel: Colored circles represent individual data points for control (Ctr) and EPA-treated groups from 6 independent experiments. Black circles and vertical lines indicate group means with 95% confidence intervals. Right panel: Floating plots show mean differences (EPA minus Ctr) for each experiment and the overall weighted mean difference (bottom). Circles represent the point estimate of the mean difference, with vertical lines indicating 95% confidence intervals. The shaded curve represents the resampled distribution of the effect size.
 
-## 100 μM of Glutamate - Figure 3c
+## 100 μM of Glutamate on Astrocytes - Figure 3c
 
 ```{r}
 unpaired_glut <- load(df_glut,
