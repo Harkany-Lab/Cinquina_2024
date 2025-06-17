@@ -78,7 +78,8 @@ theme_set(ggmin::theme_powerpoint())
 ```{r load}
 df <- read_tsv(here(data_dir, "ASTRO_MTT_EPA.tsv"))
 df <- df %>%
-  tidyr::gather(key = Group, value = Measurement)
+  tidyr::gather(key = Group, value = Measurement)%>%
+  drop_na()
 
 kable(df)
 ```
