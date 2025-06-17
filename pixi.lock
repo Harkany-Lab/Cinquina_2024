@@ -483,6 +483,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/linux-64/r-scattermore-1.2-r43h0d4f4ea_3.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/r-sctransform-0.4.2-r43hc2d650c_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/r-selectr-0.4_2-r43hc72bb7e_4.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/r-sessioninfo-1.2.3-r43hc72bb7e_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/r-seurat-5.3.0-r43h93ab643_0.conda
       - conda: https://repo.prefix.dev/bioconda/linux-64/r-seurat-data-0.2.1-r43h9ee0642_0.tar.bz2
       - conda: https://repo.prefix.dev/bioconda/linux-64/r-seurat-disk-0.0.0.9021-r43h9ee0642_0.tar.bz2
@@ -7482,6 +7483,18 @@ packages:
   purls: []
   size: 424675
   timestamp: 1721252096248
+- conda: https://repo.prefix.dev/conda-forge/noarch/r-sessioninfo-1.2.3-r43hc72bb7e_0.conda
+  sha256: b896549b9ca8ace59a308bf6478923610744ed4816e77a2548a14c145ae93df9
+  md5: 13a8f242fc3aac7e8c572041c387f3fa
+  depends:
+  - r-base >=4.3,<4.4.0a0
+  - r-cli
+  - r-withr
+  license: GPL-2.0-only
+  license_family: GPL2
+  purls: []
+  size: 212094
+  timestamp: 1738772223660
 - conda: https://repo.prefix.dev/conda-forge/linux-64/r-seurat-5.3.0-r43h93ab643_0.conda
   sha256: 58f1576d3ddf0b354828b6e13951c20e1615bc0cfd521b18d8c8ee8d9cdbd78b
   md5: 5e51ec33bd6ff208fe06b1a99c847b8e

@@ -38,6 +38,7 @@ quarto = ">=1.7.32,<2"
 pyprojroot = ">=0.3.0,<0.4"
 numba = ">=0.61.2,<0.62"
 r-reticulate = ">=1.42.0,<2"
+r-sessioninfo = ">=1.2.3,<2"
 
 [pypi-dependencies]
 dabest = ">=0.2.5, <0.3"
