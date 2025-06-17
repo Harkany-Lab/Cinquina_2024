@@ -745,6 +745,58 @@ FeaturePlot(astro,
             alpha = 0.35)
 ```
 
+```{r plot-density-s100a6-S100b-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "S100b"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
+```
+
+```{r plot-density-CaCyBP-S100b-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "S100b"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
+```
+
+```{r plot-density-s100a6-Aldh1l1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("S100a6", "Aldh1l1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
+```
+
+```{r plot-density-CaCyBP-Aldh1l1-astro-cells, fig.height=4.5, fig.width=18}
+FeaturePlot(astro,
+            blend = TRUE,
+            features = c("Cacybp", "Aldh1l1"),
+            blend.threshold = 0.4,
+            max.cutoff = "q99",
+            min.cutoff = "q30",
+            pt.size = 0.7, 
+            cols = c("grey98", "red", "blue"),
+            order = T,
+            alpha = 0.35)
+```
+
 ```{r plot-density-s100a6-Gja1-astro-cells, fig.height=4.5, fig.width=18}
 FeaturePlot(astro,
             blend = TRUE,
