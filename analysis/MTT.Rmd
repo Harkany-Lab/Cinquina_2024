@@ -91,6 +91,36 @@ df_glut <- df_glut %>%
 kable(df_glut)
 ```
 
+## 1 μM of EPA - Figure S7a
+
+```{r}
+unpaired1 <- load(df,
+  x = Group, y = Measurement,
+  idx = list(
+    c("Ctr_7", "EPA_1μM_7")
+  )
+)
+```
+
+```{r}
+print(unpaired1)
+```
+
+```{r}
+unpaired1.mean_diff <- mean_diff(unpaired1)
+
+print(unpaired1.mean_diff)
+```
+
+```{r}
+kable(unpaired1.mean_diff$boot_result |> select(-bootstraps))
+```
+
+```{r}
+dabest_plot(unpaired1.mean_diff)
+```
+
+
 ## 5 μM of EPA - Figure S5b
 
 ```{r}
@@ -102,7 +132,8 @@ unpaired5 <- load(df,
     c("Ctr_3", "EPA_5μM_3"),
     c("Ctr_4", "EPA_5μM_4"),
     c("Ctr_5", "EPA_5μM_5"),
-    c("Ctr_6", "EPA_5μM_6")
+    c("Ctr_6", "EPA_5μM_6"),
+    c("Ctr_7", "EPA_5μM_7")
   ),
   minimeta = TRUE
 )
