@@ -1,0 +1,26 @@
+[workspace]
+authors = ["EugOT <Evgenii.Tretiakov@meduniwien.ac.at>"]
+channels = ["https://repo.prefix.dev/conda-forge", "https://repo.prefix.dev/bioconda"]
+name = "Cinquina_2024"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+radian = ">=0.6.15,<0.7"
+r-seurat = ">=5.3.0,<6"
+r-seuratobject = ">=5.1.0,<6"
+r-tidyseurat = ">=0.8.0,<0.9"
+r-azimuth = ">=0.5.0,<0.6"
+r-tidyverse = ">=2.0.0,<3"
+r-workflowr = ">=1.7.1,<2"
+r-ggrastr = ">=1.0.2,<2"
+r-biocmanager = ">=1.30.26,<2"
+r-remotes = ">=2.5.0,<3"
+r-skimr = ">=2.1.5,<3"
+r-rcolorbrewer = ">=1.1_3,<2"
+r-here = ">=1.0.1,<2"
+r-upsetr = ">=1.4.0,<2"
+r-leidenbase = ">=0.1.32,<0.2"
+r-boot = ">=1.3_31,<2"

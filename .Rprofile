@@ -1,3 +1,6 @@
+if (interactive() && Sys.getenv("RSTUDIO") == "") {
+  source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
+}
 ## This makes sure that R loads the workflowr package
 ## automatically, everytime the project is loaded
 if (requireNamespace("workflowr", quietly = TRUE)) {

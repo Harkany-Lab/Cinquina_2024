@@ -48,3 +48,7 @@ rsconnect/
 
 # Original data from Broad Single-Cell portal
 data/SCP1290
+
+# pixi environments
+.pixi
+*.egg-info
