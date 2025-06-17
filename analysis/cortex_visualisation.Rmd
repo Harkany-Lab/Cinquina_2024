@@ -577,7 +577,7 @@ DimPlot(
 Idents(astro) <- "New_cellType"
 astro_subset <- subset(astro, idents = c("Astrocytes"))
 Idents(astro_subset) <- "astro_clusters"
-astro_subset <- subset(astro_subset, idents = c("7", "9", "13", "15", "16"))
+astro_subset <- subset(astro_subset, idents = c("8", "9", "12"))
 
 
 # pseudobulk the counts based on donor-condition-celltype
@@ -620,34 +620,62 @@ bulk.astros.de <- FindAllMarkers(object = pseudo_combined_astro_subset,
                          min.cells.group = 1,
                          test.use = "DESeq2",
                          only.pos = F)
-head(bulk.astros.de, n = 15)
 
-# compare the DE P-values between the single-cell level and the pseudobulk level results
-names(bulk.astros.de) <- paste0(names(bulk.astros.de), ".bulk")
-bulk.astros.de$gene <- rownames(bulk.astros.de)
-
-names(astros.de) <- paste0(names(astros.de), ".sc")
-astros.de$gene <- rownames(astros.de)
-
-merge_dat <- merge(astros.de, bulk.astros.de, by = "gene")
-merge_dat <- merge_dat[order(merge_dat$p_val.bulk), ]
-
-# Number of genes that are marginally significant in both; marginally significant only in bulk; and marginally significant only in single-cell
-common <-
-  merge_dat |>
-  filter(merge_dat$p_val.bulk < 0.05 & 
-           merge_dat$p_val.sc < 0.05) |>
-  group_by(cluster.bulk) |> 
-  slice_max(order_by = avg_log10FC.sc, n = 5) |> 
-  pull(gene)
-
-only_sc <- merge_dat$gene[which(merge_dat$p_val.bulk > 0.05 & 
-                                  merge_dat$p_val.sc < 0.05)]
-only_bulk <- merge_dat$gene[which(merge_dat$p_val.bulk < 0.05 & 
-                                    merge_dat$p_val.sc > 0.05)]
-print(paste0('# Common: ',length(common)))
-print(paste0('# Only in single-cell: ',length(only_sc)))
-print(paste0('# Only in bulk: ',length(only_bulk)))
+# Check if bulk.astros.de has results before proceeding
+if (nrow(bulk.astros.de) > 0) {
+  head(bulk.astros.de, n = 15)
+  
+  # compare the DE P-values between the single-cell level and the pseudobulk level results
+  names(bulk.astros.de) <- paste0(names(bulk.astros.de), ".bulk")
+  bulk.astros.de$gene <- rownames(bulk.astros.de)
+  
+  names(astros.de) <- paste0(names(astros.de), ".sc")
+  astros.de$gene <- rownames(astros.de)
+  
+  merge_dat <- merge(astros.de, bulk.astros.de, by = "gene")
+} else {
+  # If bulk DE analysis failed, use only single-cell results
+  print("Bulk DE analysis returned no results, using only single-cell results")
+  names(astros.de) <- paste0(names(astros.de), ".sc")
+  astros.de$gene <- rownames(astros.de)
+  merge_dat <- astros.de
+}
+# Process results based on whether bulk analysis succeeded
+if (nrow(bulk.astros.de) > 0) {
+  merge_dat <- merge_dat[order(merge_dat$p_val.bulk), ]
+  
+  # Number of genes that are marginally significant in both; marginally significant only in bulk; and marginally significant only in single-cell
+  common <-
+    merge_dat |>
+    filter(merge_dat$p_val.bulk < 0.05 & 
+             merge_dat$p_val.sc < 0.05) |>
+    group_by(cluster.bulk) |> 
+    slice_max(order_by = avg_log10FC.sc, n = 5) |> 
+    pull(gene)
+  
+  only_sc <- merge_dat$gene[which(merge_dat$p_val.bulk > 0.05 & 
+                                    merge_dat$p_val.sc < 0.05)]
+  only_bulk <- merge_dat$gene[which(merge_dat$p_val.bulk < 0.05 & 
+                                      merge_dat$p_val.sc > 0.05)]
+  print(paste0('# Common: ',length(common)))
+  print(paste0('# Only in single-cell: ',length(only_sc)))
+  print(paste0('# Only in bulk: ',length(only_bulk)))
+} else {
+  # Use only single-cell results
+  merge_dat <- merge_dat[order(merge_dat$p_val.sc), ]
+  
+  # Get top differentially expressed genes from single-cell analysis
+  common <-
+    merge_dat |>
+    filter(merge_dat$p_val.sc < 0.05) |>
+    group_by(cluster.sc) |> 
+    slice_max(order_by = avg_log10FC.sc, n = 5) |> 
+    pull(gene)
+  
+  only_sc <- character(0)
+  only_bulk <- character(0)
+  print(paste0('# From single-cell only: ',length(common)))
+}
 
 
 # create a new column to annotate sample-condition-celltype in the single-cell dataset
@@ -655,7 +683,11 @@ astro_subset$stage.astro_clusters <- paste0(astro_subset$astro_clusters, "-", as
 
 # generate violin plot 
 Idents(astro_subset) <- "astro_clusters"
-print(merge_dat[merge_dat$gene %in% common[1:25],c('gene','p_val.sc','p_val.bulk', 'cluster.bulk')])
+if (nrow(bulk.astros.de) > 0 && length(common) > 0) {
+  print(merge_dat[merge_dat$gene %in% common[1:min(25, length(common))],c('gene','p_val.sc','p_val.bulk', 'cluster.bulk')])
+} else if (length(common) > 0) {
+  print(merge_dat[merge_dat$gene %in% common[1:min(25, length(common))],c('gene','p_val.sc', 'cluster.sc')])
+}
 ```
 
 
@@ -663,10 +695,24 @@ print(merge_dat[merge_dat$gene %in% common[1:25],c('gene','p_val.sc','p_val.bulk
 VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", "Ndrg2", "Aldoc", "Slc1a3", "Glul", "Apoe", "Aldh1l1", "Ntrk2", "Gfap", "Gja1", "Htra1", "Aqp4", "Ntsr2"), group.by = "astro_clusters",
   cols = astro@misc$clusters_Colour_Pal) 
 
-VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]), group.by = "astro_clusters",
-  cols = astro@misc$clusters_Colour_Pal) 
+if (length(common) >= 24) {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]), group.by = "astro_clusters",
+    cols = astro@misc$clusters_Colour_Pal) 
+} else if (length(common) > 0) {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:min(24, length(common))]), group.by = "astro_clusters",
+    cols = astro@misc$clusters_Colour_Pal) 
+} else {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b"), group.by = "astro_clusters",
+    cols = astro@misc$clusters_Colour_Pal) 
+}
 
-VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:6]), group.by = "stage.astro_clusters", ncol = 1) 
+if (length(common) >= 6) {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:6]), group.by = "stage.astro_clusters", ncol = 1) 
+} else if (length(common) > 0) {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:min(6, length(common))]), group.by = "stage.astro_clusters", ncol = 1) 
+} else {
+  VlnPlot(astro_subset, features = c("S100a6", "Cacybp", "Siah1a", "Siah1b"), group.by = "stage.astro_clusters", ncol = 1) 
+} 
 ```
 
 
@@ -715,16 +761,40 @@ print(compact_plot)
 ```{r plot-s100-dot-split-astro-cells-cluster, fig.height=21, fig.width=10}
 astro$type.cluster <- str_c(astro$New_cellType, astro$astro_clusters, sep = "_")
 # Create a compact DotPlot
-compact_plot <- DotPlot(
-  object = astro,
-  features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]),
-  group.by = "stage",
-  cluster.idents = F,
-  cols = ggsci::pal_igv("default")(35),
-  scale = TRUE,
-  split.by = "type.cluster",
-  dot.scale = 12
-) + RotatedAxis()
+if (length(common) >= 24) {
+  compact_plot <- DotPlot(
+    object = astro,
+    features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:24]),
+    group.by = "stage",
+    cluster.idents = F,
+    cols = ggsci::pal_igv("default")(35),
+    scale = TRUE,
+    split.by = "type.cluster",
+    dot.scale = 12
+  ) + RotatedAxis()
+} else if (length(common) > 0) {
+  compact_plot <- DotPlot(
+    object = astro,
+    features = c("S100a6", "Cacybp", "Siah1a", "Siah1b", common[1:min(24, length(common))]),
+    group.by = "stage",
+    cluster.idents = F,
+    cols = ggsci::pal_igv("default")(35),
+    scale = TRUE,
+    split.by = "type.cluster",
+    dot.scale = 12
+  ) + RotatedAxis()
+} else {
+  compact_plot <- DotPlot(
+    object = astro,
+    features = c("S100a6", "Cacybp", "Siah1a", "Siah1b"),
+    group.by = "stage",
+    cluster.idents = F,
+    cols = ggsci::pal_igv("default")(35),
+    scale = TRUE,
+    split.by = "type.cluster",
+    dot.scale = 12
+  ) + RotatedAxis()
+}
 
 # Display the compact plot
 print(compact_plot)
