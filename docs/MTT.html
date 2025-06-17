@@ -401,7 +401,7 @@ EDA-treated astrocytes from multiple experiments</h1>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -412,8 +412,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -426,9 +426,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cinquina_2024/</code> <span
@@ -451,21 +451,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -556,15 +553,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree7f2ca99746a55edfdc20a38cf24e600afd4b632dtargetblank7f2ca99a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treef653eaffee5184f05af68df732f8794808b5f884targetblankf653eafa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/7f2ca99746a55edfdc20a38cf24e600afd4b632d" target="_blank">7f2ca99</a>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/f653eaffee5184f05af68df732f8794808b5f884" target="_blank">f653eaf</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024tree7f2ca99746a55edfdc20a38cf24e600afd4b632dtargetblank7f2ca99a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomHarkanyLabCinquina2024treef653eaffee5184f05af68df732f8794808b5f884targetblankf653eafa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -574,7 +571,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/7f2ca99746a55edfdc20a38cf24e600afd4b632d" target="_blank">7f2ca99</a>.
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/tree/f653eaffee5184f05af68df732f8794808b5f884" target="_blank">f653eaf</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -594,9 +591,6 @@ Ignored files:
     Ignored:    .pixi/
     Ignored:    data/SCP1290/
     Ignored:    data/azimuth_integrated.rds
-
-Unstaged changes:
-    Modified:   analysis/MTT.Rmd
 
 </code></pre>
 <p>
@@ -640,6 +634,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/f653eaffee5184f05af68df732f8794808b5f884/analysis/MTT.Rmd" target="_blank">f653eaf</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+<td>
+mark correctly neurons and astrocytes
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/analysis/MTT.Rmd" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+<td>
+rebuild notebook of MTT analysis with more samples
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/Harkany-Lab/Cinquina_2024/cccdace398a733379717cc7ee80c5489810fd56c/docs/MTT.html" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+<td>
+rebuild notebook of MTT analysis with more samples
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2517,12 +2562,13 @@ kable(df_glut)</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="μm-of-epa---figure-s7a" class="section level2">
-<h2>1 μM of EPA - Figure S7a</h2>
+<div id="and-5-μm-of-epa-on-neurons---figure-s7a"
+class="section level2">
+<h2>1 and 5 μM of EPA on Neurons - Figure S7a</h2>
 <pre class="r"><code>unpaired1 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
-    c(&quot;Ctr_7&quot;, &quot;EPA_1μM_7&quot;)
+    c(&quot;Ctr_7&quot;, &quot;EPA_1μM_7&quot;, &quot;EPA_5μM_7&quot;)
   )
 )</code></pre>
 <pre class="r"><code>print(unpaired1)</code></pre>
@@ -2530,10 +2576,11 @@ kable(df_glut)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 ffect size(s) with 95% confidence intervals will be computed for:
 1. EPA_1μM_7 minus Ctr_7
+2. EPA_5μM_7 minus Ctr_7
 
 5000 resamples will be used to generate the effect size bootstraps.</code></pre>
 <pre class="r"><code>unpaired1.mean_diff &lt;- mean_diff(unpaired1)
@@ -2543,10 +2590,13 @@ print(unpaired1.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 The character(0) mean difference between EPA_1μM_7 and Ctr_7 is 0.107 [95%CI 0.015, 0.168].
 The p-value of the two-sided permutation t-test is 0.0242, calculated for legacy purposes only.
+
+The character(0) mean difference between EPA_5μM_7 and Ctr_7 is -0.23 [95%CI -0.309, -0.162].
+The p-value of the two-sided permutation t-test is 0.0003, calculated for legacy purposes only.
 
 5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
 Any p-value reported is the probability of observing the effect size (or greater),
@@ -2593,6 +2643,18 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">0.1068644</td>
 <td align="right">177.6146</td>
 </tr>
+<tr class="even">
+<td align="left">Ctr_7</td>
+<td align="left">EPA_5μM_7</td>
+<td align="right">5000</td>
+<td align="right">-0.3091020</td>
+<td align="right">-0.1622632</td>
+<td align="right">-0.3050414</td>
+<td align="right">-0.1592285</td>
+<td align="right">95</td>
+<td align="right">-0.2302763</td>
+<td align="right">177.0996</td>
+</tr>
 </tbody>
 </table>
 <pre class="r"><code>dabest_plot(unpaired1.mean_diff)</code></pre>
@@ -2619,6 +2681,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/docs/figure/MTT.Rmd/unnamed-chunk-5-1.png" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/7a9f863604ad3129acbc54465518b8fbd7e170cc/docs/figure/MTT.Rmd/unnamed-chunk-5-1.png" target="_blank">7a9f863</a>
@@ -2668,8 +2741,8 @@ EugOT
 </div>
 </div>
 </div>
-<div id="μm-of-epa---figure-s5b" class="section level2">
-<h2>5 μM of EPA - Figure S5b</h2>
+<div id="μm-of-epa-on-astrocytes---figure-s7c1" class="section level2">
+<h2>5 μM of EPA on Astrocytes - Figure S7c1</h2>
 <pre class="r"><code>unpaired5 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -2678,8 +2751,7 @@ EugOT
     c(&quot;Ctr_3&quot;, &quot;EPA_5μM_3&quot;),
     c(&quot;Ctr_4&quot;, &quot;EPA_5μM_4&quot;),
     c(&quot;Ctr_5&quot;, &quot;EPA_5μM_5&quot;),
-    c(&quot;Ctr_6&quot;, &quot;EPA_5μM_6&quot;),
-    c(&quot;Ctr_7&quot;, &quot;EPA_5μM_7&quot;)
+    c(&quot;Ctr_6&quot;, &quot;EPA_5μM_6&quot;)
   ),
   minimeta = TRUE
 )</code></pre>
@@ -2688,7 +2760,7 @@ EugOT
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 ffect size(s) with 95% confidence intervals will be computed for:
 1. EPA_5μM_1 minus Ctr_1
@@ -2697,8 +2769,7 @@ ffect size(s) with 95% confidence intervals will be computed for:
 4. EPA_5μM_4 minus Ctr_4
 5. EPA_5μM_5 minus Ctr_5
 6. EPA_5μM_6 minus Ctr_6
-7. EPA_5μM_7 minus Ctr_7
-8. weighted delta (only for mean difference)
+7. weighted delta (only for mean difference)
 
 5000 resamples will be used to generate the effect size bootstraps.</code></pre>
 <pre class="r"><code>unpaired5.mean_diff &lt;- mean_diff(unpaired5)
@@ -2708,7 +2779,7 @@ print(unpaired5.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 The character(0) mean difference between EPA_5μM_1 and Ctr_1 is 0.036 [95%CI 0.011, 0.063].
 The p-value of the two-sided permutation t-test is 0.0266, calculated for legacy purposes only.
@@ -2727,9 +2798,6 @@ The p-value of the two-sided permutation t-test is 0.2624, calculated for legacy
 
 The character(0) mean difference between EPA_5μM_6 and Ctr_6 is 0.091 [95%CI 0.065, 0.125].
 The p-value of the two-sided permutation t-test is 0.0001, calculated for legacy purposes only.
-
-The character(0) mean difference between EPA_5μM_7 and Ctr_7 is -0.23 [95%CI -0.309, -0.162].
-The p-value of the two-sided permutation t-test is 0.0003, calculated for legacy purposes only.
 
 5000 bootstrap samples were taken; the confidence interval is bias-corrected and accelerated.
 Any p-value reported is the probability of observing the effect size (or greater),
@@ -2773,7 +2841,7 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">0.0105000</td>
 <td align="right">0.0625000</td>
 <td align="right">95</td>
-<td align="right">0.0360000</td>
+<td align="right">0.036000</td>
 <td align="right">1278.3053</td>
 </tr>
 <tr class="even">
@@ -2785,7 +2853,7 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">0.0315031</td>
 <td align="right">0.1076250</td>
 <td align="right">95</td>
-<td align="right">0.0685000</td>
+<td align="right">0.068500</td>
 <td align="right">575.6816</td>
 </tr>
 <tr class="odd">
@@ -2797,7 +2865,7 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">-0.0182469</td>
 <td align="right">0.0428750</td>
 <td align="right">95</td>
-<td align="right">0.0118750</td>
+<td align="right">0.011875</td>
 <td align="right">925.5663</td>
 </tr>
 <tr class="even">
@@ -2809,7 +2877,7 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">-0.0494969</td>
 <td align="right">0.0003719</td>
 <td align="right">95</td>
-<td align="right">-0.0257500</td>
+<td align="right">-0.025750</td>
 <td align="right">1362.6962</td>
 </tr>
 <tr class="odd">
@@ -2821,7 +2889,7 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">-0.0300000</td>
 <td align="right">0.0057500</td>
 <td align="right">95</td>
-<td align="right">-0.0115000</td>
+<td align="right">-0.011500</td>
 <td align="right">2693.9914</td>
 </tr>
 <tr class="even">
@@ -2833,31 +2901,19 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 <td align="right">0.0625000</td>
 <td align="right">0.1225000</td>
 <td align="right">95</td>
-<td align="right">0.0912500</td>
+<td align="right">0.091250</td>
 <td align="right">949.9576</td>
 </tr>
 <tr class="odd">
-<td align="left">Ctr_7</td>
-<td align="left">EPA_5μM_7</td>
-<td align="right">5000</td>
-<td align="right">-0.3091020</td>
-<td align="right">-0.1622632</td>
-<td align="right">-0.3050414</td>
-<td align="right">-0.1592285</td>
-<td align="right">95</td>
-<td align="right">-0.2302763</td>
-<td align="right">177.0996</td>
-</tr>
-<tr class="even">
 <td align="left">Minimeta Overall Test</td>
 <td align="left">Minimeta Overall Test</td>
 <td align="right">5000</td>
-<td align="right">-0.0027889</td>
-<td align="right">0.0216841</td>
-<td align="right">0.0094190</td>
-<td align="right">0.0097679</td>
+<td align="right">0.0024303</td>
+<td align="right">0.0274285</td>
+<td align="right">0.0148743</td>
+<td align="right">0.0152279</td>
 <td align="right">95</td>
-<td align="right">0.0095784</td>
+<td align="right">0.015034</td>
 <td align="right">1.0000</td>
 </tr>
 </tbody>
@@ -2886,6 +2942,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/docs/figure/MTT.Rmd/unnamed-chunk-10-1.png" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/7a9f863604ad3129acbc54465518b8fbd7e170cc/docs/figure/MTT.Rmd/unnamed-chunk-10-1.png" target="_blank">7a9f863</a>
@@ -2935,8 +3002,8 @@ EugOT
 </div>
 </div>
 </div>
-<div id="μm-of-epa---figure-s5b1" class="section level2">
-<h2>10 μM of EPA - Figure S5b1</h2>
+<div id="μm-of-epa-on-astrocytes---figure-s7c2" class="section level2">
+<h2>10 μM of EPA on Astrocytes - Figure S7c2</h2>
 <pre class="r"><code>unpaired10 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -2954,7 +3021,7 @@ EugOT
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 ffect size(s) with 95% confidence intervals will be computed for:
 1. EPA_10μM_1 minus Ctr_1
@@ -2973,7 +3040,7 @@ print(unpaired10.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 The character(0) mean difference between EPA_10μM_1 and Ctr_1 is 0.06 [95%CI 0.033, 0.093].
 The p-value of the two-sided permutation t-test is 0.0026, calculated for legacy purposes only.
@@ -3138,6 +3205,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/docs/figure/MTT.Rmd/unnamed-chunk-15-1.png" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/7a9f863604ad3129acbc54465518b8fbd7e170cc/docs/figure/MTT.Rmd/unnamed-chunk-15-1.png" target="_blank">7a9f863</a>
 </td>
 <td>
@@ -3196,8 +3274,8 @@ Ctr) for each experiment and the overall weighted mean difference
 with vertical lines indicating 95% confidence intervals. The shaded
 curve represents the resampled distribution of the effect size.</p>
 </div>
-<div id="μm-of-epa---figure-5c" class="section level2">
-<h2>30 μM of EPA - Figure 5c</h2>
+<div id="μm-of-epa-on-astrocytes---figure-s7c3" class="section level2">
+<h2>30 μM of EPA on Astrocytes - Figure S7c3</h2>
 <pre class="r"><code>unpaired30 &lt;- load(df,
   x = Group, y = Measurement,
   idx = list(
@@ -3215,7 +3293,7 @@ curve represents the resampled distribution of the effect size.</p>
 ==================
 
 Good afternoon!
-The current time is 15:26 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 ffect size(s) with 95% confidence intervals will be computed for:
 1. EPA_30μM_1 minus Ctr_1
@@ -3234,7 +3312,7 @@ print(unpaired30.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:27 PM on Tuesday June 17, 2025.
+The current time is 16:40 PM on Tuesday June 17, 2025.
 
 The character(0) mean difference between EPA_30μM_1 and Ctr_1 is 0.096 [95%CI 0.007, 0.14].
 The p-value of the two-sided permutation t-test is 0.0175, calculated for legacy purposes only.
@@ -3399,6 +3477,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/docs/figure/MTT.Rmd/unnamed-chunk-20-1.png" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/9636b47e1aa51f265897b8f0a8ea2a51fcdb011c/docs/figure/MTT.Rmd/unnamed-chunk-20-1.png" target="_blank">9636b47</a>
 </td>
 <td>
@@ -3424,8 +3513,9 @@ difference, with vertical lines indicating 95% confidence intervals. The
 shaded curve represents the resampled distribution of the effect
 size.</p>
 </div>
-<div id="μm-of-glutamate---figure-3c" class="section level2">
-<h2>100 μM of Glutamate - Figure 3c</h2>
+<div id="μm-of-glutamate-on-astrocytes---figure-3c"
+class="section level2">
+<h2>100 μM of Glutamate on Astrocytes - Figure 3c</h2>
 <pre class="r"><code>unpaired_glut &lt;- load(df_glut,
   x = Group, y = Measurement,
   idx = list(
@@ -3443,7 +3533,7 @@ size.</p>
 ==================
 
 Good afternoon!
-The current time is 15:27 PM on Tuesday June 17, 2025.
+The current time is 16:41 PM on Tuesday June 17, 2025.
 
 ffect size(s) with 95% confidence intervals will be computed for:
 1. Glu_1 minus Ctr_1
@@ -3462,7 +3552,7 @@ print(unpaired_glut.mean_diff)</code></pre>
 ==================
 
 Good afternoon!
-The current time is 15:27 PM on Tuesday June 17, 2025.
+The current time is 16:41 PM on Tuesday June 17, 2025.
 
 The character(0) mean difference between Glu_1 and Ctr_1 is 0.02 [95%CI 0, 0.043].
 The p-value of the two-sided permutation t-test is 0.0856, calculated for legacy purposes only.
@@ -3603,6 +3693,43 @@ For each p-value, 5000 reshuffles of the control and test labels were performed.
 </table>
 <pre class="r"><code>dabest_plot(unpaired_glut.mean_diff)</code></pre>
 <p><img src="figure/MTT.Rmd/unnamed-chunk-25-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
+Past versions of unnamed-chunk-25-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/Harkany-Lab/Cinquina_2024/blob/cccdace398a733379717cc7ee80c5489810fd56c/docs/figure/MTT.Rmd/unnamed-chunk-25-1.png" target="_blank">cccdace</a>
+</td>
+<td>
+EugOT
+</td>
+<td>
+2025-06-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Figure 3. Effects of glutamate on astrocyte viability. c. Cumming
 estimation plot showing astroglia viability (MTT assay) after 100 μM
 glutamate treatment. Left panel: Colored circles represent individual
