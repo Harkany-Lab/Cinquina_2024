@@ -1,6 +1,6 @@
 # Data
 
-Raw data were obtained from the Single Cell Portal [1,2]. All generated data are available in this repository.
+Raw data were obtained from the Single Cell Portal ([Di Bella et al., 2021](https://doi.org/10.1038/s41586-021-03670-5); [Tarhan et al., 2023](https://doi.org/10.1101/2023.07.13.548886)). All generated data are available in this repository.
 
 ## References
 
